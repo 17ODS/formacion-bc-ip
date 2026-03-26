@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Líneas periódicas · Business Central · I.P. Ingeniería de Producción</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f0eeea;color:#1a1a18;padding:24px 16px;min-height:100vh;}
+.container{max-width:860px;margin:0 auto;}
+
+.hdr-tag{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#8a8880;margin-bottom:4px;}
+h1{font-size:20px;font-weight:700;margin-bottom:3px;}
+.hdr-sub{font-size:12px;color:#6b6a65;margin-bottom:22px;line-height:1.65;}
+
+/* Main tabs */
+.tabs{display:flex;border-bottom:2px solid #dddbd4;margin-bottom:22px;}
+.tab{padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#8a8880;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;white-space:nowrap;}
+.tab:hover{color:#1a1a18;}
+.tab.tc.on{color:#185FA5;border-bottom-color:#185FA5;}
+.tab.tv.on{color:#0F6E56;border-bottom-color:#1D9E75;}
+
+.panel{display:none;}.panel.show{display:block;}
+
+/* Step pills */
+.pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:18px;}
+.pill{padding:5px 12px;border-radius:999px;font-size:11px;font-weight:700;border:1px solid #c8c6be;background:#f5f4f0;color:#6b6a65;cursor:pointer;transition:all .12s;white-space:nowrap;}
+.pill.done-c{background:#E6F1FB;color:#0C447C;border-color:#185FA5;}
+.pill.done-v{background:#EAF3DE;color:#085041;border-color:#1D9E75;}
+.pill.active{background:#1a1a18;color:#fff;border-color:#1a1a18;}
+
+/* Main step card */
+.card{background:#fff;border-radius:14px;border:1px solid #dddbd4;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+.card-c{border-top:3px solid #185FA5;}
+.card-v{border-top:3px solid #1D9E75;}
+.step-meta{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#8a8880;margin-bottom:4px;}
+.step-title{font-size:16px;font-weight:700;color:#1a1a18;margin-bottom:16px;}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;}
+@media(max-width:580px){.two{grid-template-columns:1fr;}}
+.col-h{font-size:10px;font-weight:700;color:#9c9a92;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+
+.action-list{list-style:none;}
+.action-list li{font-size:13px;color:#1a1a18;line-height:1.7;padding:3px 0 3px 14px;position:relative;}
+.action-list li::before{content:"·";position:absolute;left:0;color:#9c9a92;font-weight:700;}
+.action-list li.hi{color:#185FA5;font-weight:600;}
+.action-list li.hi::before{color:#185FA5;}
+.action-list li.hiv{color:#0F6E56;font-weight:600;}
+.action-list li.hiv::before{color:#0F6E56;}
+
+/* ── BC SCREEN MOCKUPS ── */
+.bc-screen{background:#fff;border:1px solid #c8c6be;border-radius:10px;overflow:hidden;font-size:11px;}
+.bc-topbar{background:#f5f4f0;border-bottom:1px solid #dddbd4;padding:7px 12px;display:flex;align-items:center;gap:8px;}
+.bc-topbar-title{font-weight:700;font-size:12px;color:#1a1a18;flex:1;}
+.bc-btn{padding:4px 10px;border-radius:5px;border:1px solid #c8c6be;background:#fff;font-size:10px;font-weight:600;color:#1a1a18;white-space:nowrap;}
+.bc-btn.bc-btn-hi{background:#0078d4;color:#fff;border-color:#0078d4;}
+.bc-body{padding:10px 12px;}
+
+/* Vendor list mockup */
+.bc-vendor-list{display:flex;gap:0;height:160px;}
+.bc-vlist{width:180px;border-right:1px solid #dddbd4;overflow:hidden;flex-shrink:0;}
+.bc-vlist-hdr{background:#f5f4f0;padding:5px 8px;font-size:10px;font-weight:700;color:#6b6a65;border-bottom:1px solid #dddbd4;}
+.bc-vlist-row{padding:5px 8px;font-size:10px;border-bottom:1px solid #eeece6;cursor:pointer;color:#185FA5;}
+.bc-vlist-row.sel{background:#e6f1fb;font-weight:700;}
+.bc-vright{flex:1;padding:10px 12px;overflow:hidden;}
+.bc-vtab{display:inline-block;padding:4px 10px;background:#0078d4;color:#fff;border-radius:5px 5px 0 0;font-size:10px;font-weight:700;margin-bottom:0;}
+
+/* Periodic lines table */
+.bc-ptable{width:100%;border-collapse:collapse;font-size:10px;border:1px solid #dddbd4;}
+.bc-ptable th{background:#f5f4f0;padding:5px 7px;text-align:left;border-bottom:1px solid #dddbd4;font-weight:700;color:#6b6a65;white-space:nowrap;}
+.bc-ptable td{padding:5px 7px;border-bottom:1px solid #eeece6;color:#1a1a18;vertical-align:middle;}
+.bc-ptable tr:last-child td{border-bottom:none;}
+.bc-select{border:1px solid #0078d4;border-radius:3px;padding:2px 4px;font-size:10px;color:#0078d4;background:#fff;}
+.bc-tag-auto{display:inline-block;background:#EAF3DE;color:#085041;border-radius:3px;padding:1px 5px;font-size:9px;font-weight:700;}
+.bc-tag-man{display:inline-block;background:#f5f4f0;color:#6b6a65;border-radius:3px;padding:1px 5px;font-size:9px;font-weight:700;}
+
+/* Standard code card mockup */
+.bc-form{padding:0;}
+.bc-form-section{padding:8px 12px;border-bottom:1px solid #eeece6;}
+.bc-form-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.bc-form-row:last-child{margin-bottom:0;}
+.bc-label{font-size:10px;color:#6b6a65;width:80px;flex-shrink:0;}
+.bc-input{flex:1;border:1px solid #c8c6be;border-radius:4px;padding:3px 7px;font-size:11px;color:#1a1a18;}
+.bc-input.hi{border-color:#0078d4;background:#f0f7ff;}
+.bc-lines-hdr{background:#f5f4f0;padding:5px 12px;display:flex;gap:12px;border-bottom:1px solid #dddbd4;}
+.bc-lines-tab{font-size:10px;font-weight:700;color:#0078d4;padding-bottom:3px;border-bottom:2px solid #0078d4;}
+.bc-lines-tab-off{font-size:10px;color:#6b6a65;padding-bottom:3px;}
+.bc-ltable{width:100%;border-collapse:collapse;font-size:10px;}
+.bc-ltable th{background:#f5f4f0;padding:5px 6px;text-align:left;border-bottom:1px solid #dddbd4;font-weight:700;color:#6b6a65;white-space:nowrap;}
+.bc-ltable td{padding:5px 6px;border-bottom:1px solid #eeece6;}
+.bc-ltable td.hi{background:#e6f1fb;}
+.bc-cell-select{border:1px solid #0078d4;border-radius:3px;padding:1px 4px;font-size:10px;color:#0078d4;background:#fff;}
+
+/* Result mockup */
+.bc-doc{background:#fff;border:1px solid #dddbd4;border-radius:8px;overflow:hidden;font-size:11px;}
+.bc-doc-hdr{background:#f5f4f0;padding:6px 10px;border-bottom:1px solid #dddbd4;font-weight:700;font-size:11px;color:#1a1a18;}
+.bc-doc-lines{padding:6px 10px;}
+.bc-doc-row{display:flex;gap:6px;padding:4px 0;border-bottom:1px solid #eeece6;align-items:center;}
+.bc-doc-row:last-child{border-bottom:none;}
+.bc-doc-new{background:#EAF3DE;}
+.bc-doc-type{font-size:9px;color:#6b6a65;width:50px;flex-shrink:0;}
+.bc-doc-num{font-size:10px;font-weight:700;color:#185FA5;width:70px;flex-shrink:0;}
+.bc-doc-desc{flex:1;font-size:10px;color:#1a1a18;}
+.bc-doc-qty{font-size:10px;font-weight:700;width:35px;text-align:right;}
+.bc-badge-new{font-size:9px;font-weight:700;background:#EAF3DE;color:#085041;padding:1px 5px;border-radius:3px;flex-shrink:0;}
+
+/* bc-caption */
+.bc-caption{font-size:11px;color:#6b6a65;margin-top:8px;line-height:1.6;}
+.bc-caption strong{color:#1a1a18;}
+
+/* dashboard */
+.dash{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:14px;}
+.dc{background:#f5f4f0;border-radius:8px;padding:9px 11px;}
+.dl{font-size:9px;font-weight:700;color:#9c9a92;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+.dv{font-size:14px;font-weight:700;color:#1a1a18;}
+.dv-c{color:#185FA5;}
+.dv-v{color:#0F6E56;}
+.dv-z{color:#9c9a92;}
+
+/* Alert */
+.alert{border-radius:8px;padding:10px 13px;margin-top:13px;font-size:12.5px;line-height:1.6;}
+.al-t{font-weight:700;margin-bottom:2px;}
+.al-ok  {background:#EAF3DE;border:1px solid #3B6D11;color:#27500A;}
+.al-info{background:#E6F1FB;border:1px solid #185FA5;color:#0C447C;}
+.al-warn{background:#FAEEDA;border:1px solid #854F0B;color:#633806;}
+
+/* nav */
+.navrow{display:flex;justify-content:space-between;align-items:center;}
+.nbtn{padding:8px 18px;font-size:13px;font-weight:600;border-radius:8px;border:1px solid #c8c6be;background:#f5f4f0;color:#1a1a18;cursor:pointer;}
+.nbtn:hover{background:#e8e6e0;}
+.nbtn:disabled{opacity:.3;cursor:not-allowed;}
+.nbtn.pri-c{background:#185FA5;color:#fff;border-color:#185FA5;}
+.nbtn.pri-c:hover{background:#0C447C;}
+.nbtn.pri-v{background:#1D9E75;color:#fff;border-color:#1D9E75;}
+.nbtn.pri-v:hover{background:#0F6E56;}
+.ncnt{font-size:12px;color:#9c9a92;}
+
+footer{text-align:center;margin-top:24px;font-size:11px;color:#9c9a92;}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hdr-tag">Business Central · Sesión S2 · Productividad</div>
+  <h1>Líneas periódicas en compras y ventas</h1>
+  <div class="hdr-sub">
+    Cuando un proveedor o cliente tiene siempre los mismos artículos, BC puede rellenar las líneas del documento automáticamente. Se configura una vez y se reutiliza siempre que se necesite.
+  </div>
+
+  <div class="tabs">
+    <button class="tab tc on" onclick="switchMain('c')">📥 Líneas de compra periódicas</button>
+    <button class="tab tv"    onclick="switchMain('v')">📤 Líneas de venta periódicas</button>
+  </div>
+
+  <!-- ══════════════════════════ COMPRAS ══════════════════════════ -->
+  <div class="panel show" id="panel-c">
+    <div class="pills" id="pills-c"></div>
+    <div class="card card-c" id="card-c"></div>
+    <div class="dash" id="dash-c"></div>
+    <div class="navrow">
+      <button class="nbtn" id="prev-c" onclick="go('c', curC-1)">← Anterior</button>
+      <span class="ncnt" id="ncnt-c"></span>
+      <button class="nbtn pri-c" id="next-c" onclick="go('c', curC+1)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════ VENTAS ══════════════════════════ -->
+  <div class="panel" id="panel-v">
+    <div class="pills" id="pills-v"></div>
+    <div class="card card-v" id="card-v"></div>
+    <div class="dash" id="dash-v"></div>
+    <div class="navrow">
+      <button class="nbtn" id="prev-v" onclick="go('v', curV-1)">← Anterior</button>
+      <span class="ncnt" id="ncnt-v"></span>
+      <button class="nbtn pri-v" id="next-v" onclick="go('v', curV+1)">Siguiente →</button>
+    </div>
+  </div>
+</div>
+<footer>Documento de formación interno · I.P. Ingeniería de Producción, S.L. · Natxo Hernández, consultor externo · Marzo 2026</footer>
+
+<script>
+/* ─────────────────────────────────────────────────────────────────
+   STEPS — COMPRAS
+───────────────────────────────────────────────────────────────── */
+const SC = [
+  {
+    label:"¿Qué son?",
+    title:"Qué son las líneas de compra periódicas",
+    acciones:[
+      "Un proveedor tiene siempre los mismos consumibles: aceite hidráulico, filtros, retenes…",
+      "Cada vez que se crea un pedido hay que escribir las mismas líneas a mano.",
+      "Las líneas periódicas permiten definir esas líneas una vez y que BC las inserte solas."
+    ],
+    hi:[],
+    screen:`
+      <div class="bc-screen">
+        <div class="bc-topbar">
+          <div class="bc-topbar-title">Sin líneas periódicas configuradas</div>
+        </div>
+        <div class="bc-body">
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="font-size:11px;color:#6b6a65;margin-bottom:4px;">Cada pedido al mismo proveedor:</div>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <div style="background:#FCEBEB;border-radius:4px;padding:6px 10px;flex:1;font-size:11px;color:#501313;">→ Línea 1: Filtro aceite FH-220 · escribir a mano</div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <div style="background:#FCEBEB;border-radius:4px;padding:6px 10px;flex:1;font-size:11px;color:#501313;">→ Línea 2: Retén 40×60 · escribir a mano</div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;">
+              <div style="background:#FCEBEB;border-radius:4px;padding:6px 10px;flex:1;font-size:11px;color:#501313;">→ Línea 3: Junta tórica OR-110 · escribir a mano</div>
+            </div>
+            <div style="font-size:10px;color:#9c9a92;margin-top:4px;">Mismo proceso cada vez. Riesgo de error en el artículo, la cantidad o la dimensión.</div>
+          </div>
+        </div>
+      </div>`,
+    caption:"Sin líneas periódicas, cada pedido al mismo proveedor requiere introducir las mismas líneas desde cero. Con una sola configuración inicial, BC puede insertar todas esas líneas automáticamente.",
+    d1:"Tiempo de entrada",d1v:"Alto",d1c:"dv-z",
+    d2:"Riesgo de error",d2v:"Alto",d2c:"dv-z",
+    d3:"Configuración",d3v:"Pendiente",d3c:"dv-z",
+    alert:null
+  },
+  {
+    label:"Crear el código",
+    title:"Paso 1 — Crear el código estándar de compras",
+    acciones:[
+      "En BC: buscar 'Códigos estándar de compra' en el buscador.",
+      "Pulsar + Nuevo.",
+      "Asignar un código identificativo (por ejemplo: CONS-HIDRAULICA) y una descripción.",
+      "En las líneas, añadir cada artículo con su tipo, número, descripción y cantidad habitual.",
+      "También se pueden incluir las dimensiones (Departamento, Zona…) en cada línea para que se asignen automáticamente."
+    ],
+    hi:[3,4],
+    screen:`
+      <div class="bc-screen">
+        <div class="bc-topbar">
+          <div class="bc-topbar-title">Ficha código estándar compras</div>
+          <button class="bc-btn bc-btn-hi">Guardar</button>
+        </div>
+        <div class="bc-form">
+          <div class="bc-form-section">
+            <div class="bc-form-row">
+              <span class="bc-label">Código</span>
+              <span class="bc-input hi">CONS-HIDRAULICA</span>
+            </div>
+            <div class="bc-form-row">
+              <span class="bc-label">Descripción</span>
+              <span class="bc-input">Consumibles hidráulicos habituales</span>
+            </div>
+          </div>
+          <div class="bc-lines-hdr">
+            <span class="bc-lines-tab">Líneas</span>
+            <span class="bc-lines-tab-off">Administrar</span>
+          </div>
+          <table class="bc-ltable">
+            <tr>
+              <th>Tipo</th><th>Nº</th><th>Descripción</th><th>Cantidad</th><th>Dpto.</th>
+            </tr>
+            <tr>
+              <td>Artículo</td><td class="hi">FH-220</td><td>Filtro aceite FH-220</td><td class="hi">6</td><td>REP</td>
+            </tr>
+            <tr>
+              <td>Artículo</td><td class="hi">RET-4060</td><td>Retén 40×60</td><td class="hi">10</td><td>REP</td>
+            </tr>
+            <tr>
+              <td>Artículo</td><td class="hi">OR-110</td><td>Junta tórica OR-110</td><td class="hi">20</td><td>REP</td>
+            </tr>
+          </table>
+        </div>
+      </div>`,
+    caption:"El código estándar es la plantilla. Se define el artículo, la cantidad habitual y las dimensiones que correspondan. Se puede tener tantos códigos como tipos de pedido recurrentes haya.",
+    d1:"Tiempo de entrada",d1v:"Puntual",d1c:"dv-c",
+    d2:"Riesgo de error",d2v:"Solo al crear",d2c:"dv-c",
+    d3:"Configuración",d3v:"En curso",d3c:"dv-c",
+    alert:{type:"info",title:"Las dimensiones en la plantilla son clave",
+      body:"Si se incluyen Departamento y Zona en cada línea del código estándar, cuando BC inserte las líneas en el pedido ya llevarán las dimensiones correctas. Se evita el olvido más frecuente."}
+  },
+  {
+    label:"Vincular al proveedor",
+    title:"Paso 2 — Vincular el código al proveedor",
+    acciones:[
+      "Ir a la ficha del proveedor.",
+      "Buscar la sección o pestaña 'Líneas de compra periódicas'.",
+      "Añadir una nueva línea: seleccionar el código recién creado (CONS-HIDRAULICA).",
+      "Configurar cuándo se insertan las líneas en cada tipo de documento:",
+      "— Automático: BC las inserta sin preguntar al abrir el documento.",
+      "— Manual: BC pregunta si se quieren insertar.",
+      "— En blanco: no se insertan para ese tipo de documento."
+    ],
+    hi:[3,4,5,6],
+    screen:`
+      <div class="bc-screen">
+        <div class="bc-topbar">
+          <div class="bc-topbar-title">ACREV0001 · Acreedor Gestión Dynamica Estructurada</div>
+          <button class="bc-btn">+ Nuevo</button>
+          <button class="bc-btn bc-btn-hi">Editar lista</button>
+        </div>
+        <div style="background:#0078d4;color:#fff;padding:4px 12px;font-size:10px;font-weight:700;display:inline-block;border-radius:0 0 0 0;">Líneas de compra periódicas</div>
+        <table class="bc-ptable">
+          <tr>
+            <th style="width:28px;"></th>
+            <th>Código</th>
+            <th>Descripción</th>
+            <th>Insertar en ofertas</th>
+            <th>Insertar en pedidos</th>
+            <th>Insertar en facturas</th>
+            <th>Insertar en abonos</th>
+          </tr>
+          <tr>
+            <td>→</td>
+            <td style="font-weight:700;color:#185FA5;">CONS-HIDRAULICA</td>
+            <td>Consumibles hidráulicos</td>
+            <td><span class="bc-tag-man">Manual</span></td>
+            <td><span class="bc-tag-auto">Automático</span></td>
+            <td><span class="bc-tag-man">Manual</span></td>
+            <td><span class="bc-tag-man">Manual</span></td>
+          </tr>
+        </table>
+      </div>`,
+    caption:"Para cada tipo de documento se puede elegir si la inserción es automática (sin preguntar) o manual (BC pregunta primero). En pedidos habituales lo más cómodo es Automático. En facturas, Manual por si el pedido viene ya con las líneas correctas.",
+    d1:"Tiempo de entrada",d1v:"Puntual",d1c:"dv-c",
+    d2:"Riesgo de error",d2v:"Reducido",d2c:"dv-c",
+    d3:"Configuración",d3v:"Lista",d3c:"dv-c",
+    alert:null
+  },
+  {
+    label:"Crear un pedido",
+    title:"Paso 3 — Crear un nuevo pedido de compra",
+    acciones:[
+      "Se crea un nuevo pedido de compra para el proveedor ACREV0001.",
+      "Al seleccionar el proveedor, BC detecta que tiene líneas periódicas configuradas.",
+      "Como está configurado en Automático para pedidos, BC inserta las líneas directamente.",
+      "Si estuviera en Manual, aparecería un mensaje preguntando si se quieren insertar."
+    ],
+    hi:[2,3],
+    screen:`
+      <div class="bc-screen">
+        <div class="bc-topbar">
+          <div class="bc-topbar-title">Pedido de compra · ACREV0001</div>
+          <button class="bc-btn bc-btn-hi">Registrar</button>
+        </div>
+        <div style="padding:8px 12px;border-bottom:1px solid #eeece6;font-size:10px;display:flex;gap:16px;">
+          <span><strong>Proveedor:</strong> ACREV0001</span>
+          <span><strong>Fecha documento:</strong> 24/03/2026</span>
+        </div>
+        <div style="padding:6px 10px;background:#EAF3DE;border-bottom:1px solid #c0dd97;font-size:10px;color:#085041;font-weight:700;">
+          ✓ Líneas periódicas insertadas automáticamente (CONS-HIDRAULICA)
+        </div>
+        <div class="bc-doc-lines">
+          <div class="bc-doc-row bc-doc-new">
+            <div class="bc-doc-type">Artículo</div>
+            <div class="bc-doc-num">FH-220</div>
+            <div class="bc-doc-desc">Filtro aceite FH-220</div>
+            <div class="bc-doc-qty">6</div>
+            <div class="bc-badge-new">Auto</div>
+          </div>
+          <div class="bc-doc-row bc-doc-new">
+            <div class="bc-doc-type">Artículo</div>
+            <div class="bc-doc-num">RET-4060</div>
+            <div class="bc-doc-desc">Retén 40×60</div>
+            <div class="bc-doc-qty">10</div>
+            <div class="bc-badge-new">Auto</div>
+          </div>
+          <div class="bc-doc-row bc-doc-new">
+            <div class="bc-doc-type">Artículo</div>
+            <div class="bc-doc-num">OR-110</div>
+            <div class="bc-doc-desc">Junta tórica OR-110</div>
+            <div class="bc-doc-qty">20</div>
+            <div class="bc-badge-new">Auto</div>
+          </div>
+        </div>
+      </div>`,
+    caption:"Las tres líneas aparecen ya rellenas con artículo, descripción, cantidad y dimensiones. Solo hay que revisar que las cantidades son las correctas para este pedido concreto y ajustar si hace falta.",
+    d1:"Tiempo de entrada",d1v:"Mínimo",d1c:"dv-c",
+    d2:"Riesgo de error",d2v:"Muy bajo",d2c:"dv-c",
+    d3:"Estado",d3v:"Listo para registrar",d3c:"dv-c",
+    alert:{type:"ok",title:"Las líneas se pueden modificar libremente antes de registrar",
+      body:"Las líneas insertadas automáticamente son un punto de partida, no datos fijos. Se puede cambiar la cantidad, añadir líneas nuevas o borrar las que no correspondan en ese pedido concreto. BC no bloquea nada."}
+  },
+  {
+    label:"Cuándo usarlo",
+    title:"Cuándo tiene sentido configurar líneas periódicas",
+    acciones:[
+      "El proveedor siempre suministra los mismos artículos o una base fija de artículos.",
+      "Se hacen pedidos recurrentes al mismo proveedor (mensual, trimestral…).",
+      "Las líneas suelen llevar las mismas dimensiones (mismo departamento, misma zona).",
+      "Hay más de 3 líneas por pedido: cuanto más largas sean las órdenes, más tiempo se ahorra.",
+      "No tiene sentido si cada pedido es completamente distinto o si los artículos cambian siempre."
+    ],
+    hi:[],
+    screen:`
+      <div class="bc-screen">
+        <div class="bc-topbar"><div class="bc-topbar-title">Resumen: líneas periódicas en compras</div></div>
+        <div class="bc-body" style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;gap:8px;align-items:flex-start;">
+            <div style="background:#EAF3DE;border-radius:6px;padding:7px 10px;flex:1;font-size:11px;color:#085041;">
+              <div style="font-weight:700;margin-bottom:3px;">✓ Ideal para</div>
+              Consumibles recurrentes al mismo proveedor · Pedidos de reposición periódica · Artículos con cantidades estándar
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:flex-start;">
+            <div style="background:#FAEEDA;border-radius:6px;padding:7px 10px;flex:1;font-size:11px;color:#633806;">
+              <div style="font-weight:700;margin-bottom:3px;">⚠ No aplica si</div>
+              Cada pedido es distinto · Los artículos y cantidades varían siempre · El proveedor es puntual y no recurrente
+            </div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:flex-start;">
+            <div style="background:#E6F1FB;border-radius:6px;padding:7px 10px;flex:1;font-size:11px;color:#0C447C;">
+              <div style="font-weight:700;margin-bottom:3px;">ℹ Se pueden tener varios códigos por proveedor</div>
+              Un proveedor puede tener un código para pedidos de mantenimiento y otro para pedidos de reposición de almacén. Se selecciona el que corresponde en cada caso.
+            </div>
+          </div>
+        </div>
+      </div>`,
+    caption:"",
+    d1:"Ahorro por pedido",d1v:"3–10 min",d1c:"dv-c",
+    d2:"Errores de introducción",d2v:"Prácticamente 0",d2c:"dv-c",
+    d3:"Dimensiones auto",d3v:"Sí",d3c:"dv-c",
+    alert:null
+  }
+];
+
+/* ─────────────────────────────────────────────────────────────────
+   STEPS — VENTAS
+───────────────────────────────────────────────────────────────── */
+const SV = [
+  {
+    label:"¿Qué son?",
+    title:"Qué son las líneas de venta periódicas",
+    acciones:[
+      "Un cliente hace siempre el mismo pedido: los mismos repuestos para su máquina.",
+      "Cada vez que llama o escribe hay que introducir las mismas líneas desde cero.",
+      "Las líneas periódicas de venta permiten que BC rellene esas líneas automáticamente al crear el pedido."
+    ],
+    hi:[],
+    screen:`
+      <div class="bc-screen">
+        <div class="bc-topbar"><div class="bc-topbar-title">Sin líneas periódicas — cada pedido del mismo cliente</div></div>
+        <div class="bc-body">
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="background:#FCEBEB;border-radius:4px;padding:6px 10px;font-size:11px;color:#501313;">→ Línea 1: Kit retenes bomba hidráulica · escribir a mano</div>
+            <div style="background:#FCEBEB;border-radius:4px;padding:6px 10px;font-size:11px;color:#501313;">→ Línea 2: Filtro aceite motor · escribir a mano</div>
+            <div style="background:#FCEBEB;border-radius:4px;padding:6px 10px;font-size:11px;color:#501313;">→ Línea 3: Correa dentada · escribir a mano</div>
+            <div style="font-size:10px;color:#9c9a92;margin-top:4px;">Si el cliente pide siempre esto, hay que escribirlo siempre. Riesgo de error en artículo, precio o dimensión.</div>
+          </div>
+        </div>
+      </div>`,
+    caption:"El mismo problema que en compras pero en el lado de las ventas. Un cliente que tiene un contrato de mantenimiento o que repone siempre los mismos repuestos es un candidato perfecto para tener líneas periódicas.",
+    d1:"Tiempo de entrada",d1v:"Alto",d1c:"dv-z",
+    d2:"Riesgo de error",d2v:"Alto",d2c:"dv-z",
+    d3:"Configuración",d3v:"Pendiente",d3c:"dv-z",
+    alert:null
+  },
+  {
+    label:"Crear el código",
+    title:"Paso 1 — Crear el código estándar de ventas",
+    acciones:[
+      "En BC: buscar 'Códigos estándar de venta' en el buscador.",
+      "Pulsar + Nuevo.",
+      "Asignar código y descripción (por ejemplo: KIT-MANT-HIDRAULICA).",
+      "En las líneas, añadir cada artículo con su cantidad y precio de venta habitual.",
+      "Incluir también el expediente u otras dimensiones si son siempre las mismas para ese cliente."
+    ],
+    hi:[3,4],
+    screen:`
+      <div class="bc-screen">
+        <div class="bc-topbar">
+          <div class="bc-topbar-title">Ficha código estándar ventas</div>
+          <button class="bc-btn bc-btn-hi">Guardar</button>
+        </div>
+        <div class="bc-form">
+          <div class="bc-form-section">
+            <div class="bc-form-row">
+              <span class="bc-label">Código</span>
+              <span class="bc-input hi">KIT-MANT-HID</span>
+            </div>
+            <div class="bc-form-row">
+              <span class="bc-label">Descripción</span>
+              <span class="bc-input">Kit mantenimiento hidráulico cliente</span>
+            </div>
+          </div>
+          <div class="bc-lines-hdr">
+            <span class="bc-lines-tab">Líneas</span>
+            <span class="bc-lines-tab-off">Administrar</span>
+          </div>
+          <table class="bc-ltable">
+            <tr><th>Tipo</th><th>Nº</th><th>Descripción</th><th>Cantidad</th><th>Precio venta</th><th>Expediente</th></tr>
+            <tr><td>Artículo</td><td class="hi">KIT-BH-01</td><td>Kit retenes bomba</td><td class="hi">1</td><td>285,00 €</td><td>EXP-CLIENTE</td></tr>
+            <tr><td>Artículo</td><td class="hi">FIL-MOT-22</td><td>Filtro aceite motor</td><td class="hi">2</td><td>38,50 €</td><td>EXP-CLIENTE</td></tr>
+            <tr><td>Artículo</td><td class="hi">COR-DEN-14</td><td>Correa dentada 14T</td><td class="hi">1</td><td>62,00 €</td><td>EXP-CLIENTE</td></tr>
+          </table>
+        </div>
+      </div>`,
+    caption:"El código de venta puede incluir el precio de venta acordado con ese cliente. Si tiene tarifas especiales, se reflejan aquí y BC las aplicará sin tener que recordarlas cada vez.",
+    d1:"Tiempo de entrada",d1v:"Puntual",d1c:"dv-v",
+    d2:"Precio especial",d2v:"Incluido",d2c:"dv-v",
+    d3:"Configuración",d3v:"En curso",d3c:"dv-v",
+    alert:{type:"info",title:"El expediente en la plantilla evita el olvido más frecuente",
+      body:"Si el cliente tiene siempre el mismo expediente de seguimiento, incluirlo en las líneas del código estándar garantiza que nunca se olvida asignarlo al crear el pedido de venta."}
+  },
+  {
+    label:"Vincular al cliente",
+    title:"Paso 2 — Vincular el código al cliente",
+    acciones:[
+      "Ir a la ficha del cliente.",
+      "Buscar la sección 'Líneas de venta periódicas'.",
+      "Añadir una nueva línea con el código KIT-MANT-HID.",
+      "Configurar el modo de inserción para cada tipo de documento:",
+      "— Pedidos: Automático (se insertan al seleccionar el cliente).",
+      "— Facturas: Manual (por si la factura no viene de ese pedido recurrente).",
+      "— Ofertas: Manual (las ofertas suelen personalizarse más)."
+    ],
+    hi:[3,4,5,6],
+    screen:`
+      <div class="bc-screen">
+        <div class="bc-topbar">
+          <div class="bc-topbar-title">CLI-00042 · Cliente Mantenimiento Hidráulica</div>
+          <button class="bc-btn">+ Nuevo</button>
+          <button class="bc-btn bc-btn-hi">Editar lista</button>
+        </div>
+        <div style="background:#1D9E75;color:#fff;padding:4px 12px;font-size:10px;font-weight:700;">Líneas de venta periódicas</div>
+        <table class="bc-ptable">
+          <tr>
+            <th></th><th>Código</th><th>Descripción</th>
+            <th>Insertar en ofertas</th><th>Insertar en pedidos</th>
+            <th>Insertar en facturas</th><th>Insertar en abonos</th>
+          </tr>
+          <tr>
+            <td>→</td>
+            <td style="font-weight:700;color:#0F6E56;">KIT-MANT-HID</td>
+            <td>Kit mantenimiento hidráulico</td>
+            <td><span class="bc-tag-man">Manual</span></td>
+            <td><span class="bc-tag-auto">Automático</span></td>
+            <td><span class="bc-tag-man">Manual</span></td>
+            <td><span class="bc-tag-man">Manual</span></td>
+          </tr>
+        </table>
+      </div>`,
+    caption:"La misma lógica que en compras: Automático para los pedidos recurrentes y Manual para los documentos donde puede haber variaciones. Un cliente puede tener más de un código vinculado.",
+    d1:"Tiempo de entrada",d1v:"Puntual",d1c:"dv-v",
+    d2:"Riesgo de error",d2v:"Reducido",d2c:"dv-v",
+    d3:"Configuración",d3v:"Lista",d3c:"dv-v",
+    alert:null
+  },
+  {
+    label:"Crear un pedido",
+    title:"Paso 3 — Crear un nuevo pedido de venta",
+    acciones:[
+      "Se crea un nuevo pedido de venta para el cliente CLI-00042.",
+      "BC detecta que tiene líneas periódicas configuradas en modo Automático.",
+      "Inserta las tres líneas con artículo, cantidad, precio y expediente ya rellenos.",
+      "Si el cliente pide una cantidad diferente, se modifica en la línea antes de confirmar."
+    ],
+    hi:[2,3],
+    screen:`
+      <div class="bc-screen">
+        <div class="bc-topbar">
+          <div class="bc-topbar-title">Pedido de venta · CLI-00042</div>
+          <button class="bc-btn bc-btn-hi">Registrar</button>
+        </div>
+        <div style="padding:8px 12px;border-bottom:1px solid #eeece6;font-size:10px;display:flex;gap:16px;">
+          <span><strong>Cliente:</strong> CLI-00042</span>
+          <span><strong>Fecha documento:</strong> 24/03/2026</span>
+        </div>
+        <div style="padding:6px 10px;background:#EAF3DE;border-bottom:1px solid #c0dd97;font-size:10px;color:#085041;font-weight:700;">
+          ✓ Líneas periódicas insertadas automáticamente (KIT-MANT-HID)
+        </div>
+        <div class="bc-doc-lines">
+          <div class="bc-doc-row bc-doc-new">
+            <div class="bc-doc-type">Artículo</div>
+            <div class="bc-doc-num">KIT-BH-01</div>
+            <div class="bc-doc-desc">Kit retenes bomba hidráulica</div>
+            <div class="bc-doc-qty">1</div>
+            <div class="bc-badge-new">Auto</div>
+          </div>
+          <div class="bc-doc-row bc-doc-new">
+            <div class="bc-doc-type">Artículo</div>
+            <div class="bc-doc-num">FIL-MOT-22</div>
+            <div class="bc-doc-desc">Filtro aceite motor</div>
+            <div class="bc-doc-qty">2</div>
+            <div class="bc-badge-new">Auto</div>
+          </div>
+          <div class="bc-doc-row bc-doc-new">
+            <div class="bc-doc-type">Artículo</div>
+            <div class="bc-doc-num">COR-DEN-14</div>
+            <div class="bc-doc-desc">Correa dentada 14T</div>
+            <div class="bc-doc-qty">1</div>
+            <div class="bc-badge-new">Auto</div>
+          </div>
+        </div>
+      </div>`,
+    caption:"Artículo, precio, cantidad y expediente ya rellenos. Solo hay que revisar las cantidades y, si todo está correcto, confirmar el pedido.",
+    d1:"Tiempo de entrada",d1v:"Mínimo",d1c:"dv-v",
+    d2:"Precio especial",d2v:"Aplicado auto",d2c:"dv-v",
+    d3:"Expediente",d3v:"Asignado auto",d3c:"dv-v",
+    alert:{type:"ok",title:"Las líneas se pueden modificar antes de confirmar",
+      body:"Igual que en compras, las líneas insertadas son un punto de partida. Se pueden cambiar cantidades, añadir o quitar líneas sin ninguna restricción antes de registrar el pedido."}
+  },
+  {
+    label:"Cuándo usarlo",
+    title:"Cuándo tiene sentido en ventas",
+    acciones:[
+      "El cliente hace pedidos recurrentes con los mismos artículos (contratos de mantenimiento, reposiciones periódicas).",
+      "El cliente tiene precios especiales o descuentos acordados: incluirlos en la plantilla evita errores.",
+      "Cada pedido lleva siempre el mismo expediente: la plantilla lo asigna automáticamente.",
+      "El cliente suele pedir por teléfono o email de forma rápida: la agilidad reduce errores.",
+      "No tiene sentido si el cliente siempre pide cosas distintas o si es un cliente puntual."
+    ],
+    hi:[],
+    screen:`
+      <div class="bc-screen">
+        <div class="bc-topbar"><div class="bc-topbar-title">Resumen: líneas periódicas en ventas</div></div>
+        <div class="bc-body" style="display:flex;flex-direction:column;gap:8px;">
+          <div style="background:#EAF3DE;border-radius:6px;padding:7px 10px;font-size:11px;color:#085041;">
+            <div style="font-weight:700;margin-bottom:3px;">✓ Ideal para</div>
+            Clientes con contrato de mantenimiento · Reposiciones periódicas · Clientes con tarifa especial acordada
+          </div>
+          <div style="background:#FAEEDA;border-radius:6px;padding:7px 10px;font-size:11px;color:#633806;">
+            <div style="font-weight:700;margin-bottom:3px;">⚠ No aplica si</div>
+            El cliente siempre pide cosas distintas · Es un cliente puntual · Los precios cambian en cada pedido
+          </div>
+          <div style="background:#E6F1FB;border-radius:6px;padding:7px 10px;font-size:11px;color:#0C447C;">
+            <div style="font-weight:700;margin-bottom:3px;">ℹ Diferencia clave con compras</div>
+            En ventas las líneas periódicas pueden incluir el precio de venta acordado y el expediente de seguimiento. Dos elementos críticos que en Repuestos se olvidan con frecuencia.
+          </div>
+        </div>
+      </div>`,
+    caption:"",
+    d1:"Ahorro por pedido",d1v:"3–10 min",d1c:"dv-v",
+    d2:"Precio especial auto",d2v:"Sí",d2c:"dv-v",
+    d3:"Expediente auto",d3v:"Sí",d3c:"dv-v",
+    alert:null
+  }
+];
+
+/* ─────────────────────────────────────────────────────────────────
+   RENDER ENGINE
+───────────────────────────────────────────────────────────────── */
+let curC = 0, curV = 0;
+
+function renderStep(type, idx){
+  const steps = type==='c' ? SC : SV;
+  const s = steps[idx];
+  const done = type==='c' ? 'done-c' : 'done-v';
+
+  // Pills
+  document.getElementById('pills-'+type).innerHTML = steps.map((x,i)=>{
+    let cl = 'pill';
+    if(i===idx) cl='pill active';
+    else if(i<idx) cl='pill '+done;
+    return `<button class="${cl}" onclick="go('${type}',${i})">${i+1}. ${x.label}</button>`;
+  }).join('');
+
+  // Actions
+  const acList = s.acciones.map((a,i)=>{
+    const hc = type==='c'?'hi':'hiv';
+    const cls = s.hi&&s.hi.includes(i)?' class="'+hc+'"':'';
+    return `<li${cls}>${a}</li>`;
+  }).join('');
+
+  // Alert
+  let ahtml = '';
+  if(s.alert){
+    const ac = s.alert.type==='ok'?'al-ok': s.alert.type==='warn'?'al-warn':'al-info';
+    ahtml = `<div class="alert ${ac}"><div class="al-t">${s.alert.title}</div>${s.alert.body}</div>`;
+  }
+
+  // Card
+  document.getElementById('card-'+type).innerHTML = `
+    <div class="step-meta">${type==='c'?'Líneas de compra periódicas':'Líneas de venta periódicas'}</div>
+    <div class="step-title">${s.title}</div>
+    <div class="two">
+      <div>
+        <div class="col-h">En qué consiste</div>
+        <ul class="action-list">${acList}</ul>
+      </div>
+      <div>
+        <div class="col-h">Cómo se ve en BC</div>
+        ${s.screen}
+        ${s.caption?`<p class="bc-caption">${s.caption}</p>`:''}
+      </div>
+    </div>
+    ${ahtml}
+  `;
+
+  // Dash
+  const vc = type==='c'?'dv-c':'dv-v';
+  document.getElementById('dash-'+type).innerHTML = `
+    <div class="dc"><div class="dl">${s.d1}</div><div class="dv ${s.d1c}">${s.d1v}</div></div>
+    <div class="dc"><div class="dl">${s.d2}</div><div class="dv ${s.d2c}">${s.d2v}</div></div>
+    <div class="dc"><div class="dl">${s.d3}</div><div class="dv ${s.d3c}">${s.d3v}</div></div>
+  `;
+
+  document.getElementById('ncnt-'+type).textContent = `Paso ${idx+1} de ${steps.length}`;
+  document.getElementById('prev-'+type).disabled = idx===0;
+  document.getElementById('next-'+type).disabled = idx===steps.length-1;
+}
+
+function go(type, idx){
+  const steps = type==='c' ? SC : SV;
+  if(idx<0||idx>=steps.length) return;
+  if(type==='c') curC=idx; else curV=idx;
+  renderStep(type, idx);
+}
+
+function switchMain(type){
+  document.getElementById('panel-c').className='panel'+(type==='c'?' show':'');
+  document.getElementById('panel-v').className='panel'+(type==='v'?' show':'');
+  document.querySelectorAll('.tabs .tab').forEach((t,i)=>{
+    const base = i===0?'tab tc':'tab tv';
+    t.className = base + ((i===0&&type==='c')||(i===1&&type==='v')?' on':'');
+  });
+}
+
+// Init
+renderStep('c', 0);
+renderStep('v', 0);
+</script>
+</body>
+</html>

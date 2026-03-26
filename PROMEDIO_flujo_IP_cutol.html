@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flujo IP · Cutol MS 5 L · BC</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f0eeea;color:#1a1a18;padding:24px 16px;min-height:100vh;}
+.container{max-width:820px;margin:0 auto;}
+
+.hdr-tag{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#8a8880;margin-bottom:4px;}
+h1{font-size:20px;font-weight:700;margin-bottom:2px;}
+.hdr-sub{font-size:12px;color:#6b6a65;margin-bottom:10px;}
+.hdr-badge{display:inline-block;background:#FAEEDA;color:#633806;border:1px solid #854F0B;border-radius:5px;font-size:10px;font-weight:700;padding:2px 8px;margin-left:6px;vertical-align:middle;}
+.hdr-art{font-size:12px;color:#6b6a65;margin-bottom:20px;padding:8px 12px;background:#fff;border-radius:8px;border:1px solid #dddbd4;display:inline-block;}
+.hdr-art span{margin-right:14px;}
+
+.pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:18px;}
+.pill{padding:5px 12px;border-radius:999px;font-size:11px;font-weight:700;border:1px solid #c8c6be;background:#f5f4f0;color:#6b6a65;cursor:pointer;transition:all .12s;white-space:nowrap;}
+.pill.done-ok    {background:#EAF3DE;color:#085041;border-color:#1D9E75;}
+.pill.done-warn  {background:#FAEEDA;color:#633806;border-color:#854F0B;}
+.pill.done-danger{background:#FCEBEB;color:#501313;border-color:#A32D2D;}
+.pill.active{background:#1a1a18;color:#fff;border-color:#1a1a18;}
+
+.period-bar{display:flex;border-radius:8px;overflow:hidden;margin-bottom:14px;font-size:11px;font-weight:700;}
+.pb-month{flex:1;padding:6px 12px;text-align:center;}
+.pb-jan{background:#E6F1FB;color:#0C447C;}
+.pb-feb{background:#FAEEDA;color:#633806;}
+.pb-active-jan{background:#0C447C;color:#fff;}
+.pb-active-feb{background:#854F0B;color:#fff;}
+
+.card{background:#fff;border-radius:14px;border:1px solid #dddbd4;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+.card-ok    {border-top:3px solid #1D9E75;}
+.card-warn  {border-top:3px solid #BA7517;}
+.card-danger{border-top:3px solid #A32D2D;}
+
+.step-meta{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#8a8880;margin-bottom:4px;}
+.step-title{font-size:16px;font-weight:700;color:#1a1a18;margin-bottom:16px;}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;}
+@media(max-width:560px){.two{grid-template-columns:1fr;}}
+.col-h{font-size:10px;font-weight:700;color:#9c9a92;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+
+.action-list{list-style:none;}
+.action-list li{font-size:13px;color:#1a1a18;line-height:1.7;padding:3px 0;padding-left:14px;position:relative;}
+.action-list li::before{content:"·";position:absolute;left:0;color:#9c9a92;font-weight:700;}
+.action-list li.hi{color:#854F0B;font-weight:600;}
+.action-list li.hi::before{color:#854F0B;}
+
+.bc-box{background:#f5f4f0;border-radius:10px;padding:12px 14px;}
+.bc-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid #e8e6e0;font-size:12px;gap:8px;}
+.bc-row:last-child{border-bottom:none;}
+.bc-lbl{color:#6b6a65;flex:1;}
+.bc-val     {font-weight:700;color:#1a1a18;text-align:right;white-space:nowrap;}
+.bc-val-ok  {font-weight:700;color:#0F6E56;text-align:right;white-space:nowrap;}
+.bc-val-warn{font-weight:700;color:#854F0B;text-align:right;white-space:nowrap;}
+.bc-val-mute{font-weight:400;color:#9c9a92;font-style:italic;text-align:right;white-space:nowrap;}
+.bc-caption{font-size:11px;color:#6b6a65;margin-top:8px;line-height:1.6;}
+
+/* Average cost visualizer */
+.avg-viz{background:#fff;border:1px solid #dddbd4;border-radius:8px;padding:10px 12px;margin:8px 0;}
+.avg-viz-title{font-size:10px;font-weight:700;color:#9c9a92;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+.avg-bars{display:flex;height:20px;border-radius:4px;overflow:hidden;margin-bottom:6px;}
+.avg-b1{background:#C0DD97;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#085041;}
+.avg-b2{background:#85B7EB;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#0C447C;}
+.avg-b-prov{background:#F7C1C1;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#501313;}
+.avg-arrow{text-align:center;font-size:11px;color:#9c9a92;margin:3px 0;}
+.avg-result-ok  {display:flex;align-items:center;justify-content:center;height:20px;border-radius:4px;background:linear-gradient(90deg,#C0DD97,#85B7EB);font-size:10px;font-weight:700;color:#1a1a18;}
+.avg-result-warn{display:flex;align-items:center;justify-content:center;height:20px;border-radius:4px;background:#FAEEDA;font-size:10px;font-weight:700;color:#633806;border:1px solid #854F0B;}
+
+.dash{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px;}
+@media(max-width:480px){.dash{grid-template-columns:repeat(2,1fr);}}
+.dc{background:#f5f4f0;border-radius:8px;padding:9px 11px;}
+.dl{font-size:9px;font-weight:700;color:#9c9a92;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+.dv{font-size:15px;font-weight:700;}
+.ds{font-size:10px;color:#9c9a92;margin-top:2px;}
+.dv-ok    {color:#0F6E56;}
+.dv-warn  {color:#854F0B;}
+.dv-danger{color:#A32D2D;}
+.dv-zero  {color:#9c9a92;}
+
+.alert{border-radius:8px;padding:10px 13px;margin-top:13px;font-size:12.5px;line-height:1.6;}
+.al-t{font-weight:700;margin-bottom:2px;}
+.al-ok    {background:#EAF3DE;border:1px solid #3B6D11;color:#27500A;}
+.al-warn  {background:#FAEEDA;border:1px solid #854F0B;color:#633806;}
+.al-danger{background:#FCEBEB;border:1px solid #A32D2D;color:#501313;}
+.al-info  {background:#E6F1FB;border:1px solid #185FA5;color:#0C447C;}
+
+.navrow{display:flex;justify-content:space-between;align-items:center;}
+.nbtn{padding:8px 18px;font-size:13px;font-weight:600;border-radius:8px;border:1px solid #c8c6be;background:#f5f4f0;color:#1a1a18;cursor:pointer;}
+.nbtn:hover{background:#e8e6e0;}
+.nbtn:disabled{opacity:.3;cursor:not-allowed;}
+.nbtn.pri{background:#854F0B;color:#fff;border-color:#854F0B;}
+.nbtn.pri:hover{background:#633806;}
+.ncnt{font-size:12px;color:#9c9a92;}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hdr-tag">Business Central · Sesión S2 · Flujo real · Consumibles</div>
+  <h1>Flujo IP <span class="hdr-badge">⚠ Flujo habitual</span></h1>
+  <div class="hdr-sub">La factura del Proveedor B llega <strong>después del cierre</strong>. BC calcula el coste medio con datos incompletos y tiene que corregirlo en el mes siguiente.</div>
+  <div class="hdr-art">
+    <span>🧴 <strong>Cutol MS - Garrafa 5 Litros</strong></span>
+    <span>Compra 1: 6 ud × 38,50 €</span>
+    <span>Compra 2: 4 ud × 44,20 €</span>
+    <span>Consumo interno: 7 ud</span>
+  </div>
+
+  <div class="period-bar">
+    <div class="pb-month" id="pb-jan">Enero 2026</div>
+    <div class="pb-month" id="pb-feb">Febrero 2026</div>
+  </div>
+
+  <div class="pills" id="pills"></div>
+  <div class="card" id="main-card"></div>
+  <div class="dash" id="dash"></div>
+
+  <div class="navrow">
+    <button class="nbtn" id="btn-prev" onclick="go(cur-1)">← Anterior</button>
+    <span class="ncnt" id="ncnt"></span>
+    <button class="nbtn pri" id="btn-next" onclick="go(cur+1)">Siguiente →</button>
+  </div>
+</div>
+
+<script>
+const S = [
+  {
+    date:"3 enero", period:"jan", label:"1.ª compra", pSt:"ok", cSt:"ok",
+    title:"Primera compra al Proveedor A",
+    acciones:[
+      "IP compra 6 garrafas al Proveedor A: 6 ud × 38,50 € = 231,00 €.",
+      "Se registra la recepción en BC.",
+      "Se registra también la factura del proveedor."
+    ],
+    hi:[],
+    bcRows:[
+      ["Unidades en stock","ok","6 ud"],
+      ["Valor del stock","norm","231,00 €"],
+      ["Coste medio actual","ok","38,50 €/ud  —  confirmado"],
+    ],
+    bcCaption:"La primera compra está completa. Coste medio confirmado con factura.",
+    avgViz:null,
+    stock:6, sval:231, cm:38.5, cmReal:38.5, cmDef:true, consumo:0, consumoReal:0, adj:0
+  },
+  {
+    date:"18 enero", period:"jan", label:"2.ª compra (sin factura)", pSt:"warn", cSt:"warn",
+    title:"Segunda compra al Proveedor B — sin factura todavía",
+    acciones:[
+      "IP compra 4 garrafas al Proveedor B: 4 ud × 44,20 €.",
+      "Se registra la recepción de la mercancía en BC.",
+      "La factura del Proveedor B no ha llegado todavía."
+    ],
+    hi:[2],
+    bcRows:[
+      ["Unidades en stock","ok","10 ud  (6 + 4)"],
+      ["Valor total del stock","warn","407,80 €  (231,00 + 176,80 del pedido)"],
+      ["Coste medio calculado por BC","warn","40,78 €/ud  —  PROVISIONAL  (falta la factura)"],
+    ],
+    bcCaption:"BC calcula el coste medio usando el precio del pedido de la segunda compra, no el de la factura real. Si la factura llega con un precio diferente, el coste medio cambiará.",
+    avgViz:{
+      warn:true,
+      b1:"6 ud · 38,50 € ✓", b1pct:60,
+      b2:"4 ud · 44,20 € (estimado)", b2pct:40,
+      result:"Coste medio provisional: 40,78 €/ud"
+    },
+    stock:10, sval:407.8, cm:40.78, cmReal:40.78, cmDef:false, consumo:0, consumoReal:0, adj:0,
+    alert:{type:"warn", title:"El coste medio es provisional",
+      body:"BC ha podido calcular el coste medio porque tiene el precio del pedido. Pero si la factura del Proveedor B llega con un cargo adicional (porte, descuento no aplicado…), el coste medio cambiará y arrastrará un ajuste a todas las salidas del mes."}
+  },
+  {
+    date:"25 enero", period:"jan", label:"Consumo interno", pSt:"warn", cSt:"warn",
+    title:"Se consumen 7 garrafas en el taller",
+    acciones:[
+      "El taller retira 7 garrafas de Cutol del almacén.",
+      "IP registra la salida en BC.",
+      "BC aplica el coste medio actual (40,78 €/ud) a las 7 unidades."
+    ],
+    hi:[],
+    bcRows:[
+      ["Unidades consumidas","norm","7 ud"],
+      ["Coste de la salida","warn","285,46 €  (7 × 40,78 €)  —  PROVISIONAL"],
+      ["Unidades restantes en stock","norm","3 ud"],
+      ["Valor del stock restante","warn","122,34 €  (3 × 40,78 €)  —  provisional"],
+    ],
+    bcCaption:"El coste de la salida es provisional porque el coste medio lo es. Si la factura del Proveedor B llega con diferencias, Adjust Cost corregirá este importe.",
+    avgViz:null,
+    stock:3, sval:122.34, cm:40.78, cmReal:40.78, cmDef:false, consumo:285.46, consumoReal:285.46, adj:0,
+    alert:{type:"warn", title:"Coste de la salida provisional: 285,46 €",
+      body:"Este es el importe que verá IP en los informes de consumo de enero. Si la factura del Proveedor B llega con precio distinto, este dato cambiará retroactivamente cuando corra Adjust Cost."}
+  },
+  {
+    date:"31 enero", period:"jan", label:"Cierre de enero", pSt:"danger", cSt:"danger",
+    title:"Se cierra enero — la factura del Proveedor B sigue sin llegar",
+    acciones:[
+      "IP ejecuta el Adjust Cost al cerrar enero.",
+      "BC busca diferencias entre coste estimado y facturas reales.",
+      "La factura del Proveedor B no está en el sistema: no puede corregir nada."
+    ],
+    hi:[2],
+    bcRows:[
+      ["Coste de la salida en enero","warn","285,46 €  —  PROVISIONAL  (no corregible aún)"],
+      ["Coste medio a cierre de enero","warn","40,78 €/ud  —  no definitivo"],
+      ["Ajuste realizado por BC","mute","0,00 €  (falta la factura del Proveedor B)"],
+    ],
+    bcCaption:"Enero queda cerrado con un coste de consumo provisional. BC no puede hacer nada sin la factura. La corrección llegará en febrero.",
+    avgViz:null,
+    stock:3, sval:122.34, cm:40.78, cmReal:40.78, cmDef:false, consumo:285.46, consumoReal:285.46, adj:0,
+    alert:{type:"danger", title:"Enero queda cerrado con datos de consumo provisionales",
+      body:"Los informes de consumo de materiales de enero no son definitivos. La corrección aparecerá en febrero mezclada con el consumo real de ese mes, dificultando el análisis."}
+  },
+  {
+    date:"5 febrero", period:"feb", label:"Llega la factura", pSt:"warn", cSt:"warn",
+    title:"Llega y se registra la factura del Proveedor B",
+    acciones:[
+      "El Proveedor B envía la factura: 4 ud × 46,00 € = 184,00 €.",
+      "El precio es mayor al del pedido: incluye un cargo por transporte urgente.",
+      "IP registra la factura en BC."
+    ],
+    hi:[1,2],
+    bcRows:[
+      ["Precio en el pedido (estimado)","norm","44,20 €/ud  →  176,80 € por 4 ud"],
+      ["Precio real en la factura","warn","46,00 €/ud  →  184,00 € por 4 ud"],
+      ["Diferencia detectada por BC","warn","7,20 €  —  pendiente de repartir entre las salidas"],
+    ],
+    bcCaption:"BC detecta que la segunda compra costó 7,20 € más de lo estimado. Ahora tiene que repartir ese sobrecoste entre todas las salidas del mes de enero en las que participó ese lote.",
+    avgViz:{
+      warn:true,
+      b1:"6 ud · 38,50 € ✓", b1pct:60,
+      b2:"4 ud · 46,00 € (real)", b2pct:40,
+      result:"Coste medio real: 41,50 €/ud"
+    },
+    stock:3, sval:122.34, cm:40.78, cmReal:41.5, cmDef:false, consumo:285.46, consumoReal:290.5, adj:7.2,
+    alert:{type:"warn", title:"El coste medio real es 41,50 €/ud, no 40,78 €",
+      body:"Con la factura real, el coste medio del período sube de 40,78 € a 41,50 €/ud. Las 7 unidades consumidas en enero deberían haberse valorado a 290,50 €, no a 285,46 €. La diferencia es 5,04 €."}
+  },
+  {
+    date:"5 febrero", period:"feb", label:"Adjust Cost", pSt:"danger", cSt:"danger",
+    title:"Adjust Cost distribuye la corrección",
+    acciones:[
+      "BC recalcula el coste medio real del período: 41,50 €/ud.",
+      "Corrige el coste de la salida de enero: de 285,46 € a 290,50 €.",
+      "El ajuste de 5,04 € aparece en el informe de febrero, no en el de enero."
+    ],
+    hi:[2],
+    bcRows:[
+      ["Coste medio definitivo","ok","41,50 €/ud"],
+      ["Coste de la salida definitivo","ok","290,50 €  (7 × 41,50 €)  —  DEFINITIVO"],
+      ["Ajuste aplicado en febrero","warn","+5,04 €  (sin consumo asociado en febrero)"],
+      ["Valor del stock corregido","ok","124,50 €  (3 × 41,50 €)"],
+    ],
+    bcCaption:"El dato final es correcto, pero el ajuste de 5,04 € aparece en febrero como un gasto de consumo de materiales sin ninguna retirada de almacén visible. Los informes de consumo de febrero están distorsionados.",
+    avgViz:null,
+    stock:3, sval:124.5, cm:41.5, cmReal:41.5, cmDef:true, consumo:290.5, consumoReal:290.5, adj:0,
+    alert:{type:"danger", title:"El ajuste de 5,04 € aparece en febrero sin consumo asociado",
+      body:"Enero: coste de salida aparente 285,46 € (incorrecto). Febrero: corrección de +5,04 € sin ninguna retirada de almacén. El informe de consumo de materiales de febrero muestra un gasto que no corresponde a ninguna operación de ese mes."}
+  },
+  {
+    date:"28 febrero", period:"feb", label:"Cierre febrero", pSt:"ok", cSt:"ok",
+    title:"Cierre de febrero — operación definitivamente cerrada",
+    acciones:[
+      "IP cierra febrero.",
+      "El coste de consumo del Cutol queda definitivamente registrado.",
+      "Para ver el dato real hay que consolidar los dos meses."
+    ],
+    hi:[2],
+    bcRows:[
+      ["Coste de la salida definitivo","ok","290,50 €"],
+      ["Coste medio definitivo","ok","41,50 €/ud"],
+      ["Stock a cierre","ok","3 ud  ·  124,50 €"],
+      ["Distribuido en","warn","Enero (consumo) + Febrero (ajuste)"],
+    ],
+    bcCaption:"El dato es correcto. Pero requiere mirar dos meses distintos para ver el coste de consumo completo y el stock valorado correctamente.",
+    avgViz:null,
+    stock:3, sval:124.5, cm:41.5, cmReal:41.5, cmDef:true, consumo:290.5, consumoReal:290.5, adj:0,
+    alert:{type:"info", title:"Coste real: 290,50 € — requiere vista de dos meses",
+      body:"El flujo deseable habría dado el mismo resultado, pero con los informes de consumo de enero correctos desde el primer día y sin ajustes que distorsionen los datos de febrero."}
+  }
+];
+
+let cur = 0;
+
+function fmt(n){
+  if(!n||n===0) return '—';
+  return n.toFixed(2).replace('.',',') + ' €';
+}
+
+function avgVizHTML(v){
+  if(!v) return '';
+  const cls = v.warn ? 'avg-result-warn' : 'avg-result-ok';
+  const b2cls = v.warn ? 'avg-b-prov' : 'avg-b2';
+  return `
+    <div class="avg-viz">
+      <div class="avg-viz-title">Cómo calcula BC el coste medio</div>
+      <div class="avg-bars">
+        <div class="avg-b1" style="flex:${v.b1pct};">${v.b1}</div>
+        <div class="${b2cls}" style="flex:${v.b2pct};">${v.b2}</div>
+      </div>
+      <div class="avg-arrow">⇩ se mezclan</div>
+      <div class="${cls}">${v.result}</div>
+    </div>`;
+}
+
+function render(){
+  const s = S[cur];
+  const inFeb = s.period==='feb';
+
+  document.getElementById('pb-jan').className = 'pb-month ' + (inFeb?'pb-jan':'pb-active-jan');
+  document.getElementById('pb-feb').className = 'pb-month ' + (inFeb?'pb-active-feb':'pb-feb');
+
+  document.getElementById('pills').innerHTML = S.map((x,i)=>{
+    let c='pill';
+    if(i===cur) c='pill active';
+    else if(i<cur) c = x.pSt==='ok'?'pill done-ok': x.pSt==='warn'?'pill done-warn':'pill done-danger';
+    return `<button class="${c}" onclick="go(${i})">${i+1}. ${x.label}</button>`;
+  }).join('');
+
+  const bcRows = s.bcRows.map(([l,t,v])=>{
+    const vc={ok:'bc-val-ok',warn:'bc-val-warn',mute:'bc-val-mute',norm:'bc-val'}[t];
+    return `<div class="bc-row"><span class="bc-lbl">${l}</span><span class="${vc}">${v}</span></div>`;
+  }).join('');
+
+  const acList = s.acciones.map((a,i)=>`<li class="${s.hi.includes(i)?'hi':''}">${a}</li>`).join('');
+
+  let ahtml='';
+  if(s.alert){
+    const ac={ok:'al-ok',warn:'al-warn',danger:'al-danger',info:'al-info'}[s.alert.type];
+    ahtml=`<div class="alert ${ac}"><div class="al-t">${s.alert.title}</div>${s.alert.body}</div>`;
+  }
+
+  const cc={ok:'card-ok',warn:'card-warn',danger:'card-danger'}[s.cSt];
+  document.getElementById('main-card').className=`card ${cc}`;
+  document.getElementById('main-card').innerHTML=`
+    <div class="step-meta">${inFeb?'Febrero':'Enero'} 2026 · ${s.date}</div>
+    <div class="step-title">${s.title}</div>
+    <div class="two">
+      <div>
+        <div class="col-h">Qué hace IP</div>
+        <ul class="action-list">${acList}</ul>
+        ${avgVizHTML(s.avgViz)}
+      </div>
+      <div>
+        <div class="col-h">Qué ve BC</div>
+        <div class="bc-box">${bcRows}</div>
+        <p class="bc-caption">${s.bcCaption}</p>
+      </div>
+    </div>
+    ${ahtml}
+  `;
+
+  const cmColor  = s.cmDef?'dv-ok': s.cm>0?'dv-warn':'dv-zero';
+  const cvColor  = s.consumoReal>0?(s.cmDef?'dv-ok':'dv-warn'):'dv-zero';
+  const adjColor = s.adj>0?'dv-danger':'dv-zero';
+
+  document.getElementById('dash').innerHTML=`
+    <div class="dc">
+      <div class="dl">Unidades en stock</div>
+      <div class="dv ${s.stock>0?'dv-ok':'dv-zero'}">${s.stock>0?s.stock+' ud':'—'}</div>
+      <div class="ds">${s.sval>0?fmt(s.sval):'—'}</div>
+    </div>
+    <div class="dc">
+      <div class="dl">Coste medio</div>
+      <div class="dv ${cmColor}">${s.cmReal>0?s.cmReal.toFixed(2).replace('.',',')+' €/ud':'—'}</div>
+      <div class="ds">${s.cmReal>0?(s.cmDef?'Definitivo':'Provisional'):'—'}</div>
+    </div>
+    <div class="dc">
+      <div class="dl">Coste de la salida</div>
+      <div class="dv ${cvColor}">${s.consumoReal>0?fmt(s.consumoReal):'—'}</div>
+      <div class="ds">${s.consumoReal>0?(s.cmDef?'Definitivo':'Provisional'):'—'}</div>
+    </div>
+    <div class="dc">
+      <div class="dl">Ajuste pendiente</div>
+      <div class="dv ${adjColor}">${s.adj>0?fmt(s.adj):'—'}</div>
+      <div class="ds">${s.adj>0?'Por repartir entre salidas':'Sin diferencias'}</div>
+    </div>
+  `;
+
+  document.getElementById('ncnt').textContent=`Paso ${cur+1} de ${S.length}`;
+  document.getElementById('btn-prev').disabled=cur===0;
+  document.getElementById('btn-next').disabled=cur===S.length-1;
+}
+
+function go(i){ if(i>=0&&i<S.length){cur=i;render();} }
+render();
+</script>
+</body>
+</html>

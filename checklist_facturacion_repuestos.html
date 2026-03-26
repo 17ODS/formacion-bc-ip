@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist de facturación · Repuestos · I.P. Ingeniería de Producción</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f0eeea;color:#1a1a18;padding:24px 16px;min-height:100vh;}
+.container{max-width:860px;margin:0 auto;}
+
+.hdr-tag{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#8a8880;margin-bottom:4px;}
+h1{font-size:20px;font-weight:700;margin-bottom:3px;}
+.hdr-sub{font-size:12px;color:#6b6a65;margin-bottom:22px;line-height:1.6;}
+
+/* Main tabs */
+.tabs{display:flex;gap:0;border-bottom:2px solid #dddbd4;margin-bottom:22px;flex-wrap:wrap;}
+.tab{padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;border:none;background:transparent;color:#8a8880;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;white-space:nowrap;}
+.tab:hover{color:#1a1a18;}
+.tab.t1.on{color:#185FA5;border-bottom-color:#185FA5;}
+.tab.t2.on{color:#3B6D11;border-bottom-color:#1D9E75;}
+.tab.t3.on{color:#854F0B;border-bottom-color:#BA7517;}
+.tab.t4.on{color:#A32D2D;border-bottom-color:#A32D2D;}
+
+.panel{display:none;}.panel.show{display:block;}
+
+/* Section title */
+.sec-title{font-size:17px;font-weight:700;color:#1a1a18;margin-bottom:4px;}
+.sec-intro{font-size:13px;color:#6b6a65;line-height:1.65;margin-bottom:20px;}
+
+/* Case cards */
+.cases{display:flex;flex-direction:column;gap:12px;margin-bottom:20px;}
+.case{background:#fff;border-radius:12px;border:1px solid #dddbd4;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);}
+.case-header{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;user-select:none;}
+.case-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.dot-ok   {background:#1D9E75;}
+.dot-warn {background:#BA7517;}
+.dot-info {background:#185FA5;}
+.dot-red  {background:#A32D2D;}
+.case-label{font-size:13px;font-weight:700;flex:1;}
+.case-arrow{font-size:12px;color:#9c9a92;transition:transform .2s;}
+.case-arrow.open{transform:rotate(90deg);}
+.case-body{display:none;padding:0 16px 14px;border-top:1px solid #eeece6;}
+.case-body.open{display:block;}
+
+/* Inside case body */
+.cb-intro{font-size:13px;color:#1a1a18;line-height:1.65;margin:12px 0 10px;}
+.check-list{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.check-list li{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;line-height:1.6;color:#1a1a18;}
+.check-list li .ck{font-size:13px;margin-top:1px;flex-shrink:0;}
+.ck-ok  {color:#1D9E75;}
+.ck-step{color:#185FA5;}
+
+/* BC path */
+.bc-path{background:#f5f4f0;border-radius:8px;padding:9px 13px;font-size:12px;color:#6b6a65;line-height:1.6;margin-bottom:10px;}
+.bc-path strong{color:#1a1a18;}
+.bc-path .arrow{color:#9c9a92;margin:0 4px;}
+
+/* Error row */
+.err-block{margin-top:4px;}
+.err-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#9c9a92;margin-bottom:6px;}
+.err-row{display:flex;gap:0;border-radius:8px;overflow:hidden;margin-bottom:5px;font-size:11.5px;}
+.err-cause{background:#FCEBEB;color:#501313;padding:7px 10px;flex:2;font-weight:600;}
+.err-effect{background:#FFF0E8;color:#633806;padding:7px 10px;flex:3;}
+
+/* Dimension grid */
+.dim-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:14px;}
+@media(max-width:560px){.dim-grid{grid-template-columns:1fr;}}
+.dim-card{background:#fff;border-radius:10px;border:1px solid #dddbd4;padding:12px 14px;}
+.dim-card-title{font-size:12px;font-weight:700;margin-bottom:6px;}
+.dim-card p{font-size:12px;color:#6b6a65;line-height:1.6;}
+
+/* Semaphore check widget */
+.sema-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.sema-item{display:flex;align-items:flex-start;gap:10px;background:#fff;border-radius:10px;border:1px solid #dddbd4;padding:11px 14px;}
+.sema-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:1px;}
+.si-ok  {background:#EAF3DE;}
+.si-warn{background:#FAEEDA;}
+.si-red {background:#FCEBEB;}
+.sema-content{}
+.sema-q{font-size:13px;font-weight:700;color:#1a1a18;margin-bottom:2px;}
+.sema-a{font-size:12px;color:#6b6a65;line-height:1.6;}
+
+/* Timeline for dates */
+.timeline{position:relative;padding-left:20px;margin-bottom:16px;}
+.timeline::before{content:'';position:absolute;left:5px;top:6px;bottom:6px;width:2px;background:#dddbd4;}
+.tl-item{position:relative;margin-bottom:14px;}
+.tl-dot{position:absolute;left:-18px;top:3px;width:10px;height:10px;border-radius:50%;border:2px solid #dddbd4;background:#fff;}
+.tl-dot.ok  {border-color:#1D9E75;background:#EAF3DE;}
+.tl-dot.warn{border-color:#BA7517;background:#FAEEDA;}
+.tl-dot.red {border-color:#A32D2D;background:#FCEBEB;}
+.tl-label{font-size:12px;font-weight:700;color:#1a1a18;margin-bottom:2px;}
+.tl-desc{font-size:12px;color:#6b6a65;line-height:1.6;}
+
+/* Two-step widget */
+.two-step{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:14px;}
+@media(max-width:560px){.two-step{grid-template-columns:1fr;}}
+.step-box{border-radius:10px;padding:14px 16px;}
+.sb-venta{background:#EAF3DE;border:1px solid #1D9E75;}
+.sb-compra{background:#E6F1FB;border:1px solid #185FA5;}
+.sb-num{font-size:22px;font-weight:700;margin-bottom:4px;}
+.sb-venta .sb-num{color:#0F6E56;}
+.sb-compra .sb-num{color:#0C447C;}
+.sb-title{font-size:12px;font-weight:700;margin-bottom:8px;}
+.sb-venta .sb-title{color:#085041;}
+.sb-compra .sb-title{color:#042C53;}
+.sb-steps{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.sb-steps li{font-size:12px;line-height:1.6;display:flex;gap:6px;align-items:flex-start;}
+.sb-steps li .n{font-weight:700;flex-shrink:0;}
+.sb-venta .sb-steps li{color:#085041;}
+.sb-compra .sb-steps li{color:#042C53;}
+
+/* Alert */
+.alert{border-radius:8px;padding:10px 13px;margin-bottom:12px;font-size:12.5px;line-height:1.6;}
+.al-t{font-weight:700;margin-bottom:2px;}
+.al-ok    {background:#EAF3DE;border:1px solid #3B6D11;color:#27500A;}
+.al-warn  {background:#FAEEDA;border:1px solid #854F0B;color:#633806;}
+.al-danger{background:#FCEBEB;border:1px solid #A32D2D;color:#501313;}
+.al-info  {background:#E6F1FB;border:1px solid #185FA5;color:#0C447C;}
+
+/* Divider */
+.divider{height:1px;background:#eeece6;margin:16px 0;}
+
+/* Table */
+.t-wrap{overflow-x:auto;margin-bottom:14px;}
+table.t{width:100%;border-collapse:collapse;font-size:12px;}
+table.t th{background:#f5f4f0;font-weight:700;padding:8px 10px;text-align:left;border-bottom:2px solid #dddbd4;}
+table.t td{padding:8px 10px;border-bottom:1px solid #eeece6;vertical-align:top;line-height:1.55;}
+table.t tr:last-child td{border-bottom:none;}
+table.t .td-red{color:#501313;font-weight:600;}
+table.t .td-warn{color:#633806;}
+
+/* Sub-tabs ventas/compras */
+.stab{padding:7px 14px;font-size:12px;font-weight:700;border-radius:8px;border:1px solid #c8c6be;background:#f5f4f0;color:#6b6a65;cursor:pointer;transition:all .12s;}
+.stab:hover{color:#1a1a18;border-color:#8a8880;}
+.stab.stab-on{background:#1a1a18;color:#fff;border-color:#1a1a18;}
+.spanel{display:none;}.spanel.show{display:block;}
+
+footer{text-align:center;margin-top:24px;font-size:11px;color:#9c9a92;}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hdr-tag">Business Central · Sesión S2 · Repuestos</div>
+  <h1>Antes de facturar, comprueba estas cuatro cosas</h1>
+  <div class="hdr-sub">Cuatro preguntas que hay que poder responder con seguridad antes de lanzar cualquier factura desde Repuestos.<br>Si alguna no está clara, es mejor pararse un momento antes que corregir después.</div>
+
+  <div class="tabs">
+    <button class="tab t1 on" onclick="switchTab(0)">💶 IVA</button>
+    <button class="tab t2"    onclick="switchTab(1)">🏷 Dimensiones</button>
+    <button class="tab t3"    onclick="switchTab(2)">📅 Fechas</button>
+    <button class="tab t4"    onclick="switchTab(3)">🔺 Operaciones triangulares</button>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════ TAB 1: IVA -->
+  <div class="panel show" id="p0">
+    <div class="sec-title">¿Qué IVA aplica en esta operación?</div>
+    <div class="sec-intro">El equipo de Repuestos gestiona los dos lados: crea el pedido de compra y el de venta. En ambos hay decisiones de IVA. Identifica primero si estás en una venta o en una compra, y luego el caso concreto.</div>
+
+    <!-- Sub-tabs ventas / compras -->
+    <div style="display:flex;gap:8px;margin-bottom:16px;">
+      <button id="st0" class="stab stab-on" onclick="switchSub(0)">📤 Ventas — IP factura al cliente</button>
+      <button id="st1" class="stab" onclick="switchSub(1)">📥 Compras — IP recibe factura del proveedor</button>
+    </div>
+
+    <div id="sp0" class="spanel show"><!-- VENTAS -->
+
+    <div class="cases">
+
+      <!-- CASO 1: España -->
+      <div class="case">
+        <div class="case-header" onclick="toggleCase(this)">
+          <div class="case-dot dot-ok"></div>
+          <div class="case-label">Venta en España — cliente peninsular o Baleares</div>
+          <div class="case-arrow">›</div>
+        </div>
+        <div class="case-body">
+          <p class="cb-intro">El caso más habitual. El cliente está en España (Península o Baleares), tiene NIF español y la factura lleva IVA al 21%.</p>
+          <div class="err-title">Qué comprobar en BC</div>
+          <div class="bc-path">Ficha del cliente <span class="arrow">→</span> <strong>Grupo contable negocio IVA</strong> = <strong>NACIONAL</strong></div>
+          <div class="bc-path">Línea del pedido <span class="arrow">→</span> <strong>Grupo contable producto IVA</strong> = <strong>IVA21</strong> para repuestos físicos</div>
+          <ul class="check-list">
+            <li><span class="ck ck-ok">✓</span> La factura muestra IVA al 21%</li>
+            <li><span class="ck ck-ok">✓</span> Base imponible + 21% = total de la factura</li>
+          </ul>
+          <div class="err-block">
+            <div class="err-title">Errores frecuentes</div>
+            <div class="err-row"><div class="err-cause">IVA al 0% en un cliente nacional</div><div class="err-effect">Factura incorrecta. Anular y rehacer. Afecta a la declaración de IVA del mes.</div></div>
+            <div class="err-row"><div class="err-cause">Artículo configurado como servicio en lugar de bien físico</div><div class="err-effect">BC puede aplicar un tipo distinto. Revisar el grupo contable producto en la línea del pedido.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CASO 2: Canarias -->
+      <div class="case">
+        <div class="case-header" onclick="toggleCase(this)">
+          <div class="case-dot dot-warn"></div>
+          <div class="case-label">Canarias — depende de dónde se entrega la mercancía</div>
+          <div class="case-arrow">›</div>
+        </div>
+        <div class="case-body">
+          <p class="cb-intro">Canarias está fuera del territorio IVA peninsular aunque sea España. El tratamiento depende de dónde se entrega físicamente la mercancía, no de dónde está el cliente.</p>
+
+          <div class="err-title" style="margin-bottom:8px;">Opción A — La mercancía se entrega en Canarias</div>
+          <div class="bc-path">La entrega física se produce en Canarias <span class="arrow">→</span> es una <strong>exportación</strong> a efectos de IVA peninsular <span class="arrow">→</span> <strong>IVA = 0%</strong> (exenta)</div>
+          <ul class="check-list">
+            <li><span class="ck ck-ok">✓</span> Factura sin IVA peninsular (base imponible = total)</li>
+            <li><span class="ck ck-ok">✓</span> El cliente pagará IGIC en Canarias (impuesto canario), pero eso lo gestiona el cliente, no IP</li>
+            <li><span class="ck ck-step">→</span> En BC: Grupo contable negocio IVA del cliente = <strong>EXPORT</strong> o equivalente configurado por GDE</li>
+          </ul>
+
+          <div class="err-title" style="margin-bottom:8px;margin-top:10px;">Opción B — El cliente es canario pero recoge o recibe en Península</div>
+          <div class="bc-path">La entrega física se produce en España peninsular <span class="arrow">→</span> aplica <strong>IVA peninsular al 21%</strong> con normalidad</div>
+          <ul class="check-list">
+            <li><span class="ck ck-ok">✓</span> Factura con IVA al 21% aunque el cliente tenga NIF canario</li>
+            <li><span class="ck ck-step">→</span> El criterio es el lugar de entrega, no el domicilio fiscal del cliente</li>
+          </ul>
+
+          <div class="err-block" style="margin-top:10px;">
+            <div class="err-title">Errores frecuentes</div>
+            <div class="err-row"><div class="err-cause">Aplicar 0% porque el cliente tiene NIF canario, sin verificar dónde se entrega</div><div class="err-effect">Si la mercancía se entrega en Península, la factura debe llevar IVA al 21%. Factura incorrecta.</div></div>
+            <div class="err-row"><div class="err-cause">Aplicar 21% cuando la entrega es en Canarias</div><div class="err-effect">Factura con IVA incorrecto. El cliente no puede deducir IVA peninsular en Canarias.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CASO 3: Intracomunitaria -->
+      <div class="case">
+        <div class="case-header" onclick="toggleCase(this)">
+          <div class="case-dot dot-info"></div>
+          <div class="case-label">Operación intracomunitaria — cliente en la UE con NIF válido</div>
+          <div class="case-arrow">›</div>
+        </div>
+        <div class="case-body">
+          <p class="cb-intro">Cliente en Portugal, Alemania, Francia u otro país de la UE. Si tiene NIF intracomunitario válido (verificado en el censo VIES), la factura va a 0% exenta y se declara en el modelo 349. Si no tiene NIF válido, se factura con IVA español al 21%.</p>
+          <div class="err-title">Qué comprobar en BC</div>
+          <div class="bc-path">Ficha del cliente <span class="arrow">→</span> <strong>NIF</strong>: debe incluir el prefijo del país (PT, DE, FR, IT…)</div>
+          <div class="bc-path">Ficha del cliente <span class="arrow">→</span> <strong>Grupo contable negocio IVA</strong> = <strong>UE</strong></div>
+          <div class="bc-path">BC aplica IVA = 0% automáticamente si la configuración es correcta</div>
+          <ul class="check-list">
+            <li><span class="ck ck-ok">✓</span> NIF registrado con prefijo de país correcto</li>
+            <li><span class="ck ck-ok">✓</span> La factura no lleva IVA (base imponible = total)</li>
+            <li><span class="ck ck-step">→</span> Si hay duda sobre la validez del NIF, consultar con Administración antes de facturar</li>
+          </ul>
+          <div class="err-block">
+            <div class="err-title">Errores frecuentes</div>
+            <div class="err-row"><div class="err-cause">NIF intracomunitario no validado o incorrecto en BC</div><div class="err-effect">BC aplica IVA español al 21%. Factura incorrecta y error en el modelo 349.</div></div>
+            <div class="err-row"><div class="err-cause">Grupo contable del cliente en NACIONAL en vez de UE</div><div class="err-effect">La factura lleva IVA al 21% aunque el cliente sea europeo. La operación no queda reflejada en el 349.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CASO 4: Exportación fuera UE -->
+      <div class="case">
+        <div class="case-header" onclick="toggleCase(this)">
+          <div class="case-dot dot-warn"></div>
+          <div class="case-label">Exportación — cliente fuera de la UE</div>
+          <div class="case-arrow">›</div>
+        </div>
+        <div class="case-body">
+          <p class="cb-intro">Cliente en un país fuera de la Unión Europea (EE.UU., Marruecos, México, Suiza, Reino Unido…). La exportación está exenta de IVA en origen. La factura sale a 0%, pero la exención se justifica con el documento de exportación aduanero (DUA), no con un NIF intracomunitario.</p>
+          <div class="err-title">Qué comprobar en BC</div>
+          <div class="bc-path">Ficha del cliente <span class="arrow">→</span> <strong>Grupo contable negocio IVA</strong> = <strong>EXPORT</strong> o equivalente configurado</div>
+          <div class="bc-path">La factura sale a 0%, pero es una exención distinta a la intracomunitaria: requiere documentación aduanera</div>
+          <ul class="check-list">
+            <li><span class="ck ck-ok">✓</span> Factura sin IVA (base imponible = total)</li>
+            <li><span class="ck ck-step">→</span> El DUA de exportación debe estar disponible para justificar la exención ante Hacienda</li>
+            <li><span class="ck ck-step">→</span> Si hay duda sobre la clasificación del país, consultar con Administración</li>
+          </ul>
+          <div class="err-block">
+            <div class="err-title">Errores frecuentes</div>
+            <div class="err-row"><div class="err-cause">Configurar al cliente como UE cuando es de un tercer país</div><div class="err-effect">La operación se declara incorrectamente en el 349. La exención es la misma pero la justificación legal es diferente.</div></div>
+            <div class="err-row"><div class="err-cause">No tener el DUA de exportación</div><div class="err-effect">En caso de inspección, la exención de IVA no está documentada aunque la factura sea correcta.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CASO 5: Importación -->
+      <div class="case">
+        <div class="case-header" onclick="toggleCase(this)">
+          <div class="case-dot dot-warn"></div>
+          <div class="case-label">Importación — compra a proveedor fuera de la UE</div>
+          <div class="case-arrow">›</div>
+        </div>
+        <div class="case-body">
+          <p class="cb-intro">Compra a un proveedor ubicado fuera de la Unión Europea. El IVA no lo factura el proveedor: lo liquida la aduana en el momento de la entrada en España. IP lo paga en aduana (o lo difiere si tiene autorización de IVA a la importación diferido) y luego lo deduce.</p>
+          <div class="err-title">Qué ocurre en BC</div>
+          <div class="bc-path">Factura del proveedor extranjero <span class="arrow">→</span> sin IVA (el proveedor no lo aplica)</div>
+          <div class="bc-path">En aduana <span class="arrow">→</span> se liquida el IVA sobre el valor aduanero (precio + flete + seguro)</div>
+          <div class="bc-path">BC <span class="arrow">→</span> la factura de compra se registra sin IVA; el IVA de importación lo registra Administración por separado</div>
+          <ul class="check-list">
+            <li><span class="ck ck-step">→</span> En Repuestos: si el proveedor es de fuera de la UE, avisar a Administración para coordinar el registro del DUA</li>
+            <li><span class="ck ck-step">→</span> El coste real del artículo incluye el IVA de importación más los aranceles: tenerlo en cuenta en el margen</li>
+          </ul>
+          <div class="err-block">
+            <div class="err-title">Errores frecuentes</div>
+            <div class="err-row"><div class="err-cause">Registrar la factura del proveedor extranjero con IVA</div><div class="err-effect">Duplicidad: el IVA ya se paga en aduana. El artículo queda con un coste inflado y la contabilidad descuadra.</div></div>
+            <div class="err-row"><div class="err-cause">No comunicar a Administración que hay un DUA pendiente</div><div class="err-effect">El IVA de importación no se deduce a tiempo y puede perderse el derecho a deducción en ese período.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CASO 6: Triangular -->
+      <div class="case">
+        <div class="case-header" onclick="toggleCase(this)">
+          <div class="case-dot dot-red"></div>
+          <div class="case-label">Operación triangular — mercancía directa del proveedor al cliente</div>
+          <div class="case-arrow">›</div>
+        </div>
+        <div class="case-body">
+          <p class="cb-intro">La mercancía va directamente del proveedor europeo al cliente final sin pasar por el almacén de IP. Tiene un tratamiento fiscal propio y requiere dos acciones concretas en BC. <strong>Ver la pestaña Operaciones triangulares</strong> para el procedimiento completo.</p>
+          <ul class="check-list">
+            <li><span class="ck ck-step">→</span> El proveedor está en Alemania u otro país UE</li>
+            <li><span class="ck ck-step">→</span> El cliente está en Portugal u otro país UE</li>
+            <li><span class="ck ck-step">→</span> La mercancía no entra en el almacén de IP en España</li>
+          </ul>
+          <div class="alert al-danger" style="margin-top:8px;">
+            <div class="al-t">Si se cumplen las tres condiciones, ir a la pestaña Operaciones triangulares</div>
+            Hay que marcar el checkbox en el pedido de venta Y cambiar el grupo IVA a NO SUJETO en cada línea del pedido de compra. Si no se hace, la declaración de IVA sale incorrecta.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="alert al-info">
+      <div class="al-t">Regla general: nunca cambiar el IVA a mano en una línea</div>
+      Si el IVA que calcula BC no parece el correcto, el problema está en la configuración del cliente o del artículo. Hay que corregirlo ahí, no sobreescribir el campo de IVA en la línea. Un cambio manual no queda bien reflejado en las declaraciones fiscales.
+    </div>
+    </div><!-- /sp0 ventas -->
+
+    <div id="sp1" class="spanel"><!-- COMPRAS -->
+      <div class="cases">
+
+        <!-- COMPRA 1: España -->
+        <div class="case">
+          <div class="case-header" onclick="toggleCase(this)">
+            <div class="case-dot dot-ok"></div>
+            <div class="case-label">Proveedor en España</div>
+            <div class="case-arrow">›</div>
+          </div>
+          <div class="case-body">
+            <p class="cb-intro">El proveedor está en España y factura con IVA al 21%. IP lo paga, lo registra en BC y lo deduce en la declaración trimestral. No hay ninguna particularidad.</p>
+            <div class="err-title">Qué comprobar en BC</div>
+            <div class="bc-path">Ficha del proveedor <span class="arrow">→</span> <strong>Grupo contable negocio IVA</strong> = <strong>NACIONAL</strong></div>
+            <div class="bc-path">Línea del pedido de compra <span class="arrow">→</span> <strong>Grupo contable producto IVA</strong> = <strong>IVA21</strong></div>
+            <ul class="check-list">
+              <li><span class="ck ck-ok">✓</span> La factura del proveedor lleva IVA al 21%</li>
+              <li><span class="ck ck-ok">✓</span> BC registra el IVA soportado y queda pendiente de deducción</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- COMPRA 2: UE adquisición intracomunitaria -->
+        <div class="case">
+          <div class="case-header" onclick="toggleCase(this)">
+            <div class="case-dot dot-info"></div>
+            <div class="case-label">Proveedor en la UE — adquisición intracomunitaria</div>
+            <div class="case-arrow">›</div>
+          </div>
+          <div class="case-body">
+            <p class="cb-intro">El proveedor está en Alemania, Holanda, Francia u otro país de la UE y factura <strong>sin IVA</strong>. Eso es correcto: no es un error ni un favor del proveedor. Es que IP tiene que autoliquidar el IVA: lo declara como IVA devengado y lo deduce en la misma declaración. El resultado neto es cero, pero hay que declararlo.</p>
+            <div class="err-title">Qué ocurre en BC</div>
+            <div class="bc-path">Ficha del proveedor <span class="arrow">→</span> <strong>Grupo contable negocio IVA</strong> = <strong>UE</strong></div>
+            <div class="bc-path">BC registra automáticamente el IVA de la adquisición intracomunitaria y lo refleja en el modelo 349 y en la declaración de IVA</div>
+            <ul class="check-list">
+              <li><span class="ck ck-ok">✓</span> La factura del proveedor llega sin IVA: es lo normal y correcto</li>
+              <li><span class="ck ck-ok">✓</span> BC calcula el IVA equivalente (21%) y lo registra como devengado y deducible a la vez</li>
+              <li><span class="ck ck-step">→</span> El NIF intracomunitario del proveedor debe estar registrado en BC con el prefijo de país (DE, NL…)</li>
+            </ul>
+            <div class="err-block">
+              <div class="err-title">Error más frecuente en Repuestos</div>
+              <div class="err-row"><div class="err-cause">Pensar que la factura sin IVA del proveedor europeo es un error</div><div class="err-effect">No lo es. El IVA lo autoliquida IP. Si se registra como si fuera un proveedor nacional, se duplica el IVA y la contabilidad descuadra.</div></div>
+              <div class="err-row"><div class="err-cause">Proveedor UE configurado como NACIONAL en BC</div><div class="err-effect">BC añade IVA donde no debe. La factura queda mal registrada y hay que corregir el asiento contable.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMPRA 3: Fuera UE importación -->
+        <div class="case">
+          <div class="case-header" onclick="toggleCase(this)">
+            <div class="case-dot dot-warn"></div>
+            <div class="case-label">Proveedor fuera de la UE — importación</div>
+            <div class="case-arrow">›</div>
+          </div>
+          <div class="case-body">
+            <p class="cb-intro">El proveedor está en un país fuera de la UE (EE.UU., Japón, China, Suiza, Reino Unido…). La factura llega sin IVA, igual que la intracomunitaria, pero aquí el IVA no lo autoliquida IP directamente: lo liquida la aduana en el momento de la entrada en España. IP lo paga en aduana y luego lo deduce.</p>
+            <div class="err-title">Qué ocurre en la práctica</div>
+            <div class="bc-path">Factura del proveedor <span class="arrow">→</span> sin IVA (correcto)</div>
+            <div class="bc-path">En aduana <span class="arrow">→</span> se liquida el IVA sobre el valor aduanero (precio + flete + seguro)</div>
+            <div class="bc-path">BC <span class="arrow">→</span> la factura de compra se registra sin IVA; el IVA de importación lo registra Administración con el DUA</div>
+            <ul class="check-list">
+              <li><span class="ck ck-step">→</span> Avisar a Administración cuando llegue mercancía de fuera de la UE para coordinar el registro del DUA</li>
+              <li><span class="ck ck-step">→</span> El coste real del artículo incluye el precio del proveedor más aranceles: tenerlo en cuenta al calcular el margen</li>
+            </ul>
+            <div class="err-block">
+              <div class="err-title">Errores frecuentes</div>
+              <div class="err-row"><div class="err-cause">Registrar la factura del proveedor extranjero con IVA</div><div class="err-effect">Duplicidad: el IVA ya se paga en aduana. El artículo queda con un coste inflado.</div></div>
+              <div class="err-row"><div class="err-cause">No avisar a Administración del DUA</div><div class="err-effect">El IVA de importación no se deduce a tiempo y puede perderse el derecho a deducción en ese período.</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMPRA 4: Triangular -->
+        <div class="case">
+          <div class="case-header" onclick="toggleCase(this)">
+            <div class="case-dot dot-red"></div>
+            <div class="case-label">Compra en operación triangular — proveedor UE, cliente en otro país UE</div>
+            <div class="case-arrow">›</div>
+          </div>
+          <div class="case-body">
+            <p class="cb-intro">Cuando la operación es triangular, el pedido de compra tiene una acción obligatoria adicional además de las comprobaciones habituales.</p>
+            <div class="err-title">Qué hay que hacer en el pedido de compra</div>
+            <div class="bc-path">Pedido de compra <span class="arrow">→</span> cada línea de artículo <span class="arrow">→</span> campo <strong>Grupo contable IVA prod.</strong> <span class="arrow">→</span> cambiar a <strong>NO SUJETO</strong></div>
+            <ul class="check-list">
+              <li><span class="ck ck-step">→</span> Repetir en todas las líneas del pedido, una a una</li>
+              <li><span class="ck ck-step">→</span> Hacerlo antes de registrar la factura de compra</li>
+            </ul>
+            <div class="alert al-danger" style="margin-top:8px;">
+              <div class="al-t">Ver procedimiento completo en la pestaña Operaciones triangulares</div>
+              El pedido de compra y el de venta deben tratarse juntos. Los dos pasos son obligatorios y deben hacerse antes de registrar cualquier documento.
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /cases compras -->
+
+      <div class="alert al-info">
+        <div class="al-t">La diferencia clave entre UE y fuera de UE en compras</div>
+        En ambos casos la factura del proveedor llega sin IVA. La diferencia es quién lo liquida: en adquisiciones intracomunitarias lo autoliquida IP en su declaración; en importaciones lo liquida la aduana y hay un DUA de por medio. Si hay duda sobre el origen del proveedor, consultar con Administración antes de registrar.
+      </div>
+    </div><!-- /sp1 compras -->
+
+  </div>
+
+  <!-- ══════════════════════════════════════════════ TAB 2: DIMENSIONES -->
+  <div class="panel" id="p1">
+    <div class="sec-title">¿Están las dimensiones en el pedido?</div>
+    <div class="sec-intro">Las dimensiones son las etiquetas que permiten saber a qué expediente, sede o área de negocio pertenece cada operación. Sin ellas, la factura existe en BC pero no aparece en los informes de seguimiento de Repuestos. El dinero está pero no se puede ver de dónde viene ni a dónde va.</div>
+
+    <div class="dim-grid">
+      <div class="dim-card">
+        <div class="dim-card-title" style="color:#0C447C;">¿Qué son?</div>
+        <p>Son campos adicionales en el pedido que "etiquetan" la operación. Los principales en Repuestos son el <strong>expediente</strong> y la <strong>sede o división</strong>.</p>
+      </div>
+      <div class="dim-card">
+        <div class="dim-card-title" style="color:#0F6E56;">¿Para qué sirven?</div>
+        <p>Permiten filtrar operaciones por expediente, ver el margen real de cada venta y que Administración pueda hacer el cierre mensual correctamente.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="err-title" style="margin-bottom:10px;">Comprueba estas tres cosas antes de lanzar la factura</div>
+
+    <div class="sema-list">
+      <div class="sema-item">
+        <div class="sema-icon si-ok">🏷</div>
+        <div class="sema-content">
+          <div class="sema-q">¿Está el código de expediente en la cabecera del pedido?</div>
+          <div class="sema-a">El expediente es el código que agrupa toda la operación (compra + venta). Si no está, BC no puede vincular la factura con el seguimiento del margen. <strong>Dónde mirarlo:</strong> cabecera del pedido de venta → campo Dimensiones o Expediente.</div>
+        </div>
+      </div>
+      <div class="sema-item">
+        <div class="sema-icon si-ok">🏢</div>
+        <div class="sema-content">
+          <div class="sema-q">¿Está la sede o división correcta?</div>
+          <div class="sema-a">Indica a qué área de negocio pertenece la operación. Si no está o está mal, los informes de rentabilidad por sede quedan distorsionados. <strong>Dónde mirarlo:</strong> cabecera del pedido → campo División o Departamento.</div>
+        </div>
+      </div>
+      <div class="sema-item">
+        <div class="sema-icon si-warn">⚠</div>
+        <div class="sema-content">
+          <div class="sema-q">¿Las dimensiones están también en el pedido de compra asociado?</div>
+          <div class="sema-a">El pedido de compra debe llevar el mismo expediente que el de venta. Si no, el coste y el ingreso quedan en "cajones" distintos y el margen del expediente no se puede calcular. Es el error más frecuente y el más difícil de corregir después.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="err-title" style="margin-bottom:8px;">Qué pasa si faltan las dimensiones</div>
+    <div class="t-wrap">
+      <table class="t">
+        <tr><th>Situación</th><th>Consecuencia visible</th></tr>
+        <tr><td class="td-red">Falta el expediente en la venta</td><td class="td-warn">La factura existe pero no aparece en el informe de seguimiento del expediente. El margen queda "perdido".</td></tr>
+        <tr><td class="td-red">Falta el expediente en la compra</td><td class="td-warn">El coste no se asocia al expediente. El margen calculado es incorrecto.</td></tr>
+        <tr><td class="td-red">Sede incorrecta</td><td class="td-warn">Los informes de rentabilidad por sede están mal. Difícil de detectar si no se revisa el cierre.</td></tr>
+        <tr><td>Dimensiones correctas en ambos pedidos</td><td style="color:#27500A;font-weight:600;">Trazabilidad completa. El informe de expediente muestra ingreso, coste y margen correctos.</td></tr>
+      </table>
+    </div>
+
+    <div class="alert al-warn">
+      <div class="al-t">Si una factura ya fue lanzada sin dimensiones</div>
+      No se puede añadir la dimensión después en la factura registrada. Hay que comunicarlo a Administración para que hagan el ajuste contable. Mejor revisar antes que corregir después.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════ TAB 3: FECHAS -->
+  <div class="panel" id="p2">
+    <div class="sec-title">¿Es correcta la fecha del documento?</div>
+    <div class="sec-intro">En BC hay varias fechas en un pedido. Solo una determina el período de IVA y el mes en el que cae la operación: la <strong>fecha del documento</strong>. Las otras son logísticas. Confundirlas es el origen de muchos descuadres al cierre del mes.</div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot ok"></div>
+        <div class="tl-label">Fecha del documento</div>
+        <div class="tl-desc">Es la fecha que aparece en la factura y la que BC usa para asignar la operación a un período fiscal. <strong>Determina en qué mes se declara el IVA.</strong> Tiene que coincidir con la fecha real de la operación. Si se pone una fecha de otro mes, la factura cae en ese otro mes aunque se haya registrado hoy.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot warn"></div>
+        <div class="tl-label">Fecha de registro</div>
+        <div class="tl-desc">Es la fecha en la que BC guarda el movimiento en el libro mayor. Normalmente coincide con la fecha del documento, pero si el período anterior ya está cerrado, BC puede desplazarla automáticamente al período actual. Esto puede generar diferencias entre la fecha de la factura y la fecha contable.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot ok"></div>
+        <div class="tl-label">Fecha de entrega prometida</div>
+        <div class="tl-desc">Es la fecha que se comunica al cliente como fecha de entrega. No tiene impacto contable ni fiscal. BC la usa para calcular disponibilidad y planificación. Se puede modificar libremente sin consecuencias en la factura.</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="err-title" style="margin-bottom:10px;">Situaciones que hay que vigilar</div>
+
+    <div class="sema-list">
+      <div class="sema-item">
+        <div class="sema-icon si-red">🔴</div>
+        <div class="sema-content">
+          <div class="sema-q">El período anterior ya está cerrado y la fecha del documento es del mes pasado</div>
+          <div class="sema-a">BC no permite registrar en un período cerrado. O cambia la fecha al mes actual o abre el período con Administración. <strong>Nunca cambiar la fecha del documento sin comunicarlo:</strong> si la factura tiene que ser del mes anterior, hay que coordinarlo con Administración antes de registrar.</div>
+        </div>
+      </div>
+      <div class="sema-item">
+        <div class="sema-icon si-warn">⚠</div>
+        <div class="sema-content">
+          <div class="sema-q">Se registra la factura a finales de mes pero el albarán es del mes anterior</div>
+          <div class="sema-a">Si la fecha del documento del albarán es de enero y la factura se registra en febrero, la factura puede caer en febrero aunque el albarán sea de enero. Hay que revisar que la fecha del documento de la factura es la correcta y está alineada con el mes que corresponde.</div>
+        </div>
+      </div>
+      <div class="sema-item">
+        <div class="sema-icon si-ok">✓</div>
+        <div class="sema-content">
+          <div class="sema-q">Flujo normal: albarán y factura en el mismo mes</div>
+          <div class="sema-a">Si el albarán y la factura se registran en el mismo mes y la fecha del documento es la del día, no hay ningún problema. BC asigna todo al mismo período y el cierre es limpio.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="err-title" style="margin-bottom:8px;">Resumen: qué hace cada fecha</div>
+    <div class="t-wrap">
+      <table class="t">
+        <tr><th>Fecha</th><th>Qué controla</th><th>Se puede cambiar</th></tr>
+        <tr><td style="font-weight:600;">Fecha del documento</td><td>Período fiscal y de IVA. Aparece en la factura impresa.</td><td class="td-warn">Con cuidado. Coordinar con Administración si es de otro mes.</td></tr>
+        <tr><td style="font-weight:600;">Fecha de registro</td><td>Fecha en el libro mayor. BC la gestiona automáticamente.</td><td class="td-warn">No tocar. BC la asigna según el período abierto.</td></tr>
+        <tr><td style="font-weight:600;">Fecha de entrega</td><td>Comunicación al cliente y planificación. Sin impacto fiscal.</td><td style="color:#27500A;font-weight:600;">Sí, libremente.</td></tr>
+      </table>
+    </div>
+
+    <div class="alert al-info">
+      <div class="al-t">La regla más fácil de recordar</div>
+      La fecha del documento es la fecha de la factura. Si la factura es de hoy, la fecha del documento es de hoy. Si tiene que ser de otro día, hay que saberlo antes de registrar y coordinarlo con Administración.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ TAB 4: TRIANGULARES -->
+  <div class="panel" id="p3">
+    <div class="sec-title">¿Es una operación triangular?</div>
+    <div class="sec-intro">Una operación triangular es cuando la mercancía va directamente del proveedor al cliente sin pasar por el almacén de IP. IP compra y vende, pero no toca la mercancía. En Repuestos ocurre principalmente con proveedores europeos (Kaltenbach Alemania u Holanda) y clientes en Portugal.</div>
+
+    <div class="alert al-danger" style="margin-top:0;">
+      <div class="al-t">¿Cuándo es triangular? Las tres condiciones</div>
+      Proveedor en un país de la UE + Cliente en otro país de la UE + La mercancía no entra en el almacén de IP en España. Si se cumplen las tres, es triangular y hay que seguir el procedimiento de esta pestaña.
+    </div>
+
+    <div class="divider"></div>
+    <div class="err-title" style="margin-bottom:12px;">El caso más habitual en Repuestos</div>
+
+    <div class="bc-path" style="font-size:13px;line-height:1.8;">
+      <strong>Kaltenbach Alemania / Holanda</strong>
+      <span class="arrow">→</span> envía la mercancía directamente
+      <span class="arrow">→</span> <strong>Cliente en Portugal</strong>
+      <br>
+      <span style="font-size:11px;color:#9c9a92;">IP gestiona la operación desde España pero la mercancía nunca entra en el almacén</span>
+    </div>
+    <div class="bc-path" style="font-size:13px;line-height:1.8;margin-top:6px;">
+      <strong>Caso MBE:</strong> Recoge en Holanda
+      <span class="arrow">→</span> tránsito por España (sin entrar en almacén IP)
+      <span class="arrow">→</span> entrega en Portugal
+      <br>
+      <span style="font-size:11px;color:#9c9a92;">Aunque MBE facture el transporte en dos tramos, la operación sigue siendo triangular</span>
+    </div>
+
+    <div class="divider"></div>
+    <div class="err-title" style="margin-bottom:12px;">Qué hay que hacer en BC — dos pasos obligatorios</div>
+
+    <div class="two-step">
+      <div class="step-box sb-venta">
+        <div class="sb-num">1</div>
+        <div class="sb-title">PEDIDO DE VENTA</div>
+        <ul class="sb-steps">
+          <li><span class="n">→</span> Abrir el pedido de venta</li>
+          <li><span class="n">→</span> Ir a la pestaña <strong>Detalles de factura</strong></li>
+          <li><span class="n">→</span> Marcar el campo <strong>Operación triangular</strong> (casilla de verificación)</li>
+          <li><span class="n">→</span> Hacerlo antes de registrar el albarán</li>
+        </ul>
+      </div>
+      <div class="step-box sb-compra">
+        <div class="sb-num">2</div>
+        <div class="sb-title">PEDIDO DE COMPRA</div>
+        <ul class="sb-steps">
+          <li><span class="n">→</span> Abrir el pedido de compra asociado</li>
+          <li><span class="n">→</span> Ir a cada línea del pedido</li>
+          <li><span class="n">→</span> Campo <strong>Grupo contable IVA prod.</strong></li>
+          <li><span class="n">→</span> Cambiar a <strong>NO SUJETO</strong> en cada línea</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="alert al-ok">
+      <div class="al-t">✓ Si los dos pasos están hechos</div>
+      Al registrar la factura de venta y la de compra, BC aplica el tratamiento fiscal correcto automáticamente. La declaración de IVA y el Intrastat salen bien.
+    </div>
+
+    <div class="divider"></div>
+    <div class="err-title" style="margin-bottom:8px;">Qué pasa si no se hace correctamente</div>
+    <div class="t-wrap">
+      <table class="t">
+        <tr><th>Error</th><th>Consecuencia</th></tr>
+        <tr>
+          <td class="td-red">No marcar "Operación triangular" en el pedido de venta</td>
+          <td class="td-warn">BC declara la operación como venta intracomunitaria ordinaria. Error en la declaración de IVA (mod. 349). Hay que rectificar la factura.</td>
+        </tr>
+        <tr>
+          <td class="td-red">No cambiar el grupo IVA a "NO SUJETO" en el pedido de compra</td>
+          <td class="td-warn">La factura de compra se contabiliza con IVA estándar. Descuadre contable y problema en el Intrastat.</td>
+        </tr>
+        <tr>
+          <td class="td-red">Hacer solo uno de los dos pasos</td>
+          <td class="td-warn">La operación queda a medias. La venta puede estar bien pero la compra mal, o al revés. Los dos pasos son obligatorios.</td>
+        </tr>
+        <tr>
+          <td class="td-red">Caso MBE: tratar los dos tramos de transporte como operaciones separadas</td>
+          <td class="td-warn">Aunque MBE facture en dos líneas (Holanda-España y España-Portugal), es una sola operación triangular. Se registra como tal desde el principio.</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="alert al-warn">
+      <div class="al-t">Antes de crear el pedido, identifica si es triangular</div>
+      El checkbox de "Operación triangular" y el cambio del grupo IVA deben hacerse antes de registrar ningún documento. Si ya se ha registrado el albarán sin marcar la casilla, hay que contactar con Administración para gestionar la rectificación.
+    </div>
+  </div>
+
+</div>
+
+<footer>Documento de formación interno · I.P. Ingeniería de Producción, S.L. · Natxo Hernández, consultor externo · Marzo 2026</footer>
+</div>
+
+<script>
+const TABS = ['t1','t2','t3','t4'];
+const LABELS = ['on t1','on t2','on t3','on t4'];
+
+function switchSub(i){
+  document.querySelectorAll('.stab').forEach((t,j)=>{
+    t.className = 'stab' + (i===j?' stab-on':'');
+  });
+  document.querySelectorAll('.spanel').forEach((p,j)=>{
+    p.className = 'spanel' + (i===j?' show':'');
+  });
+}
+
+function switchTab(i){
+  document.querySelectorAll('.tabs .tab').forEach((t,j)=>{
+    t.className = 'tab '+TABS[j] + (i===j?' on':'');
+  });
+  document.querySelectorAll('.panel').forEach((p,j)=>{
+    p.className = 'panel' + (i===j?' show':'');
+  });
+}
+
+function toggleCase(header){
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.case-arrow');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  arrow.classList.toggle('open', !isOpen);
+}
+</script>
+</body>
+</html>

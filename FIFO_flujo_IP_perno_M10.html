@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flujo IP · Perno M10×25 · BC</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f0eeea;color:#1a1a18;padding:24px 16px;min-height:100vh;}
+.container{max-width:820px;margin:0 auto;}
+
+.hdr-tag{font-size:10px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#8a8880;margin-bottom:4px;}
+h1{font-size:20px;font-weight:700;margin-bottom:2px;}
+.hdr-sub{font-size:12px;color:#6b6a65;margin-bottom:10px;}
+.hdr-badge{display:inline-block;background:#FAEEDA;color:#633806;border:1px solid #854F0B;border-radius:5px;font-size:10px;font-weight:700;padding:2px 8px;margin-left:6px;vertical-align:middle;}
+.hdr-art{font-size:12px;color:#6b6a65;margin-bottom:20px;padding:8px 12px;background:#fff;border-radius:8px;border:1px solid #dddbd4;display:inline-block;}
+.hdr-art span{margin-right:14px;}
+
+.pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:18px;}
+.pill{padding:5px 12px;border-radius:999px;font-size:11px;font-weight:700;border:1px solid #c8c6be;background:#f5f4f0;color:#6b6a65;cursor:pointer;transition:all .12s;white-space:nowrap;}
+.pill.done-ok    {background:#EAF3DE;color:#085041;border-color:#1D9E75;}
+.pill.done-warn  {background:#FAEEDA;color:#633806;border-color:#854F0B;}
+.pill.done-danger{background:#FCEBEB;color:#501313;border-color:#A32D2D;}
+.pill.active{background:#1a1a18;color:#fff;border-color:#1a1a18;}
+
+/* Period indicator */
+.period-bar{display:flex;gap:0;border-radius:8px;overflow:hidden;margin-bottom:14px;font-size:11px;font-weight:700;}
+.pb-month{flex:1;padding:6px 12px;text-align:center;}
+.pb-jan{background:#E6F1FB;color:#0C447C;}
+.pb-feb{background:#FAEEDA;color:#633806;}
+.pb-active-jan{background:#0C447C;color:#fff;}
+.pb-active-feb{background:#854F0B;color:#fff;}
+
+.card{background:#fff;border-radius:14px;border:1px solid #dddbd4;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+.card-ok    {border-top:3px solid #1D9E75;}
+.card-warn  {border-top:3px solid #BA7517;}
+.card-danger{border-top:3px solid #A32D2D;}
+
+.step-meta{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#8a8880;margin-bottom:4px;}
+.step-title{font-size:16px;font-weight:700;color:#1a1a18;margin-bottom:16px;}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;}
+@media(max-width:560px){.two{grid-template-columns:1fr;}}
+.col-h{font-size:10px;font-weight:700;color:#9c9a92;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+
+.action-list{list-style:none;}
+.action-list li{font-size:13px;color:#1a1a18;line-height:1.7;padding:3px 0;padding-left:14px;position:relative;}
+.action-list li::before{content:"·";position:absolute;left:0;color:#9c9a92;font-weight:700;}
+.action-list li.highlight{color:#854F0B;font-weight:600;}
+.action-list li.highlight::before{color:#854F0B;}
+
+.bc-box{background:#f5f4f0;border-radius:10px;padding:12px 14px;}
+.bc-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px solid #e8e6e0;font-size:12px;}
+.bc-row:last-child{border-bottom:none;}
+.bc-lbl{color:#6b6a65;flex:1;}
+.bc-val     {font-weight:700;color:#1a1a18;text-align:right;}
+.bc-val-ok  {font-weight:700;color:#0F6E56;text-align:right;}
+.bc-val-warn{font-weight:700;color:#854F0B;text-align:right;}
+.bc-val-mute{font-weight:400;color:#9c9a92;font-style:italic;text-align:right;}
+.bc-caption{font-size:11px;color:#6b6a65;margin-top:8px;line-height:1.6;}
+
+.dash{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:14px;}
+@media(max-width:480px){.dash{grid-template-columns:repeat(2,1fr);}}
+.dc{background:#f5f4f0;border-radius:8px;padding:9px 11px;}
+.dl{font-size:9px;font-weight:700;color:#9c9a92;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+.dv{font-size:15px;font-weight:700;}
+.ds{font-size:10px;color:#9c9a92;margin-top:2px;}
+.dv-ok    {color:#0F6E56;}
+.dv-warn  {color:#854F0B;}
+.dv-danger{color:#A32D2D;}
+.dv-zero  {color:#9c9a92;}
+
+.alert{border-radius:8px;padding:10px 13px;margin-top:13px;font-size:12.5px;line-height:1.6;}
+.al-t{font-weight:700;margin-bottom:2px;}
+.al-ok    {background:#EAF3DE;border:1px solid #3B6D11;color:#27500A;}
+.al-warn  {background:#FAEEDA;border:1px solid #854F0B;color:#633806;}
+.al-danger{background:#FCEBEB;border:1px solid #A32D2D;color:#501313;}
+.al-info  {background:#E6F1FB;border:1px solid #185FA5;color:#0C447C;}
+
+.navrow{display:flex;justify-content:space-between;align-items:center;}
+.nbtn{padding:8px 18px;font-size:13px;font-weight:600;border-radius:8px;border:1px solid #c8c6be;background:#f5f4f0;color:#1a1a18;cursor:pointer;}
+.nbtn:hover{background:#e8e6e0;}
+.nbtn:disabled{opacity:.3;cursor:not-allowed;}
+.nbtn.pri{background:#854F0B;color:#fff;border-color:#854F0B;}
+.nbtn.pri:hover{background:#633806;}
+.ncnt{font-size:12px;color:#9c9a92;}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hdr-tag">Business Central · Sesión S2 · Flujo real · Repuestos</div>
+  <h1>Flujo IP <span class="hdr-badge">⚠ Flujo habitual</span></h1>
+  <div class="hdr-sub">La factura del proveedor llega <strong>después</strong> de facturar al cliente. BC calcula el coste de venta con un precio provisional.</div>
+  <div class="hdr-art">
+    <span>🔩 <strong>Perno M10×25 DIN 912</strong></span>
+    <span>Compra: 60 ud × 0,55 €</span>
+    <span>Venta: 60 ud × 1,20 €</span>
+  </div>
+
+  <div class="period-bar" id="period-bar">
+    <div class="pb-month pb-jan" id="pb-jan">Enero 2026</div>
+    <div class="pb-month pb-feb" id="pb-feb">Febrero 2026</div>
+  </div>
+
+  <div class="pills" id="pills"></div>
+  <div class="card" id="main-card"></div>
+  <div class="dash" id="dash"></div>
+
+  <div class="navrow">
+    <button class="nbtn" id="btn-prev" onclick="go(cur-1)">← Anterior</button>
+    <span class="ncnt" id="ncnt"></span>
+    <button class="nbtn pri" id="btn-next" onclick="go(cur+1)">Siguiente →</button>
+  </div>
+</div>
+
+<script>
+const S = [
+  {
+    date:"10 enero", period:"jan", label:"Pedidos creados", pSt:"ok", cSt:"ok",
+    title:"Se crean el pedido de compra y el de venta",
+    acciones:[
+      "IP recibe el precio del proveedor.",
+      "Se crea el pedido de compra: 60 ud × 0,55 € = 33,00 €.",
+      "Se crea el pedido de venta: 60 ud × 1,20 € = 72,00 €.",
+      "La mercancía todavía no ha llegado al almacén."
+    ],
+    highAcciones:[],
+    bcRows:[
+      ["Unidades en stock","mute","Sin movimiento aún"],
+      ["Coste de venta","mute","Sin movimiento aún"],
+      ["Margen","mute","Sin movimiento aún"],
+    ],
+    bcCaption:"BC guarda los pedidos como documentos. No hay movimiento de stock ni de dinero todavía.",
+    stock:0, sval:0, cv:0, cvReal:0, cvDef:false, rev:0, adj:0,
+    alert:null
+  },
+  {
+    date:"14 enero", period:"jan", label:"Entra la mercancía", pSt:"ok", cSt:"ok",
+    title:"Recepción del pedido de compra",
+    acciones:[
+      "El proveedor entrega los 60 pernos en el almacén.",
+      "IP registra la recepción en BC.",
+      "BC apunta las 60 unidades en stock y les asigna el coste del pedido: 0,55 €/ud."
+    ],
+    highAcciones:[],
+    bcRows:[
+      ["Unidades en stock","ok","60 ud"],
+      ["Valor del stock","norm","33,00 €  (60 × 0,55 €)"],
+      ["Coste por unidad","warn","0,55 €/ud  —  provisional (precio del pedido)"],
+    ],
+    bcCaption:"BC crea una capa FIFO con las 60 unidades a 0,55 €. Este coste es provisional hasta que llegue la factura del proveedor.",
+    stock:60, sval:33, cv:0, cvReal:0, cvDef:false, rev:0, adj:0,
+    alert:null
+  },
+  {
+    date:"15 enero", period:"jan", label:"Venta al cliente", pSt:"warn", cSt:"warn",
+    title:"Se envía la mercancía y se factura al cliente",
+    acciones:[
+      "IP envía los 60 pernos y emite la factura al cliente.",
+      "BC descuenta las 60 unidades del stock y consume la capa FIFO.",
+      "BC calcula el coste de venta con el precio provisional del pedido: 0,55 €/ud."
+    ],
+    highAcciones:[2],
+    bcRows:[
+      ["Unidades en stock","mute","0 ud  (capa FIFO consumida)"],
+      ["Coste de venta","warn","33,00 €  —  PROVISIONAL (precio del pedido)"],
+      ["Ingreso de la venta","norm","72,00 €"],
+      ["Margen que ve BC","warn","39,00 €  (54,2%)  —  aún no es definitivo"],
+    ],
+    bcCaption:"La factura del proveedor no ha llegado. BC usa el precio del pedido como estimación. Si la factura llega con un precio diferente, el coste de venta y el margen cambiarán.",
+    stock:0, sval:0, cv:33, cvReal:33, cvDef:false, rev:72, adj:0,
+    alert:{type:"warn", title:"El margen que aparece en pantalla no es definitivo",
+      body:"BC muestra 39,00 € de margen (54,2%), pero está calculado con el precio del pedido de compra, no con el de la factura real. Este número puede cambiar cuando llegue la factura del proveedor."}
+  },
+  {
+    date:"31 enero", period:"jan", label:"Cierre de enero", pSt:"danger", cSt:"danger",
+    title:"Se cierra enero — la factura del proveedor sigue sin llegar",
+    acciones:[
+      "IP ejecuta el Adjust Cost al cerrar enero.",
+      "BC busca diferencias entre el coste estimado y el coste real.",
+      "No encuentra la factura del proveedor: no puede corregir nada."
+    ],
+    highAcciones:[2],
+    bcRows:[
+      ["Coste de venta en enero","warn","33,00 €  —  PROVISIONAL  (no corregible aún)"],
+      ["Margen en enero","warn","39,00 €  (54,2%)  —  no definitivo"],
+      ["Ajuste realizado por BC","mute","0,00 €  (falta la factura del proveedor)"],
+    ],
+    bcCaption:"Enero queda cerrado con datos provisionales. BC no puede hacer nada sin la factura del proveedor. Cualquier corrección aparecerá en febrero con fecha de febrero.",
+    stock:0, sval:0, cv:33, cvReal:33, cvDef:false, rev:72, adj:0,
+    alert:{type:"danger", title:"Enero queda cerrado con coste de venta provisional",
+      body:"Los informes de rentabilidad de enero muestran datos que aún no son reales. La corrección llegará en el próximo mes, mezclada con la actividad de febrero."}
+  },
+  {
+    date:"8 febrero", period:"feb", label:"Llega la factura", pSt:"warn", cSt:"warn",
+    title:"Llega y se registra la factura del proveedor",
+    acciones:[
+      "El proveedor envía la factura: 60 ud × 0,58 € = 34,80 €.",
+      "El precio es diferente al del pedido: incluye un cargo por porte no previsto.",
+      "IP registra la factura en BC."
+    ],
+    highAcciones:[1,2],
+    bcRows:[
+      ["Precio en el pedido de compra","norm","0,55 €/ud  →  33,00 € total"],
+      ["Precio en la factura real","warn","0,58 €/ud  →  34,80 € total"],
+      ["Diferencia detectada por BC","warn","1,80 €  —  pendiente de aplicar al coste de venta"],
+    ],
+    bcCaption:"BC detecta la diferencia de 1,80 € y la retiene hasta que Adjust Cost la reasigne al coste de venta de la operación de enero.",
+    stock:0, sval:0, cv:33, cvReal:34.8, cvDef:false, rev:72, adj:1.8,
+    alert:{type:"warn", title:"BC sabe que el coste real es 34,80 €, pero todavía no lo ha aplicado",
+      body:"La diferencia de 1,80 € está identificada. El siguiente paso (Adjust Cost) la llevará al coste de venta, pero como enero ya está cerrado, el ajuste aparecerá en febrero."}
+  },
+  {
+    date:"8 febrero", period:"feb", label:"Adjust Cost", pSt:"danger", cSt:"danger",
+    title:"Adjust Cost aplica la corrección",
+    acciones:[
+      "BC detecta la diferencia de 1,80 € entre pedido y factura.",
+      "Corrige el coste de venta de la operación de enero: de 33,00 € a 34,80 €.",
+      "Como enero ya está cerrado, la corrección aparece en el informe de febrero."
+    ],
+    highAcciones:[2],
+    bcRows:[
+      ["Coste de venta real","ok","34,80 €  —  DEFINITIVO"],
+      ["Ajuste aplicado en febrero","warn","+1,80 €  (sin venta asociada en febrero)"],
+      ["Margen real de la operación","ok","37,20 €  (51,7%)"],
+      ["Margen que apareció en enero","warn","39,00 €  (54,2%)  —  era incorrecto"],
+    ],
+    bcCaption:"El coste de venta definitivo es 34,80 €, no 33,00 €. La diferencia de 1,80 € aparece en febrero como un gasto sin una venta visible. Para saber el margen real hay que mirar enero y febrero juntos.",
+    stock:0, sval:0, cv:34.8, cvReal:34.8, cvDef:true, rev:72, adj:0,
+    alert:{type:"danger", title:"El ajuste de 1,80 € aparece en febrero sin venta asociada",
+      body:"Enero: margen aparente 39,00 € (54,2%). Febrero: corrección de −1,80 € sin ingreso visible. El informe mensual de febrero muestra un coste que no corresponde a ninguna operación de ese mes."}
+  },
+  {
+    date:"28 febrero", period:"feb", label:"Cierre febrero", pSt:"ok", cSt:"ok",
+    title:"Cierre de febrero — operación definitivamente cerrada",
+    acciones:[
+      "IP cierra febrero.",
+      "La operación del perno queda definitivamente registrada.",
+      "Para conocer el margen real hay que consolidar los dos meses."
+    ],
+    highAcciones:[2],
+    bcRows:[
+      ["Coste de venta definitivo","ok","34,80 €"],
+      ["Ingreso de la venta","norm","72,00 €"],
+      ["Margen real","ok","37,20 €  (51,7%)"],
+      ["Distribuido en","warn","Enero (venta) + Febrero (ajuste)"],
+    ],
+    bcCaption:"La operación está cerrada y el dato es correcto, pero requiere consultar dos meses distintos para ver el resultado completo.",
+    stock:0, sval:0, cv:34.8, cvReal:34.8, cvDef:true, rev:72, adj:0,
+    alert:{type:"info", title:"Margen real: 37,20 € (51,7%) — requiere vista de dos meses",
+      body:"El flujo deseable habría dado el mismo resultado final, pero con el margen correcto visible desde el primer día y sin correcciones en meses posteriores."}
+  }
+];
+
+let cur = 0;
+
+function fmt(n){
+  if(n===0||n===null) return '—';
+  return n.toFixed(2).replace('.',',') + ' €';
+}
+function pct(a,b){ return b>0?((a/b)*100).toFixed(1)+'%':'—'; }
+
+function render(){
+  const s = S[cur];
+  const margin = s.rev - s.cvReal;
+
+  // Period bar
+  const inFeb = s.period==='feb';
+  document.getElementById('pb-jan').className = 'pb-month ' + (inFeb ? 'pb-jan' : 'pb-active-jan');
+  document.getElementById('pb-feb').className = 'pb-month ' + (inFeb ? 'pb-active-feb' : 'pb-feb');
+
+  // Pills
+  document.getElementById('pills').innerHTML = S.map((x,i)=>{
+    let c = 'pill';
+    if(i===cur) c='pill active';
+    else if(i<cur){
+      c = x.pSt==='ok'?'pill done-ok': x.pSt==='warn'?'pill done-warn':'pill done-danger';
+    }
+    return `<button class="${c}" onclick="go(${i})">${i+1}. ${x.label}</button>`;
+  }).join('');
+
+  // BC box
+  const bcRows = s.bcRows.map(([l,t,v])=>{
+    const vc = t==='ok'?'bc-val-ok': t==='warn'?'bc-val-warn': t==='mute'?'bc-val-mute':'bc-val';
+    return `<div class="bc-row"><span class="bc-lbl">${l}</span><span class="${vc}">${v}</span></div>`;
+  }).join('');
+
+  // Actions
+  const acList = s.acciones.map((a,i)=>{
+    const hi = s.highAcciones.includes(i) ? ' highlight' : '';
+    return `<li class="${hi}">${a}</li>`;
+  }).join('');
+
+  // Alert
+  let ahtml = '';
+  if(s.alert){
+    const ac = {ok:'al-ok',warn:'al-warn',danger:'al-danger',info:'al-info'}[s.alert.type];
+    ahtml = `<div class="alert ${ac}"><div class="al-t">${s.alert.title}</div>${s.alert.body}</div>`;
+  }
+
+  // Card
+  const cc = {ok:'card-ok', warn:'card-warn', danger:'card-danger'}[s.cSt];
+  document.getElementById('main-card').className = `card ${cc}`;
+  document.getElementById('main-card').innerHTML = `
+    <div class="step-meta">${s.period==='feb'?'Febrero':'Enero'} 2026 · ${s.date}</div>
+    <div class="step-title">${s.title}</div>
+    <div class="two">
+      <div>
+        <div class="col-h">Qué hace IP</div>
+        <ul class="action-list">${acList}</ul>
+      </div>
+      <div>
+        <div class="col-h">Qué ve BC</div>
+        <div class="bc-box">${bcRows}</div>
+        <p class="bc-caption">${s.bcCaption}</p>
+      </div>
+    </div>
+    ${ahtml}
+  `;
+
+  // Dashboard
+  const cvColor = s.cvReal>0 ? (s.cvDef?'dv-ok':'dv-warn') : 'dv-zero';
+  const mColor  = s.rev>0 ? (s.cvDef?'dv-ok':'dv-warn') : 'dv-zero';
+  const adjColor= s.adj>0 ? 'dv-danger' : 'dv-zero';
+
+  document.getElementById('dash').innerHTML = `
+    <div class="dc">
+      <div class="dl">Unidades en stock</div>
+      <div class="dv ${s.stock>0?'dv-ok':'dv-zero'}">${s.stock>0?s.stock+' ud':'—'}</div>
+      <div class="ds">${s.sval>0?fmt(s.sval):'—'}</div>
+    </div>
+    <div class="dc">
+      <div class="dl">Coste de venta</div>
+      <div class="dv ${cvColor}">${s.cvReal>0?fmt(s.cvReal):'—'}</div>
+      <div class="ds">${s.cvReal>0?(s.cvDef?'Definitivo':'Provisional'):'—'}</div>
+    </div>
+    <div class="dc">
+      <div class="dl">Margen bruto</div>
+      <div class="dv ${mColor}">${s.rev>0?fmt(margin):'—'}</div>
+      <div class="ds">${s.rev>0?pct(margin,s.rev):''}</div>
+    </div>
+    <div class="dc">
+      <div class="dl">Ajuste pendiente</div>
+      <div class="dv ${adjColor}">${s.adj>0?fmt(s.adj):'—'}</div>
+      <div class="ds">${s.adj>0?'Por aplicar al coste':'Sin diferencias'}</div>
+    </div>
+  `;
+
+  document.getElementById('ncnt').textContent = `Paso ${cur+1} de ${S.length}`;
+  document.getElementById('btn-prev').disabled = cur===0;
+  document.getElementById('btn-next').disabled = cur===S.length-1;
+}
+
+function go(i){ if(i>=0&&i<S.length){cur=i;render();} }
+render();
+</script>
+</body>
+</html>
