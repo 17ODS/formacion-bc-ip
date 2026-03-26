@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Criterio de valoración de existencias · I.P. Ingeniería de Producción</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 15px; line-height: 1.6;
+    background: #f0eeea; color: #1a1a18;
+    padding: 28px 16px; min-height: 100vh;
+  }
+  .container { max-width: 880px; margin: 0 auto; }
+  header { margin-bottom: 22px; }
+  .header-tag { font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: #8a8880; margin-bottom: 5px; }
+  h1 { font-size: 21px; font-weight: 700; color: #1a1a18; margin-bottom: 3px; }
+  .header-sub { font-size: 13px; color: #6b6a65; }
+
+  .widget { background: #ffffff; border-radius: 14px; border: 1px solid #dddbd4; padding: 22px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+  .intro { font-size: 13px; color: #6b6a65; margin-bottom: 18px; line-height: 1.65; }
+  .intro strong { color: #1a1a18; }
+
+  .tabs { display: flex; border-bottom: 2px solid #dddbd4; margin-bottom: 20px; }
+  .tab { padding: 9px 22px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; background: transparent; color: #8a8880; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all .15s; }
+  .tab:hover { color: #1a1a18; }
+  .tab.active-fifo { color: #0F6E56; border-bottom-color: #0F6E56; }
+  .tab.active-avg  { color: #854F0B; border-bottom-color: #854F0B; }
+
+  .panel { display: none; } .panel.show { display: block; }
+
+  .criterion { border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; }
+  .cr-fifo { background: #EAF3DE; border: 1px solid #3B6D11; }
+  .cr-avg  { background: #FAEEDA; border: 1px solid #854F0B; }
+  .cr-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .cr-fifo .cr-title { color: #085041; }
+  .cr-avg  .cr-title { color: #633806; }
+  .cr-list { list-style: none; }
+  .cr-list li { font-size: 12.5px; line-height: 1.7; padding: 1px 0; color: #2a2a26; }
+  .cr-list li::before { content: "→ "; color: #9c9a92; }
+
+  .card { background: #ffffff; border: 1px solid #dddbd4; border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
+  .card-fifo { border-top: 3px solid #1D9E75; }
+  .card-avg  { border-top: 3px solid #BA7517; }
+  .art-name { font-size: 15px; font-weight: 700; color: #1a1a18; margin-bottom: 2px; }
+  .art-ref  { font-size: 11px; color: #9c9a92; margin-bottom: 14px; }
+
+  .badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 5px; margin-left: 6px; vertical-align: middle; }
+  .b-fifo { background: #EAF3DE; color: #085041; }
+  .b-avg  { background: #FAEEDA; color: #633806; }
+
+  .why-box { background: #f5f4f0; border-radius: 8px; padding: 11px 14px; margin-bottom: 16px; font-size: 12.5px; line-height: 1.65; color: #6b6a65; border-left: 3px solid #c8c6be; }
+  .why-box strong { color: #1a1a18; font-weight: 700; }
+
+  .two { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 18px; }
+  @media (max-width: 600px) { .two { grid-template-columns: 1fr; } }
+
+  .col-h { font-size: 10px; font-weight: 700; color: #9c9a92; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 7px; }
+  .step-h { font-size: 10px; font-weight: 700; color: #6b6a65; text-transform: uppercase; letter-spacing: .05em; margin: 11px 0 5px; }
+
+  table.et { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.et tr { border-bottom: 1px solid #eeece6; }
+  table.et tr:last-child { border-bottom: none; }
+  table.et td { padding: 5px 2px; }
+  .ea { color: #6b6a65; }
+  .ed { text-align: right; font-weight: 700; }
+  .ec { text-align: right; color: #6b6a65; }
+  .eh { text-align: right; font-size: 10px; color: #9c9a92; text-transform: uppercase; font-weight: 700; }
+
+  .lbar { display: flex; height: 22px; border-radius: 5px; overflow: hidden; margin: 7px 0; font-size: 10px; font-weight: 700; }
+  .lb1 { background: #EAF3DE; color: #085041; display: flex; align-items: center; justify-content: center; flex: 1; }
+  .lb2 { background: #E6F1FB; color: #0C447C; display: flex; align-items: center; justify-content: center; flex: 1; }
+  .lbc { background: #FCEBEB; color: #501313; display: flex; align-items: center; justify-content: center; }
+  .lbr { background: #EAF3DE; color: #085041; display: flex; align-items: center; justify-content: center; }
+  .avg-blend { height: 22px; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; margin: 7px 0; background: linear-gradient(90deg, #FAEEDA 0%, #E6F1FB 100%); color: #2a2a26; }
+
+  .sg3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; margin-bottom: 14px; }
+  .sg { background: #f5f4f0; border-radius: 8px; padding: 10px 12px; }
+  .sg-l { font-size: 10px; color: #9c9a92; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 3px; }
+  .sg-v { font-size: 15px; font-weight: 700; color: #1a1a18; }
+
+  .divider { height: 1px; background: #eeece6; margin: 14px 0; }
+
+  .alert { border-radius: 8px; padding: 10px 14px; margin-top: 13px; font-size: 12.5px; line-height: 1.55; }
+  .al-t { font-weight: 700; margin-bottom: 3px; }
+  .al-ok     { background: #EAF3DE; border: 1px solid #3B6D11; color: #27500A; }
+  .al-warn   { background: #FAEEDA; border: 1px solid #854F0B; color: #633806; }
+  .al-info   { background: #E6F1FB; border: 1px solid #185FA5; color: #0C447C; }
+
+  .note { font-size: 11.5px; color: #6b6a65; line-height: 1.65; margin-top: 13px; padding-top: 13px; border-top: 1px solid #eeece6; }
+  .note strong { color: #1a1a18; font-weight: 700; }
+
+  footer { text-align: center; margin-top: 22px; font-size: 11px; color: #9c9a92; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-tag">Formación Business Central · Sesión S2 · Material de apoyo</div>
+    <h1>Criterio de valoración de existencias</h1>
+    <div class="header-sub">I.P. Ingeniería de Producción, S.L. · Repuestos (FIFO) vs. Consumibles (Promedio)</div>
+  </header>
+
+  <div class="widget">
+    <p class="intro">El criterio de clasificación no es de valor unitario, es <strong>funcional</strong>: ¿se vende al cliente contra un pedido concreto? → <strong>FIFO</strong>. ¿Se consume internamente en el proceso? → <strong>Promedio</strong>.</p>
+
+    <div class="tabs">
+      <button class="tab active-fifo" onclick="switchMain('fifo')">🔩 Repuesto — Perno M10×25 (FIFO)</button>
+      <button class="tab" onclick="switchMain('avg')">🧴 Consumible — Cutol MS 5 L (Promedio)</button>
+    </div>
+
+    <!-- ═══════ FIFO ═══════ -->
+    <div class="panel show" id="panel-fifo">
+      <div class="criterion cr-fifo">
+        <div class="cr-title">¿Por qué FIFO en Repuestos?</div>
+        <ul class="cr-list">
+          <li>Se venden a un cliente concreto para una máquina concreta: la trazabilidad del coste por lote es esencial.</li>
+          <li>El margen puede variar lote a lote (distintos proveedores, precios negociados por pedido). Promediar diluye esa información.</li>
+          <li>El auditor puede exigir justificar el coste unitario de cada partida vendida. FIFO lo permite; Promedio no.</li>
+          <li>Si la factura del proveedor llega tarde (flujo habitual de IP), Adjust Cost corrige la capa exacta afectada, no todo el catálogo.</li>
+          <li>Stock relativamente bajo en volumen y alto en valor unitario: el coste de cada capa importa.</li>
+        </ul>
+      </div>
+
+      <div class="card card-fifo">
+        <div class="art-name">Perno M10×25 DIN 912 <span class="badge b-fifo">FIFO</span></div>
+        <div class="art-ref">Ref.: REP-PER-M1025 · Unidad: ud · Grupo: Tornillería estructural</div>
+        <div class="why-box"><strong>Por qué es un repuesto:</strong> se vende para reparación o mantenimiento de una máquina del cliente. No se consume en el proceso de IP; sale del almacén contra un pedido de venta concreto. El cliente puede requerir certificado de conformidad del lote.</div>
+        <div class="two">
+          <div>
+            <div class="col-h">Movimientos del período</div>
+            <div class="step-h">Compra 1 — 5 enero (Proveedor A)</div>
+            <table class="et">
+              <tr><td class="ea">Cantidad</td><td class="ed">50 ud</td></tr>
+              <tr><td class="ea">Precio unit.</td><td class="ed">0,48 €</td></tr>
+              <tr><td class="ea">Total</td><td class="ed">24,00 €</td></tr>
+            </table>
+            <div class="step-h">Compra 2 — 12 febrero (Proveedor B)</div>
+            <table class="et">
+              <tr><td class="ea">Cantidad</td><td class="ed">50 ud</td></tr>
+              <tr><td class="ea">Precio unit.</td><td class="ed">0,61 €</td></tr>
+              <tr><td class="ea">Total</td><td class="ed">30,50 €</td></tr>
+            </table>
+            <div class="step-h">Salida — 20 febrero (venta cliente)</div>
+            <table class="et">
+              <tr><td class="ea">Unidades vendidas</td><td class="ed">60 ud</td></tr>
+              <tr><td class="ea">PVP</td><td class="ed">1,20 €/ud</td></tr>
+            </table>
+          </div>
+          <div>
+            <div class="col-h">BC con FIFO — capas consumidas</div>
+            <div style="font-size:11px;color:#9c9a92;margin-bottom:4px;">Stock disponible: 100 ud</div>
+            <div class="lbar">
+              <div class="lb1">Capa 1 · 50 ud · 0,48 €</div>
+              <div class="lb2">Capa 2 · 50 ud · 0,61 €</div>
+            </div>
+            <div style="font-size:11px;color:#9c9a92;margin-bottom:4px;">Consumo de la salida (60 ud)</div>
+            <div class="lbar">
+              <div class="lbc" style="flex:5;">50 ud @ 0,48 € = 24,00 €</div>
+              <div class="lbc" style="flex:1;">10 ud</div>
+              <div class="lbr" style="flex:4;">40 ud rest.</div>
+            </div>
+            <div class="step-h">Cálculo del COGS</div>
+            <table class="et">
+              <tr><td class="ea">Capa 1 agotada (50 ud × 0,48 €)</td><td class="ed">24,00 €</td></tr>
+              <tr><td class="ea">Capa 2 parcial (10 ud × 0,61 €)</td><td class="ed">6,10 €</td></tr>
+              <tr><td class="ea" style="font-weight:700;">COGS total</td><td class="ed" style="color:#0F6E56;">30,10 €</td></tr>
+            </table>
+            <div class="step-h">Stock restante</div>
+            <table class="et">
+              <tr><td class="ea">40 ud × 0,61 € (solo Capa 2)</td><td class="ed">24,40 €</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="sg3">
+          <div class="sg"><div class="sg-l">Ingreso (60 × 1,20)</div><div class="sg-v">72,00 €</div></div>
+          <div class="sg"><div class="sg-l">COGS real FIFO</div><div class="sg-v" style="color:#0F6E56;">30,10 €</div></div>
+          <div class="sg"><div class="sg-l">Margen bruto</div><div class="sg-v">41,90 € <span style="font-size:11px;font-weight:400;color:#9c9a92;">(58,2%)</span></div></div>
+        </div>
+        <div class="alert al-ok">
+          <div class="al-t">✓ Trazabilidad completa por lote</div>
+          El auditor o el cliente puede ver que las primeras 50 ud salieron a 0,48 € (Proveedor A, enero) y las siguientes 10 ud a 0,61 € (Proveedor B, febrero). Si hay una reclamación por calidad, IP sabe exactamente de qué lote viene el perno.
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ PROMEDIO ═══════ -->
+    <div class="panel" id="panel-avg">
+      <div class="criterion cr-avg">
+        <div class="cr-title">¿Por qué Promedio en Consumibles?</div>
+        <ul class="cr-list">
+          <li>Se consumen en el proceso o se usan internamente: no hay un cliente concreto que exija trazabilidad de lote.</li>
+          <li>El precio varía entre proveedores y períodos, pero lo que importa es el coste medio de uso, no el de cada unidad concreta.</li>
+          <li>Alta rotación y bajo valor unitario: calcular capas FIFO generaría entradas de valoración innecesarias sin aporte real.</li>
+          <li>El auditor acepta el coste medio ponderado como método estándar para consumibles en actividad industrial.</li>
+          <li>Una subida puntual de precio de un proveedor no distorsiona el COGS del mes: se diluye en la media del período.</li>
+        </ul>
+      </div>
+
+      <div class="card card-avg">
+        <div class="art-name">Cutol MS - Garrafa 5 Litros <span class="badge b-avg">Promedio</span></div>
+        <div class="art-ref">Ref.: CON-CUT-5L · Unidad: ud · Grupo: Adhesivos y sellantes</div>
+        <div class="why-box"><strong>Por qué es un consumible:</strong> sellante industrial que se consume en operaciones de montaje o mantenimiento propio. No se vende individualizado a un cliente. Distintos proveedores, precio variable, pero la unidad física es equivalente: 5 L de Cutol es 5 L de Cutol independientemente del lote.</div>
+        <div class="two">
+          <div>
+            <div class="col-h">Movimientos del período</div>
+            <div class="step-h">Compra 1 — 3 enero (Proveedor A)</div>
+            <table class="et">
+              <tr><td class="ea">Cantidad</td><td class="ed">6 ud</td></tr>
+              <tr><td class="ea">Precio unit.</td><td class="ed">38,50 €</td></tr>
+              <tr><td class="ea">Total</td><td class="ed">231,00 €</td></tr>
+            </table>
+            <div class="step-h">Compra 2 — 18 enero (Proveedor B)</div>
+            <table class="et">
+              <tr><td class="ea">Cantidad</td><td class="ed">4 ud</td></tr>
+              <tr><td class="ea">Precio unit.</td><td class="ed">44,20 €</td></tr>
+              <tr><td class="ea">Total</td><td class="ed">176,80 €</td></tr>
+            </table>
+            <div class="step-h">Salida — 25 enero (consumo interno)</div>
+            <table class="et">
+              <tr><td class="ea">Unidades consumidas</td><td class="ed">7 ud</td></tr>
+            </table>
+          </div>
+          <div>
+            <div class="col-h">BC con Promedio — cálculo</div>
+            <div class="step-h">Stock total antes de la salida</div>
+            <table class="et">
+              <tr><td class="ea">10 ud · valor total</td><td class="ed">407,80 €</td></tr>
+            </table>
+            <div style="font-size:11px;color:#9c9a92;margin:7px 0 3px;">Mezcla de lotes (10 ud)</div>
+            <div class="avg-blend">⇌ Coste medio = 407,80 ÷ 10 = 40,78 €/ud</div>
+            <div class="step-h">Coste de la salida (7 ud × 40,78 €)</div>
+            <table class="et">
+              <tr><td class="ea" style="font-weight:700;">COGS</td><td class="ed" style="color:#854F0B;">285,46 €</td></tr>
+            </table>
+            <div class="step-h">Stock restante</div>
+            <table class="et">
+              <tr><td class="ea">3 ud × 40,78 €</td><td class="ed">122,34 €</td></tr>
+            </table>
+            <div class="alert al-warn" style="margin-top:10px;">
+              <div class="al-t">⚠ Coste provisional hasta Adjust Cost</div>
+              BC usa el precio de ficha (38,50 €) al registrar la salida. El ajuste al coste medio real (40,78 €) llega al cerrar el período. Diferencia a corregir: +16,24 €.
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="two" style="gap:14px;">
+          <div>
+            <div class="col-h">Comparativa FIFO vs Promedio (mismo escenario)</div>
+            <table class="et">
+              <tr><td class="ea"></td><td class="eh">FIFO</td><td class="eh">Promedio</td></tr>
+              <tr><td class="ea">COGS (7 ud)</td><td class="ed">279,00 €</td><td class="ed">285,46 €</td></tr>
+              <tr><td class="ea">Stock rest. (3 ud)</td><td class="ed">128,80 €</td><td class="ed">122,34 €</td></tr>
+              <tr><td class="ea">Diferencia</td><td class="ed" colspan="2" style="text-align:right;color:#9c9a92;">6,46 €</td></tr>
+            </table>
+            <p class="note">Para un consumible de uso interno, la diferencia de 6,46 € no justifica la complejidad de gestionar capas FIFO. El coste medio es suficientemente preciso.</p>
+          </div>
+          <div>
+            <div class="col-h">¿Qué pasa si llega tarde la factura?</div>
+            <div class="alert al-info" style="margin-top:0;">
+              <div class="al-t">Impacto menor con Promedio</div>
+              Si la factura llega con +5% de ajuste, ese incremento se diluye en el coste medio del período, afectando a todas las salidas del artículo por igual. No hay una capa concreta que corregir: el ajuste es proporcional y global.
+            </div>
+          </div>
+        </div>
+        <p class="note"><strong>Cuenta de destino:</strong> cuando un consumible sale por uso interno, BC lo lleva a gasto de explotación (grupo 6), no a Coste de Ventas (grupo 7). Si el artículo está mal clasificado en el catálogo, el asiento va a la cuenta equivocada y la variación de existencias del mes no cuadra.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>Documento de formación interno · I.P. Ingeniería de Producción, S.L. · Natxo Hernández, consultor externo · Marzo 2026</footer>
+</div>
+
+<script>
+function switchMain(w) {
+  document.getElementById('panel-fifo').className = 'panel' + (w === 'fifo' ? ' show' : '');
+  document.getElementById('panel-avg').className  = 'panel' + (w === 'avg'  ? ' show' : '');
+  document.querySelectorAll('.tabs .tab').forEach(function(t, i) {
+    t.className = 'tab';
+    if (i === 0 && w === 'fifo') t.className = 'tab active-fifo';
+    if (i === 1 && w === 'avg')  t.className = 'tab active-avg';
+  });
+}
+</script>
+</body>
+</html>
