@@ -326,7 +326,7 @@ function doLogin(){
   const inp = document.getElementById('pwd');
   const err = document.getElementById('login-error');
   if(inp.value === PASS){
-    sessionStorage.setItem(SK,'1');
+    localStorage.setItem(SK,'1');
     document.getElementById('login-screen').style.display='none';
     document.getElementById('site-content').style.display='block';
   } else {
@@ -336,7 +336,7 @@ function doLogin(){
     setTimeout(()=>inp.classList.remove('error'),400);
   }
 }
-if(sessionStorage.getItem(SK)){
+if(localStorage.getItem(SK)){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('site-content').style.display='block';
 }
