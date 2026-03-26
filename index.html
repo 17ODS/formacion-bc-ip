@@ -6,96 +6,118 @@
 <title>Formación Business Central · I.P. Ingeniería de Producción</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f7f6f3;color:#1a1a18;min-height:100vh;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f5f4f0;color:#1a1a18;min-height:100vh;}
 
 /* ── Login ── */
-.login-screen{position:fixed;inset:0;background:#f7f6f3;display:flex;align-items:center;justify-content:center;z-index:9999;padding:24px;}
-.login-box{background:#fff;border-radius:20px;border:1px solid #e8e6e0;padding:40px 36px;width:100%;max-width:380px;text-align:center;box-shadow:0 2px 24px rgba(0,0,0,0.07);}
-.login-logo{width:52px;height:52px;background:#1a1a18;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 16px;}
-.login-title{font-size:17px;font-weight:700;color:#1a1a18;margin-bottom:3px;}
-.login-org{font-size:12px;color:#9c9a92;margin-bottom:28px;}
-.login-label{display:block;font-size:11px;font-weight:700;color:#6b6a65;text-transform:uppercase;letter-spacing:.06em;text-align:left;margin-bottom:6px;}
-.login-input{width:100%;padding:11px 14px;border:1.5px solid #e8e6e0;border-radius:10px;font-size:15px;color:#1a1a18;outline:none;letter-spacing:.12em;transition:border-color .15s;}
+.login-screen{position:fixed;inset:0;background:#f5f4f0;display:flex;align-items:center;justify-content:center;z-index:9999;padding:24px;}
+.login-box{background:#fff;border-radius:20px;border:1px solid #e0deda;padding:40px 36px;width:100%;max-width:380px;text-align:center;box-shadow:0 4px 32px rgba(0,0,0,0.09);}
+.login-logo{width:54px;height:54px;background:#1a1a18;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 16px;}
+.login-title{font-size:18px;font-weight:700;color:#1a1a18;margin-bottom:3px;}
+.login-org{font-size:12px;color:#9c9a92;margin-bottom:30px;}
+.login-label{display:block;font-size:11px;font-weight:700;color:#6b6a65;text-transform:uppercase;letter-spacing:.07em;text-align:left;margin-bottom:7px;}
+.login-input{width:100%;padding:12px 14px;border:1.5px solid #e0deda;border-radius:10px;font-size:15px;color:#1a1a18;outline:none;letter-spacing:.12em;transition:border-color .15s;}
 .login-input:focus{border-color:#1a1a18;}
 .login-input.error{border-color:#e24b4a;animation:shake .3s ease;}
-.login-btn{width:100%;padding:12px;background:#1a1a18;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px;transition:opacity .15s;}
-.login-btn:hover{opacity:.85;}
+.login-btn{width:100%;padding:13px;background:#1a1a18;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px;transition:opacity .14s;}
+.login-btn:hover{opacity:.82;}
 .login-error{font-size:12px;color:#e24b4a;margin-top:8px;min-height:16px;}
-.login-hint{font-size:11px;color:#c8c6be;margin-top:18px;}
+.login-hint{font-size:11px;color:#c8c6be;margin-top:20px;}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 
-/* ── Site content ── */
+/* ── Site ── */
 .site-content{display:none;}
 
 /* ── Top bar ── */
-.topbar{background:#fff;border-bottom:1px solid #e8e6e0;padding:13px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:100;}
+.topbar{background:#fff;border-bottom:1px solid #e0deda;padding:12px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:sticky;top:0;z-index:100;}
 .topbar-left{display:flex;align-items:center;gap:10px;}
-.topbar-logo{width:30px;height:30px;background:#1a1a18;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
-.topbar-name{font-size:13px;font-weight:700;color:#1a1a18;}
+.topbar-logo{width:30px;height:30px;background:#1a1a18;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;}
+.topbar-name{font-size:13px;font-weight:700;color:#1a1a18;line-height:1.3;}
 .topbar-tag{font-size:11px;color:#9c9a92;}
-.search-input{padding:7px 14px 7px 34px;border:1.5px solid #e8e6e0;border-radius:8px;font-size:13px;color:#1a1a18;outline:none;width:200px;background:#f7f6f3 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8' stroke='%239c9a92' stroke-width='2'/%3E%3Cpath d='M21 21l-4.35-4.35' stroke='%239c9a92' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat 10px center;transition:border-color .15s;}
+.search-input{padding:8px 14px 8px 34px;border:1.5px solid #e0deda;border-radius:8px;font-size:13px;color:#1a1a18;outline:none;width:210px;background:#f5f4f0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='8' stroke='%239c9a92' stroke-width='2'/%3E%3Cpath d='M21 21l-4.35-4.35' stroke='%239c9a92' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat 10px center;transition:all .14s;}
 .search-input:focus{border-color:#1a1a18;background-color:#fff;}
 .search-input::placeholder{color:#9c9a92;}
 
 /* ── Main ── */
-.main{max-width:940px;margin:0 auto;padding:30px 20px;}
+.main{max-width:880px;margin:0 auto;padding:36px 20px 48px;}
 
 /* ── Hero ── */
-.hero{margin-bottom:30px;}
-.hero-title{font-size:24px;font-weight:700;color:#1a1a18;margin-bottom:5px;}
-.hero-sub{font-size:13px;color:#6b6a65;line-height:1.65;max-width:520px;}
-.hero-pills{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;}
-.hero-pill{font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid #e8e6e0;background:#fff;color:#6b6a65;}
+.hero{margin-bottom:36px;}
+.hero-tag{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#9c9a92;margin-bottom:8px;}
+.hero-title{font-size:26px;font-weight:700;color:#1a1a18;margin-bottom:8px;line-height:1.2;}
+.hero-sub{font-size:14px;color:#5a5956;line-height:1.7;max-width:540px;}
 
-/* ── Section ── */
-.section{margin-bottom:32px;}
-.section-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-.section-line{flex:1;height:1px;background:#e8e6e0;}
-.section-title{font-size:11px;font-weight:700;color:#9c9a92;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;}
+/* ── Need blocks ── */
+.need{background:#fff;border-radius:16px;border:1px solid #e0deda;margin-bottom:16px;overflow:hidden;transition:box-shadow .15s;}
+.need:hover{box-shadow:0 6px 24px rgba(0,0,0,0.07);}
 
-/* ── Cards ── */
-.card{background:#fff;border-radius:14px;border:1px solid #e8e6e0;padding:18px 20px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:11px;transition:all .14s;position:relative;overflow:hidden;}
-.card:hover{box-shadow:0 6px 22px rgba(0,0,0,0.08);transform:translateY(-2px);border-color:#d4d2cc;}
+.need-header{display:flex;align-items:flex-start;gap:16px;padding:22px 24px 18px;cursor:pointer;user-select:none;}
+.need-icon-wrap{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.need-question{flex:1;}
+.need-q{font-size:17px;font-weight:700;color:#1a1a18;margin-bottom:4px;line-height:1.35;}
+.need-hint{font-size:12.5px;color:#6b6a65;line-height:1.6;}
+.need-toggle{font-size:20px;color:#c8c6be;transition:transform .2s;margin-top:4px;flex-shrink:0;}
+.need-toggle.open{transform:rotate(90deg);}
 
-.card-accent{position:absolute;top:0;left:0;right:0;height:3px;}
-.ac-blue  {background:#185FA5;} .ac-purple{background:#534AB7;}
-.ac-green {background:#1D9E75;} .ac-amber {background:#BA7517;}
-.ac-coral {background:#D85A30;} .ac-teal  {background:#0F6E56;}
+/* Per-need accent colors */
+.need-proc .need-icon-wrap{background:#E1F5EE;}
+.need-proc .need-q{color:#04342C;}
+.need-fac  .need-icon-wrap{background:#EEEDFE;}
+.need-fac  .need-q{color:#26215C;}
+.need-cost .need-icon-wrap{background:#E6F1FB;}
+.need-cost .need-q{color:#042C53;}
+.need-prod .need-icon-wrap{background:#FAEEDA;}
+.need-prod .need-q{color:#412402;}
 
+/* ── Cards inside need ── */
+.need-body{display:none;padding:0 16px 16px;}
+.need-body.open{display:block;}
+
+/* Sub-section label */
+.sub-label{font-size:11px;font-weight:700;color:#4a4845;text-transform:uppercase;letter-spacing:.07em;margin:14px 0 8px 4px;}
+
+/* Single card */
+.card{background:#f5f4f0;border-radius:12px;border:1px solid #e0deda;padding:16px 18px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:all .13s;}
+.card:hover{background:#fff;box-shadow:0 4px 16px rgba(0,0,0,0.07);border-color:#c8c6be;}
 .card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;}
-.card-icon{font-size:20px;line-height:1;flex-shrink:0;}
-.card-badge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;white-space:nowrap;}
+.card-icon{font-size:18px;line-height:1;flex-shrink:0;}
+.card-badge{font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap;}
+.bg-green {background:#EAF3DE;color:#085041;}
 .bg-blue  {background:#E6F1FB;color:#0C447C;}
 .bg-purple{background:#EEEDFE;color:#26215C;}
-.bg-green {background:#EAF3DE;color:#085041;}
 .bg-amber {background:#FAEEDA;color:#633806;}
 .bg-ok    {background:#EAF3DE;color:#085041;}
 .bg-warn  {background:#FAEEDA;color:#633806;}
+.bg-teal  {background:#E1F5EE;color:#04342C;}
 
-.card-title{font-size:13.5px;font-weight:700;color:#1a1a18;line-height:1.45;}
+.card-title{font-size:13.5px;font-weight:700;color:#1a1a18;line-height:1.4;}
 .card-desc{font-size:12px;color:#6b6a65;line-height:1.65;flex:1;}
-.card-foot{display:flex;align-items:center;justify-content:space-between;padding-top:9px;border-top:1px solid #f0eeea;}
+.card-foot{display:flex;align-items:center;justify-content:space-between;padding-top:9px;border-top:1px solid #e8e6e0;}
 .card-meta{font-size:11px;color:#9c9a92;}
-.card-arr{font-size:13px;color:#c8c6be;transition:all .14s;}
+.card-arr{font-size:13px;color:#c8c6be;transition:all .13s;}
 .card:hover .card-arr{color:#1a1a18;transform:translateX(3px);}
 
-/* ── Featured card (horizontal) ── */
-.card-feat{flex-direction:row;align-items:center;gap:18px;padding:20px 24px;}
+/* Grid for compare pairs */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+@media(max-width:560px){.g2{grid-template-columns:1fr;}}
+
+/* Featured card (horizontal) */
+.card-feat{flex-direction:row;align-items:center;gap:16px;}
 .card-feat .card-body{flex:1;}
-.card-feat .card-icon{font-size:30px;}
-@media(max-width:520px){.card-feat{flex-direction:column;align-items:flex-start;}}
+.card-feat .card-icon{font-size:26px;}
+@media(max-width:480px){.card-feat{flex-direction:column;align-items:flex-start;}}
 
-/* ── Grids ── */
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
-@media(max-width:680px){.g2,.g3{grid-template-columns:1fr;}}
-@media(min-width:681px) and (max-width:820px){.g3{grid-template-columns:1fr 1fr;}}
+/* Accent top line */
+.acc-green {border-top:3px solid #1D9E75;}
+.acc-blue  {border-top:3px solid #185FA5;}
+.acc-purple{border-top:3px solid #534AB7;}
+.acc-amber {border-top:3px solid #BA7517;}
+.acc-teal  {border-top:3px solid #0F6E56;}
 
-/* ── Compare sub-label ── */
-.sub-label{font-size:11px;font-weight:600;color:#9c9a92;margin:12px 0 6px;padding-left:2px;}
-
+/* ── Empty search ── */
 .empty{text-align:center;padding:48px;color:#9c9a92;font-size:13px;display:none;}
-.site-footer{border-top:1px solid #e8e6e0;padding:18px 24px;text-align:center;font-size:11px;color:#9c9a92;margin-top:4px;}
+
+/* ── Footer ── */
+.site-footer{text-align:center;font-size:11px;color:#9c9a92;padding:20px 24px;border-top:1px solid #e0deda;margin-top:8px;}
 </style>
 </head>
 <body>
@@ -125,150 +147,168 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
         <div class="topbar-tag">Formación Business Central · S2 Repuestos</div>
       </div>
     </div>
-    <input class="search-input" type="text" placeholder="Buscar…" id="search" oninput="filterCards()">
+    <input class="search-input" type="text" placeholder="Buscar módulo…" id="search" oninput="filterCards()">
   </nav>
 
   <main class="main">
 
     <div class="hero">
-      <div class="hero-title">Materiales de formación</div>
-      <div class="hero-sub">Accede a cualquier módulo directamente. Todos los materiales están adaptados al flujo real de Repuestos en Business Central.</div>
-      <div class="hero-pills">
-        <span class="hero-pill">8 módulos</span>
-        <span class="hero-pill">Sesión S2</span>
-        <span class="hero-pill">Área Repuestos</span>
-        <span class="hero-pill">Marzo 2026</span>
+      <div class="hero-tag">Materiales de formación · Sesión S2 · Área Repuestos</div>
+      <div class="hero-title">¿Qué necesitas hoy?</div>
+      <div class="hero-sub">Selecciona el bloque que corresponde a tu necesidad. Cada uno te lleva directamente al material que estás buscando.</div>
+    </div>
+
+    <!-- ═══════ NECESIDAD 1: PROCESO COMPLETO ═══════ -->
+    <div class="need need-proc" id="need-proc" data-keywords="proceso venta compra expediente oferta pedido albaran factura ciclo flujo">
+      <div class="need-header" onclick="toggleNeed('proc')">
+        <div class="need-icon-wrap">🔄</div>
+        <div class="need-question">
+          <div class="need-q">Quiero entender el proceso de principio a fin</div>
+          <div class="need-hint">Desde que el cliente hace la solicitud hasta que el expediente queda cerrado. Incluye la gestión de compra y los documentos que genera BC en cada paso.</div>
+        </div>
+        <div class="need-toggle" id="tog-proc">›</div>
+      </div>
+      <div class="need-body" id="body-proc">
+        <a class="card card-feat acc-green" href="proceso_venta_repuestos.html" target="_blank"
+           data-keywords="proceso venta compra repuestos consumibles expediente oferta pedido albaran factura diagrama">
+          <div class="card-icon">🔄</div>
+          <div class="card-body">
+            <div class="card-head" style="margin-bottom:6px;">
+              <div class="card-title">Gestión de venta de repuestos y consumibles</div>
+              <span class="card-badge bg-teal">Proceso completo</span>
+            </div>
+            <div class="card-desc">7 fases con diagrama de flujo: recepción de la necesidad, oferta de venta, pedido, gestión de compra, expediente, despacho y facturación.</div>
+            <div class="card-foot">
+              <span class="card-meta">7 fases · 21 pasos · Diagrama interactivo</span>
+              <span class="card-arr">→</span>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
 
-    <!-- ══ PROCESOS ══ -->
-    <section class="section" data-cat="procesos">
-      <div class="section-hdr">
-        <div class="section-title">Procesos</div>
-        <div class="section-line"></div>
+    <!-- ═══════ NECESIDAD 2: FACTURAR ═══════ -->
+    <div class="need need-fac" id="need-fac" data-keywords="facturar iva dimensiones fechas triangular compras ventas canarias exportacion importacion checklist">
+      <div class="need-header" onclick="toggleNeed('fac')">
+        <div class="need-icon-wrap">💶</div>
+        <div class="need-question">
+          <div class="need-q">Voy a facturar y quiero asegurarme de que todo está bien</div>
+          <div class="need-hint">IVA según el tipo de cliente y operación, dimensiones, fechas del documento y operaciones triangulares. Cubre ventas y compras.</div>
+        </div>
+        <div class="need-toggle" id="tog-fac">›</div>
       </div>
-
-      <a class="card card-feat" href="proceso_venta_repuestos.html" target="_blank"
-         data-keywords="proceso venta compra repuestos consumibles expediente oferta pedido albaran factura ciclo completo diagrama">
-        <div class="card-accent ac-green"></div>
-        <div class="card-icon">🔄</div>
-        <div class="card-body">
-          <div class="card-head" style="margin-bottom:6px;">
-            <div class="card-title">Gestión de venta de repuestos y consumibles</div>
-            <span class="card-badge bg-green">Proceso completo</span>
+      <div class="need-body" id="body-fac">
+        <a class="card acc-purple" href="checklist_facturacion_repuestos.html" target="_blank"
+           data-keywords="facturacion iva dimensiones fechas triangular checklist ventas compras canarias exportacion importacion intracomunitaria">
+          <div class="card-head">
+            <div class="card-icon">📋</div>
+            <span class="card-badge bg-purple">Checklist</span>
           </div>
-          <div class="card-desc">El ciclo completo desde la recepción de la necesidad hasta el cierre del expediente. Incluye gestión de compra, albaranes y facturación, con diagrama de flujo interactivo.</div>
+          <div class="card-title">Antes de facturar — cuatro cosas que hay que comprobar</div>
+          <div class="card-desc">IVA en ventas y compras (España, UE, Canarias, exportación, importación, triangular), dimensiones obligatorias, fechas del documento y procedimiento completo para operaciones triangulares.</div>
           <div class="card-foot">
-            <span class="card-meta">7 fases · 21 pasos · Diagrama</span>
+            <span class="card-meta">4 pestañas · Ventas + Compras</span>
             <span class="card-arr">→</span>
           </div>
-        </div>
-      </a>
+        </a>
+      </div>
+    </div>
 
-      <div style="margin-top:10px;">
-        <a class="card" href="lineas_periodicas_BC.html" target="_blank"
-           data-keywords="lineas periodicas compra venta plantilla codigo estandar proveedor cliente automatico productividad">
-          <div class="card-accent ac-teal"></div>
+    <!-- ═══════ NECESIDAD 3: COSTES ═══════ -->
+    <div class="need need-cost" id="need-cost" data-keywords="coste fifo promedio valoracion existencias margen provisional ajuste perno cutol repuesto consumible">
+      <div class="need-header" onclick="toggleNeed('cost')">
+        <div class="need-icon-wrap">📦</div>
+        <div class="need-question">
+          <div class="need-q">Quiero entender el coste de lo que compro y vendo</div>
+          <div class="need-hint">Cómo calcula BC el coste de cada artículo, qué diferencia hay entre FIFO y Promedio, y qué pasa cuando la factura del proveedor llega tarde.</div>
+        </div>
+        <div class="need-toggle" id="tog-cost">›</div>
+      </div>
+      <div class="need-body" id="body-cost">
+
+        <a class="card acc-blue" href="criterio_coste_repuestos_consumibles_IP.html" target="_blank"
+           style="margin-bottom:8px;"
+           data-keywords="fifo promedio criterio valoracion repuesto consumible perno cutol clasificacion catalogo">
+          <div class="card-head">
+            <div class="card-icon">📊</div>
+            <span class="card-badge bg-blue">FIFO · Promedio</span>
+          </div>
+          <div class="card-title">¿Qué método usa BC para valorar mi stock?</div>
+          <div class="card-desc">Cuándo un artículo va a FIFO y cuándo a Promedio. Con ejemplos del catálogo real de IP: Perno M10×25 y Cutol MS 5 L.</div>
+          <div class="card-foot">
+            <span class="card-meta">2 pestañas · Interactivo</span>
+            <span class="card-arr">→</span>
+          </div>
+        </a>
+
+        <div class="sub-label">Método FIFO · Perno M10×25 — ¿qué diferencia hay entre hacerlo bien y hacerlo como solemos?</div>
+        <div class="g2" style="margin-bottom:8px;">
+          <a class="card acc-teal" href="FIFO_flujo_deseable_perno_M10.html" target="_blank"
+             data-keywords="fifo flujo deseable coste venta perno margen definitivo">
+            <div class="card-head"><div class="card-icon">✅</div><span class="card-badge bg-ok">Flujo recomendado</span></div>
+            <div class="card-title">FIFO · Así debería hacerse</div>
+            <div class="card-desc">La factura del proveedor llega antes de vender. El coste es definitivo desde el primer momento y el margen no cambia.</div>
+            <div class="card-foot"><span class="card-meta">5 pasos · Todo en enero</span><span class="card-arr">→</span></div>
+          </a>
+          <a class="card acc-amber" href="FIFO_flujo_IP_perno_M10.html" target="_blank"
+             data-keywords="fifo flujo ip habitual coste provisional ajuste febrero margen">
+            <div class="card-head"><div class="card-icon">⚠️</div><span class="card-badge bg-warn">Flujo habitual IP</span></div>
+            <div class="card-title">FIFO · Así pasa habitualmente en IP</div>
+            <div class="card-desc">La factura llega tarde. El coste queda provisional y el ajuste aparece en febrero sin venta visible.</div>
+            <div class="card-foot"><span class="card-meta">7 pasos · Enero + Febrero</span><span class="card-arr">→</span></div>
+          </a>
+        </div>
+
+        <div class="sub-label">Método Promedio · Cutol MS 5 L — lo mismo pero para consumibles</div>
+        <div class="g2">
+          <a class="card acc-teal" href="PROMEDIO_flujo_deseable_cutol.html" target="_blank"
+             data-keywords="promedio flujo deseable consumible cutol coste medio definitivo">
+            <div class="card-head"><div class="card-icon">✅</div><span class="card-badge bg-ok">Flujo recomendado</span></div>
+            <div class="card-title">Promedio · Así debería hacerse</div>
+            <div class="card-desc">Todas las facturas registradas antes del cierre. Coste medio definitivo, sin sorpresas en el mes siguiente.</div>
+            <div class="card-foot"><span class="card-meta">4 pasos · Todo en enero</span><span class="card-arr">→</span></div>
+          </a>
+          <a class="card acc-amber" href="PROMEDIO_flujo_IP_cutol.html" target="_blank"
+             data-keywords="promedio flujo ip habitual consumible cutol coste provisional ajuste">
+            <div class="card-head"><div class="card-icon">⚠️</div><span class="card-badge bg-warn">Flujo habitual IP</span></div>
+            <div class="card-title">Promedio · Así pasa habitualmente en IP</div>
+            <div class="card-desc">La factura del Proveedor B llega tarde. El ajuste distorsiona los informes de consumo de febrero.</div>
+            <div class="card-foot"><span class="card-meta">7 pasos · Enero + Febrero</span><span class="card-arr">→</span></div>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════ NECESIDAD 4: PRODUCTIVIDAD ═══════ -->
+    <div class="need need-prod" id="need-prod" data-keywords="lineas periodicas plantilla codigo estandar proveedor cliente automatico productividad rapido">
+      <div class="need-header" onclick="toggleNeed('prod')">
+        <div class="need-icon-wrap">⚡</div>
+        <div class="need-question">
+          <div class="need-q">Quiero trabajar más rápido en BC</div>
+          <div class="need-hint">Configurar plantillas que rellenen el pedido automáticamente para proveedores y clientes que siempre piden lo mismo.</div>
+        </div>
+        <div class="need-toggle" id="tog-prod">›</div>
+      </div>
+      <div class="need-body" id="body-prod">
+        <a class="card acc-amber" href="lineas_periodicas_BC.html" target="_blank"
+           data-keywords="lineas periodicas compra venta plantilla codigo estandar proveedor cliente automatico">
           <div class="card-head">
             <div class="card-icon">⚡</div>
-            <span class="card-badge bg-green">Productividad</span>
+            <span class="card-badge bg-amber">Productividad</span>
           </div>
           <div class="card-title">Líneas periódicas en compras y ventas</div>
-          <div class="card-desc">Configura una vez y BC rellena el pedido automáticamente. Para proveedores y clientes recurrentes. Incluye capturas reales de BC.</div>
+          <div class="card-desc">Configura una vez y BC rellena automáticamente las líneas del pedido con artículos, cantidades, precios y dimensiones. Para proveedores y clientes recurrentes. Incluye capturas reales de BC.</div>
           <div class="card-foot">
             <span class="card-meta">2 pestañas · 5 pasos cada una</span>
             <span class="card-arr">→</span>
           </div>
         </a>
       </div>
-    </section>
-
-    <!-- ══ COSTES ══ -->
-    <section class="section" data-cat="costes">
-      <div class="section-hdr">
-        <div class="section-title">Costes y valoración de existencias</div>
-        <div class="section-line"></div>
-      </div>
-
-      <a class="card" href="criterio_coste_repuestos_consumibles_IP.html" target="_blank"
-         data-keywords="fifo promedio coste valoracion repuesto consumible perno cutol catalogo clasificacion">
-        <div class="card-accent ac-blue"></div>
-        <div class="card-head">
-          <div class="card-icon">📊</div>
-          <span class="card-badge bg-blue">FIFO · Promedio</span>
-        </div>
-        <div class="card-title">Criterio de valoración: repuestos vs consumibles</div>
-        <div class="card-desc">Cuándo usar FIFO y cuándo Promedio. Con ejemplos reales del catálogo: Perno M10×25 y Cutol MS 5 L. El criterio es funcional, no de valor unitario.</div>
-        <div class="card-foot">
-          <span class="card-meta">2 pestañas · Interactivo</span>
-          <span class="card-arr">→</span>
-        </div>
-      </a>
-
-      <div class="sub-label">Método FIFO · Perno M10×25 DIN 912 — flujo deseable vs. flujo habitual de IP</div>
-      <div class="g2">
-        <a class="card" href="FIFO_flujo_deseable_perno_M10.html" target="_blank"
-           data-keywords="fifo flujo deseable coste venta perno margen definitivo">
-          <div class="card-accent ac-teal"></div>
-          <div class="card-head"><div class="card-icon">✅</div><span class="card-badge bg-ok">Recomendado</span></div>
-          <div class="card-title">FIFO · Flujo deseable</div>
-          <div class="card-desc">Factura del proveedor antes de la venta. Coste definitivo desde el primer momento.</div>
-          <div class="card-foot"><span class="card-meta">5 pasos · Enero</span><span class="card-arr">→</span></div>
-        </a>
-        <a class="card" href="FIFO_flujo_IP_perno_M10.html" target="_blank"
-           data-keywords="fifo flujo ip habitual coste provisional ajuste febrero margen">
-          <div class="card-accent ac-amber"></div>
-          <div class="card-head"><div class="card-icon">⚠️</div><span class="card-badge bg-warn">Flujo habitual IP</span></div>
-          <div class="card-title">FIFO · Flujo real de IP</div>
-          <div class="card-desc">Factura del proveedor llega tarde. Coste provisional, ajuste retroactivo en febrero.</div>
-          <div class="card-foot"><span class="card-meta">7 pasos · Enero + Febrero</span><span class="card-arr">→</span></div>
-        </a>
-      </div>
-
-      <div class="sub-label">Método Promedio · Cutol MS - Garrafa 5 L — flujo deseable vs. flujo habitual de IP</div>
-      <div class="g2">
-        <a class="card" href="PROMEDIO_flujo_deseable_cutol.html" target="_blank"
-           data-keywords="promedio flujo deseable consumible cutol coste medio definitivo">
-          <div class="card-accent ac-teal"></div>
-          <div class="card-head"><div class="card-icon">✅</div><span class="card-badge bg-ok">Recomendado</span></div>
-          <div class="card-title">Promedio · Flujo deseable</div>
-          <div class="card-desc">Todas las facturas registradas antes del cierre. Coste medio definitivo sin ajustes.</div>
-          <div class="card-foot"><span class="card-meta">4 pasos · Enero</span><span class="card-arr">→</span></div>
-        </a>
-        <a class="card" href="PROMEDIO_flujo_IP_cutol.html" target="_blank"
-           data-keywords="promedio flujo ip habitual consumible cutol coste provisional ajuste">
-          <div class="card-accent ac-amber"></div>
-          <div class="card-head"><div class="card-icon">⚠️</div><span class="card-badge bg-warn">Flujo habitual IP</span></div>
-          <div class="card-title">Promedio · Flujo real de IP</div>
-          <div class="card-desc">Factura del Proveedor B llega tarde. Ajuste que distorsiona los datos de febrero.</div>
-          <div class="card-foot"><span class="card-meta">7 pasos · Enero + Febrero</span><span class="card-arr">→</span></div>
-        </a>
-      </div>
-    </section>
-
-    <!-- ══ FACTURACIÓN ══ -->
-    <section class="section" data-cat="facturacion">
-      <div class="section-hdr">
-        <div class="section-title">Facturación</div>
-        <div class="section-line"></div>
-      </div>
-      <a class="card" href="checklist_facturacion_repuestos.html" target="_blank"
-         data-keywords="facturacion iva dimensiones fechas triangular checklist compras ventas intracomunitaria canarias exportacion importacion">
-        <div class="card-accent ac-purple"></div>
-        <div class="card-head">
-          <div class="card-icon">📋</div>
-          <span class="card-badge bg-purple">Checklist</span>
-        </div>
-        <div class="card-title">Antes de facturar — cuatro cosas que hay que comprobar</div>
-        <div class="card-desc">IVA en ventas y compras, dimensiones, fechas y operaciones triangulares. Cubre todos los casos de IP: España, UE, Canarias, exportación e importación.</div>
-        <div class="card-foot">
-          <span class="card-meta">4 pestañas · Ventas + Compras</span>
-          <span class="card-arr">→</span>
-        </div>
-      </a>
-    </section>
+    </div>
 
     <div class="empty" id="empty">No se encontraron módulos con ese término.</div>
+
   </main>
 
   <footer class="site-footer">
@@ -278,41 +318,67 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,san
 </div>
 
 <script>
+/* ── AUTH ── */
 const PASS = "IP2026rep";
-const SESSION_KEY = "bc_formacion_auth";
+const SK   = "bc_formacion_auth";
 
 function doLogin(){
-  const input = document.getElementById('pwd');
-  const err   = document.getElementById('login-error');
-  if(input.value === PASS){
-    sessionStorage.setItem(SESSION_KEY,'1');
+  const inp = document.getElementById('pwd');
+  const err = document.getElementById('login-error');
+  if(inp.value === PASS){
+    sessionStorage.setItem(SK,'1');
     document.getElementById('login-screen').style.display='none';
     document.getElementById('site-content').style.display='block';
   } else {
-    input.classList.add('error');
+    inp.classList.add('error');
     err.textContent='Clave incorrecta. Inténtalo de nuevo.';
-    input.value='';
-    setTimeout(()=>input.classList.remove('error'),400);
+    inp.value='';
+    setTimeout(()=>inp.classList.remove('error'),400);
   }
 }
-
-if(sessionStorage.getItem(SESSION_KEY)){
+if(sessionStorage.getItem(SK)){
   document.getElementById('login-screen').style.display='none';
   document.getElementById('site-content').style.display='block';
 }
 
+/* ── NEED ACCORDION ── */
+function toggleNeed(id){
+  const body  = document.getElementById('body-'+id);
+  const tog   = document.getElementById('tog-'+id);
+  const open  = body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  tog.classList.toggle('open',!open);
+}
+
+/* Open all by default */
+['proc','fac','cost','prod'].forEach(id=>{
+  document.getElementById('body-'+id).classList.add('open');
+  document.getElementById('tog-'+id).classList.add('open');
+});
+
+/* ── SEARCH ── */
 function filterCards(){
-  const q=document.getElementById('search').value.toLowerCase().trim();
+  const q = document.getElementById('search').value.toLowerCase().trim();
+  if(!q){
+    document.querySelectorAll('.need').forEach(n=>n.style.display='');
+    document.querySelectorAll('.card').forEach(c=>c.style.display='');
+    document.getElementById('empty').style.display='none';
+    return;
+  }
   let visible=0;
-  document.querySelectorAll('.card').forEach(c=>{
-    const kw=(c.dataset.keywords||'')+' '+(c.querySelector('.card-title')?.textContent||'')+' '+(c.querySelector('.card-desc')?.textContent||'');
-    const show=!q||kw.toLowerCase().includes(q);
-    c.style.display=show?'':'none';
-    if(show)visible++;
-  });
-  document.querySelectorAll('.section').forEach(s=>{
-    const has=[...s.querySelectorAll('.card')].some(c=>c.style.display!=='none');
-    s.style.display=has?'':'none';
+  document.querySelectorAll('.need').forEach(need=>{
+    const nkw=(need.dataset.keywords||'')+(need.querySelector('.need-q')?.textContent||'')+(need.querySelector('.need-hint')?.textContent||'');
+    let hasCard=false;
+    need.querySelectorAll('.card').forEach(c=>{
+      const kw=(c.dataset.keywords||'')+(c.querySelector('.card-title')?.textContent||'')+(c.querySelector('.card-desc')?.textContent||'');
+      const show=kw.toLowerCase().includes(q)||nkw.toLowerCase().includes(q);
+      c.style.display=show?'':'none';
+      if(show){hasCard=true;visible++;}
+    });
+    need.style.display=hasCard?'':'none';
+    if(hasCard){
+      document.getElementById('body-'+need.id.replace('need-','')).classList.add('open');
+    }
   });
   document.getElementById('empty').style.display=visible===0?'block':'none';
 }

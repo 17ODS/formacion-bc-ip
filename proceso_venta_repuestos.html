@@ -24,6 +24,7 @@ h1{font-size:20px;font-weight:700;margin-bottom:3px;}
 .tab.on-f4{color:#BA7517;border-bottom-color:#BA7517;}
 .tab.on-f5{color:#1D9E75;border-bottom-color:#1D9E75;}
 .tab.on-f6{color:#A32D2D;border-bottom-color:#A32D2D;}
+.tab.on-fc{color:#D85A30;border-bottom-color:#D85A30;}
 
 .panel{display:none;}.panel.show{display:block;}
 
@@ -35,6 +36,7 @@ h1{font-size:20px;font-weight:700;margin-bottom:3px;}
 .pi-f4{background:#FAEEDA;border:1px solid #BA7517;}
 .pi-f5{background:#EAF3DE;border:1px solid #1D9E75;}
 .pi-f6{background:#FCEBEB;border:1px solid #A32D2D;}
+.pi-fc{background:#FAECE7;border:1px solid #D85A30;}
 .pi-num{font-size:26px;font-weight:700;line-height:1;flex-shrink:0;margin-top:2px;}
 .pi-f1 .pi-num{color:#185FA5;}
 .pi-f2 .pi-num{color:#534AB7;}
@@ -42,6 +44,7 @@ h1{font-size:20px;font-weight:700;margin-bottom:3px;}
 .pi-f4 .pi-num{color:#BA7517;}
 .pi-f5 .pi-num{color:#1D9E75;}
 .pi-f6 .pi-num{color:#A32D2D;}
+.pi-fc .pi-num{color:#D85A30;}
 .pi-title{font-size:14px;font-weight:700;margin-bottom:2px;}
 .pi-f1 .pi-title{color:#0C447C;}
 .pi-f2 .pi-title{color:#26215C;}
@@ -49,6 +52,7 @@ h1{font-size:20px;font-weight:700;margin-bottom:3px;}
 .pi-f4 .pi-title{color:#412402;}
 .pi-f5 .pi-title{color:#085041;}
 .pi-f6 .pi-title{color:#501313;}
+.pi-fc .pi-title{color:#712B13;}
 .pi-desc{font-size:12px;line-height:1.6;}
 .pi-f1 .pi-desc{color:#0C447C;}
 .pi-f2 .pi-desc{color:#26215C;}
@@ -56,6 +60,7 @@ h1{font-size:20px;font-weight:700;margin-bottom:3px;}
 .pi-f4 .pi-desc{color:#633806;}
 .pi-f5 .pi-desc{color:#085041;}
 .pi-f6 .pi-desc{color:#501313;}
+.pi-fc .pi-desc{color:#712B13;}
 
 /* Step pills */
 .pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;}
@@ -67,6 +72,7 @@ h1{font-size:20px;font-weight:700;margin-bottom:3px;}
 .pf4.done{background:#FAEEDA;color:#412402;border-color:#BA7517;}
 .pf5.done{background:#EAF3DE;color:#085041;border-color:#1D9E75;}
 .pf6.done{background:#FCEBEB;color:#501313;border-color:#A32D2D;}
+.pfc.done{background:#FAECE7;color:#712B13;border-color:#D85A30;}
 
 /* Step card */
 .card{background:#fff;border-radius:14px;border:1px solid #dddbd4;padding:20px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
@@ -76,6 +82,7 @@ h1{font-size:20px;font-weight:700;margin-bottom:3px;}
 .c-f4{border-top:3px solid #BA7517;}
 .c-f5{border-top:3px solid #1D9E75;}
 .c-f6{border-top:3px solid #A32D2D;}
+.c-fc{border-top:3px solid #D85A30;}
 .step-meta{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#8a8880;margin-bottom:4px;}
 .step-title{font-size:16px;font-weight:700;color:#1a1a18;margin-bottom:16px;}
 
@@ -167,6 +174,7 @@ table.t tr:last-child td{border-bottom:none;}
 .nbtn.nf4{background:#BA7517;color:#fff;border-color:#BA7517;}
 .nbtn.nf5{background:#1D9E75;color:#fff;border-color:#1D9E75;}
 .nbtn.nf6{background:#A32D2D;color:#fff;border-color:#A32D2D;}
+.nbtn.nfc{background:#D85A30;color:#fff;border-color:#D85A30;}
 .ncnt{font-size:12px;color:#9c9a92;}
 
 /* Diagram SVG container */
@@ -180,6 +188,17 @@ footer{text-align:center;margin-top:24px;font-size:11px;color:#9c9a92;}
 </style>
 </head>
 <body>
+
+<style>
+.home-btn{position:fixed;top:14px;left:14px;z-index:9999;display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #dddbd4;border-radius:8px;padding:7px 13px;font-size:12px;font-weight:600;color:#1a1a18;text-decoration:none;box-shadow:0 2px 8px rgba(0,0,0,0.08);transition:all .14s;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;}
+.home-btn:hover{background:#f5f4f0;box-shadow:0 4px 14px rgba(0,0,0,0.12);}
+.home-btn svg{flex-shrink:0;}
+</style>
+<a class="home-btn" href="index.html">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  Inicio
+</a>
+
 <div class="container">
   <div class="hdr-tag">Business Central · Procedimiento PC-TRA-REP-01 · España</div>
   <h1>Gestión de venta de repuestos y consumibles</h1>
@@ -190,7 +209,8 @@ footer{text-align:center;margin-top:24px;font-size:11px;color:#9c9a92;}
     <button class="tab" onclick="switchTab('f1')">1 · Recepción</button>
     <button class="tab" onclick="switchTab('f2')">2 · Oferta de venta</button>
     <button class="tab" onclick="switchTab('f3')">3 · Pedido de venta</button>
-    <button class="tab" onclick="switchTab('f4')">4 · Expediente</button>
+    <button class="tab" onclick="switchTab('fc')">4 · Gestión de compra</button>
+    <button class="tab" onclick="switchTab('f4')">5 · Expediente</button>
     <button class="tab" onclick="switchTab('f5')">5 · Despacho</button>
     <button class="tab" onclick="switchTab('f6')">6 · Facturación</button>
   </div>
@@ -198,7 +218,7 @@ footer{text-align:center;margin-top:24px;font-size:11px;color:#9c9a92;}
   <!-- ═══════════════════════════════ DIAGRAMA ═══════════════════════════════ -->
   <div class="panel show" id="panel-dgr">
     <div class="diagram-wrap">
-      <svg width="100%" viewBox="0 0 640 880" xmlns="http://www.w3.org/2000/svg">
+      <svg width="100%" viewBox="0 0 640 1020" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -208,124 +228,110 @@ footer{text-align:center;margin-top:24px;font-size:11px;color:#9c9a92;}
         <!-- START -->
         <ellipse cx="300" cy="24" rx="80" ry="18" fill="#f5f4f0" stroke="#c8c6be" stroke-width="1"/>
         <text x="300" y="28" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="600" fill="#6b6a65">Necesidad del cliente</text>
-
-        <!-- Arrow start → F1 -->
         <line x1="300" y1="42" x2="300" y2="58" stroke="#c8c6be" stroke-width="1.5" marker-end="url(#arr)"/>
 
-        <!-- F1 — Recepción y análisis -->
+        <!-- F1 -->
         <rect x="120" y="60" width="360" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="1"/>
         <text x="300" y="82" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#185FA5">FASE 1</text>
         <text x="300" y="97" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#0C447C">Recepción y análisis</text>
         <text x="300" y="110" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#185FA5">Canales de entrada · Información requerida · Verificación BC</text>
-
-        <!-- Arrow F1 → D1 -->
         <line x1="300" y1="116" x2="300" y2="132" stroke="#c8c6be" stroke-width="1.5" marker-end="url(#arr)"/>
 
-        <!-- D1: ¿Artículo en BC y stock disponible? -->
+        <!-- D1 -->
         <polygon points="300,135 362,158 300,181 238,158" fill="#f5f4f0" stroke="#8a8880" stroke-width="1"/>
         <text x="300" y="155" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#1a1a18">¿Artículo en BC y</text>
         <text x="300" y="167" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#1a1a18">stock disponible?</text>
-        <!-- D1 Sí label -->
         <text x="284" y="197" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#0F6E56" font-weight="700">Sí</text>
-        <!-- D1 No label + branch -->
-        <text x="390" y="155" text-anchor="start" font-family="system-ui,sans-serif" font-size="9" fill="#A32D2D" font-weight="700">No</text>
-        <line x1="362" y1="158" x2="480" y2="158" stroke="#A32D2D" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arr)"/>
-        <rect x="480" y="143" width="148" height="30" rx="5" fill="#FCEBEB" stroke="#A32D2D" stroke-width="0.5"/>
-        <text x="554" y="160" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#501313">Crear artículo / gestionar</text>
-        <text x="554" y="171" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#A32D2D">compra a proveedor</text>
-
-        <!-- Arrow D1 → F2 -->
+        <text x="366" y="155" text-anchor="start" font-family="system-ui,sans-serif" font-size="9" fill="#A32D2D" font-weight="700">No</text>
+        <line x1="362" y1="158" x2="490" y2="158" stroke="#A32D2D" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arr)"/>
+        <rect x="490" y="143" width="138" height="30" rx="5" fill="#FCEBEB" stroke="#A32D2D" stroke-width="0.5"/>
+        <text x="559" y="160" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#501313">Crear artículo /</text>
+        <text x="559" y="171" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#A32D2D">gestionar compra</text>
         <line x1="300" y1="181" x2="300" y2="197" stroke="#c8c6be" stroke-width="1.5" marker-end="url(#arr)"/>
 
-        <!-- F2 — Oferta de venta -->
+        <!-- F2 -->
         <rect x="120" y="199" width="360" height="56" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
         <text x="300" y="221" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#534AB7">FASE 2</text>
         <text x="300" y="236" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#26215C">Oferta de venta</text>
         <text x="300" y="249" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#534AB7">Verificar cliente · Crear OV · Calcular precio · Seguimiento</text>
-
-        <!-- Arrow F2 → D2 -->
         <line x1="300" y1="255" x2="300" y2="271" stroke="#c8c6be" stroke-width="1.5" marker-end="url(#arr)"/>
 
-        <!-- D2: ¿Cliente aprueba OV? -->
+        <!-- D2 -->
         <polygon points="300,274 362,297 300,320 238,297" fill="#f5f4f0" stroke="#8a8880" stroke-width="1"/>
         <text x="300" y="294" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#1a1a18">¿El cliente</text>
         <text x="300" y="306" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#1a1a18">aprueba la OV?</text>
         <text x="284" y="336" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#0F6E56" font-weight="700">Sí</text>
-        <text x="390" y="294" text-anchor="start" font-family="system-ui,sans-serif" font-size="9" fill="#854F0B" font-weight="700">No</text>
-        <line x1="362" y1="297" x2="480" y2="297" stroke="#854F0B" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arr)"/>
-        <rect x="480" y="282" width="148" height="30" rx="5" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
-        <text x="554" y="299" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#633806">Rechazar / archivar OV</text>
-        <text x="554" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#854F0B">en BC con motivo</text>
-
-        <!-- Arrow D2 → F3 -->
+        <text x="366" y="294" text-anchor="start" font-family="system-ui,sans-serif" font-size="9" fill="#854F0B" font-weight="700">No</text>
+        <line x1="362" y1="297" x2="490" y2="297" stroke="#854F0B" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arr)"/>
+        <rect x="490" y="282" width="138" height="30" rx="5" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+        <text x="559" y="299" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#633806">Rechazar / archivar</text>
+        <text x="559" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#854F0B">OV en BC con motivo</text>
         <line x1="300" y1="320" x2="300" y2="336" stroke="#c8c6be" stroke-width="1.5" marker-end="url(#arr)"/>
 
-        <!-- F3 — Pedido de venta -->
+        <!-- F3 -->
         <rect x="120" y="338" width="360" height="56" rx="8" fill="#E1F5EE" stroke="#1D9E75" stroke-width="1"/>
         <text x="300" y="360" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#1D9E75">FASE 3</text>
         <text x="300" y="375" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#04342C">Pedido de venta</text>
         <text x="300" y="388" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#1D9E75">Crear PV · Verificar crédito · Confirmar al cliente</text>
-
-        <!-- Arrow F3 → F4 -->
         <line x1="300" y1="394" x2="300" y2="410" stroke="#c8c6be" stroke-width="1.5" marker-end="url(#arr)"/>
 
-        <!-- F4 — Expediente -->
-        <rect x="120" y="412" width="360" height="56" rx="8" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
-        <text x="300" y="434" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#BA7517">FASE 4</text>
-        <text x="300" y="449" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#412402">Expediente en BC</text>
-        <text x="300" y="462" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#BA7517">Crear expediente · Tipología · Informes de rentabilidad</text>
-
-        <!-- Arrow F4 → F5 -->
+        <!-- FC — Gestión de compra -->
+        <rect x="120" y="412" width="360" height="56" rx="8" fill="#FAECE7" stroke="#D85A30" stroke-width="1"/>
+        <text x="300" y="434" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#D85A30">FASE 4</text>
+        <text x="300" y="449" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#712B13">Gestión de compra</text>
+        <text x="300" y="462" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#D85A30">Lanzar PC(s) · Recepción mercancía · Albarán compra y venta</text>
         <line x1="300" y1="468" x2="300" y2="484" stroke="#c8c6be" stroke-width="1.5" marker-end="url(#arr)"/>
 
-        <!-- F5 — Preparación y despacho -->
-        <rect x="120" y="486" width="360" height="56" rx="8" fill="#EAF3DE" stroke="#1D9E75" stroke-width="1"/>
-        <text x="300" y="508" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#1D9E75">FASE 5</text>
-        <text x="300" y="523" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#085041">Preparación y despacho</text>
-        <text x="300" y="536" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#1D9E75">Empaque · Albarán · Despacho · Seguimiento envío</text>
-
-        <!-- Arrow F5 → D3 -->
+        <!-- F4 — Expediente -->
+        <rect x="120" y="486" width="360" height="56" rx="8" fill="#FAEEDA" stroke="#BA7517" stroke-width="1"/>
+        <text x="300" y="508" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#BA7517">FASE 5</text>
+        <text x="300" y="523" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#412402">Expediente en BC</text>
+        <text x="300" y="536" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#BA7517">Crear expediente · Tipología · Informes de rentabilidad</text>
         <line x1="300" y1="542" x2="300" y2="558" stroke="#c8c6be" stroke-width="1.5" marker-end="url(#arr)"/>
 
-        <!-- D3: ¿Cliente confirma recepción? -->
-        <polygon points="300,561 362,584 300,607 238,584" fill="#f5f4f0" stroke="#8a8880" stroke-width="1"/>
-        <text x="300" y="581" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#1a1a18">¿Cliente confirma</text>
-        <text x="300" y="593" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#1a1a18">recepción OK?</text>
-        <text x="284" y="623" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#0F6E56" font-weight="700">Sí</text>
-        <text x="390" y="581" text-anchor="start" font-family="system-ui,sans-serif" font-size="9" fill="#A32D2D" font-weight="700">No</text>
-        <line x1="362" y1="584" x2="480" y2="584" stroke="#A32D2D" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arr)"/>
-        <rect x="480" y="569" width="148" height="30" rx="5" fill="#FCEBEB" stroke="#A32D2D" stroke-width="0.5"/>
-        <text x="554" y="586" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#501313">Reclamación al</text>
-        <text x="554" y="597" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#A32D2D">proveedor de transporte</text>
+        <!-- F5 — Preparación y despacho -->
+        <rect x="120" y="560" width="360" height="56" rx="8" fill="#EAF3DE" stroke="#1D9E75" stroke-width="1"/>
+        <text x="300" y="582" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#1D9E75">FASE 6</text>
+        <text x="300" y="597" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#085041">Preparación y despacho</text>
+        <text x="300" y="610" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#1D9E75">Empaque · Albarán · Despacho · Seguimiento envío</text>
+        <line x1="300" y1="616" x2="300" y2="632" stroke="#c8c6be" stroke-width="1.5" marker-end="url(#arr)"/>
 
-        <!-- Arrow D3 → F6 -->
-        <line x1="300" y1="607" x2="300" y2="623" stroke="#c8c6be" stroke-width="1.5" marker-end="url(#arr)"/>
-
-        <!-- F6 — Facturación y cierre -->
-        <rect x="120" y="625" width="360" height="56" rx="8" fill="#FCEBEB" stroke="#A32D2D" stroke-width="1"/>
-        <text x="300" y="647" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#A32D2D">FASE 6</text>
-        <text x="300" y="662" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#501313">Facturación y cierre</text>
-        <text x="300" y="675" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#A32D2D">Factura desde BC · Notas de abono · Cierre de expediente</text>
-
-        <!-- Arrow F6 → END -->
+        <!-- D3 -->
+        <polygon points="300,635 362,658 300,681 238,658" fill="#f5f4f0" stroke="#8a8880" stroke-width="1"/>
+        <text x="300" y="655" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#1a1a18">¿Cliente confirma</text>
+        <text x="300" y="667" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#1a1a18">recepción OK?</text>
+        <text x="284" y="697" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#0F6E56" font-weight="700">Sí</text>
+        <text x="366" y="655" text-anchor="start" font-family="system-ui,sans-serif" font-size="9" fill="#A32D2D" font-weight="700">No</text>
+        <line x1="362" y1="658" x2="490" y2="658" stroke="#A32D2D" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arr)"/>
+        <rect x="490" y="643" width="138" height="30" rx="5" fill="#FCEBEB" stroke="#A32D2D" stroke-width="0.5"/>
+        <text x="559" y="660" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="600" fill="#501313">Reclamación al</text>
+        <text x="559" y="671" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#A32D2D">proveedor transporte</text>
         <line x1="300" y1="681" x2="300" y2="697" stroke="#c8c6be" stroke-width="1.5" marker-end="url(#arr)"/>
 
-        <!-- END -->
-        <ellipse cx="300" cy="714" rx="80" ry="18" fill="#EAF3DE" stroke="#1D9E75" stroke-width="1"/>
-        <text x="300" y="718" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#085041">Expediente cerrado ✓</text>
+        <!-- F6 — Facturación -->
+        <rect x="120" y="699" width="360" height="56" rx="8" fill="#FCEBEB" stroke="#A32D2D" stroke-width="1"/>
+        <text x="300" y="721" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="#A32D2D">FASE 7</text>
+        <text x="300" y="736" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#501313">Facturación y cierre</text>
+        <text x="300" y="749" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#A32D2D">Factura venta · Factura compra · Notas abono · Cierre expediente</text>
+        <line x1="300" y1="755" x2="300" y2="771" stroke="#c8c6be" stroke-width="1.5" marker-end="url(#arr)"/>
 
-        <!-- Nota docs España -->
-        <rect x="10" y="756" width="620" height="26" rx="5" fill="#f5f4f0" stroke="#dddbd4" stroke-width="0.5"/>
-        <text x="320" y="773" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#6b6a65">Documentos en España: Albarán de venta + Factura de venta generados desde Business Central</text>
+        <!-- END -->
+        <ellipse cx="300" cy="788" rx="80" ry="18" fill="#EAF3DE" stroke="#1D9E75" stroke-width="1"/>
+        <text x="300" y="792" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" font-weight="700" fill="#085041">Expediente cerrado ✓</text>
+
+        <!-- Footer note -->
+        <rect x="10" y="820" width="620" height="26" rx="5" fill="#f5f4f0" stroke="#dddbd4" stroke-width="0.5"/>
+        <text x="320" y="837" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#6b6a65">España · Documentos: Albarán compra · Albarán venta · Factura de venta — generados desde Business Central</text>
       </svg>
 
       <div class="diagram-legend">
         <div class="dl-item"><div class="dl-dot" style="background:#E6F1FB;border:1px solid #185FA5;"></div>F1 Recepción</div>
         <div class="dl-item"><div class="dl-dot" style="background:#EEEDFE;border:1px solid #534AB7;"></div>F2 Oferta</div>
-        <div class="dl-item"><div class="dl-dot" style="background:#E1F5EE;border:1px solid #1D9E75;"></div>F3 Pedido</div>
-        <div class="dl-item"><div class="dl-dot" style="background:#FAEEDA;border:1px solid #BA7517;"></div>F4 Expediente</div>
-        <div class="dl-item"><div class="dl-dot" style="background:#EAF3DE;border:1px solid #1D9E75;"></div>F5 Despacho</div>
-        <div class="dl-item"><div class="dl-dot" style="background:#FCEBEB;border:1px solid #A32D2D;"></div>F6 Facturación</div>
+        <div class="dl-item"><div class="dl-dot" style="background:#E1F5EE;border:1px solid #1D9E75;"></div>F3 Pedido venta</div>
+        <div class="dl-item"><div class="dl-dot" style="background:#FAECE7;border:1px solid #D85A30;"></div>F4 Compra</div>
+        <div class="dl-item"><div class="dl-dot" style="background:#FAEEDA;border:1px solid #BA7517;"></div>F5 Expediente</div>
+        <div class="dl-item"><div class="dl-dot" style="background:#EAF3DE;border:1px solid #1D9E75;"></div>F6 Despacho</div>
+        <div class="dl-item"><div class="dl-dot" style="background:#FCEBEB;border:1px solid #A32D2D;"></div>F7 Facturación</div>
         <div class="dl-item"><div class="dl-dot" style="background:#f5f4f0;border:1px solid #8a8880;transform:rotate(45deg)"></div>Decisión</div>
       </div>
     </div>
@@ -365,6 +371,18 @@ footer{text-align:center;margin-top:24px;font-size:11px;color:#9c9a92;}
     <div class="card c-f3" id="card-f3"></div>
     <div class="dash" id="dash-f3"></div>
     <div class="navrow"><button class="nbtn" id="pf3-prev" onclick="go('f3',cur.f3-1)">← Anterior</button><span class="ncnt" id="ncnt-f3"></span><button class="nbtn nf3" id="pf3-next" onclick="go('f3',cur.f3+1)">Siguiente →</button></div>
+  </div>
+
+  <!-- ═══════════════════════════════ FC: COMPRA ═══════════════════════ -->
+  <div class="panel" id="panel-fc">
+    <div class="phase-intro pi-fc">
+      <div class="pi-num">4</div>
+      <div><div class="pi-title">Gestión de compra</div><div class="pi-desc">Desde la OV aceptada se lanzan los pedidos de compra para lo que no hay en stock. La mercancía llega, se verifica y se registra el albarán de compra — que activa también el albarán de venta.</div></div>
+    </div>
+    <div class="pills" id="pills-fc"></div>
+    <div class="card c-fc" id="card-fc"></div>
+    <div class="dash" id="dash-fc"></div>
+    <div class="navrow"><button class="nbtn" id="pfc-prev" onclick="go('fc',cur.fc-1)">← Anterior</button><span class="ncnt" id="ncnt-fc"></span><button class="nbtn nfc" id="pfc-next" onclick="go('fc',cur.fc+1)">Siguiente →</button></div>
   </div>
 
   <!-- ═══════════════════════════════ F4 ═══════════════════════════════ -->
@@ -658,9 +676,122 @@ f3:[
     bcCaption:"Una vez enviada la confirmación, cualquier cambio debe ser nuevamente aprobado por el cliente. Documentar cualquier modificación en BC.",
     scenarios:null,
     d:["Documento","Confirmación del PV","Envío","Desde BC o correo","Cambios post-confirmación","Requieren nueva aprobación"]
+  },
+  {
+    label:"Lanzar pedidos de compra",
+    title:"Desde el PV aceptado: generar los Pedidos de Compra para lo que no hay en stock",
+    left_h:"Cuándo y cómo se lanzan los PCs",
+    left:[
+      {t:"Identificar qué líneas del PV no tienen stock disponible en el almacén.", hi:true},
+      {t:"Para esas líneas, crear el/los Pedidos de Compra desde BC.", hi:true},
+      {t:"Si los artículos vienen de proveedores distintos: un PC por proveedor.", hi:false},
+      {t:"Vincular cada PC al mismo expediente que el PV.", hi:true},
+      {t:"Las líneas con stock disponible no generan PC: se despachan directamente.", hi:false},
+      {t:"No confirmar fecha de entrega al cliente sin tener respuesta del proveedor sobre su plazo.", hi:true}
+    ],
+    right_h:"Qué debe contener cada PC",
+    right_type:"checks",
+    right:[
+      {t:"Referencia exacta del artículo tal como la envía el proveedor", ok:true},
+      {t:"Cantidad necesaria según el PV (no más, salvo compra adicional para stock)", ok:true},
+      {t:"Precio acordado — es la base del coste que usará BC para calcular el margen", ok:true},
+      {t:"Fecha de entrega esperada del proveedor", ok:true},
+      {t:"Expediente vinculado: el mismo que el PV", ok:true},
+      {t:"Dimensiones correctas en cabecera y líneas", ok:true}
+    ],
+    bcCaption:"PV y PC son documentos independientes en BC pero quedan ligados por el expediente. Sin esa vinculación, el informe de rentabilidad no puede cruzar ingresos y costes de la misma operación.",
+    scenarios:[
+      {type:"warn", label:"Si se compran más unidades de las que pide el cliente", body:"Si el proveedor ofrece mejor precio por volumen y se decide comprar más de lo que necesita el cliente, las unidades extra deben ir a un expediente STOCK independiente. No mezclar destinos en el mismo expediente."},
+      {type:"info", label:"Compra intercompany desde otra sede IP", body:"Si el artículo está disponible en otra sede del grupo, la compra se gestiona como intercompany. Recordar añadir el 5% de margen intercompany al calcular el precio de la OV."}
+    ],
+    d:["Origen","Desde PV aceptado","Un PC por","Proveedor diferente","Vínculo","Mismo expediente que PV"]
   }
 ],
 
+fc:[
+  {
+    label:"Lanzar pedido/s de compra",
+    title:"Desde la OV aceptada: crear PV y PC(s) simultáneamente",
+    left_h:"El momento clave: qué se lanza y en qué orden",
+    left:[
+      {t:"Una vez el cliente acepta la OV, se generan el Pedido de Venta y los Pedidos de Compra en BC.", hi:true},
+      {t:"Primero el Pedido de Venta desde la OV aceptada.", hi:false},
+      {t:"Luego, para cada artículo sin stock, un Pedido de Compra al proveedor correspondiente.", hi:false},
+      {t:"Si un mismo proveedor suministra varios artículos, pueden agruparse en un solo PC.", hi:false},
+      {t:"Si hay artículos de distintos proveedores, un PC por proveedor.", hi:false},
+      {t:"Los artículos que sí están en stock no generan PC — salen directamente del almacén.", hi:true}
+    ],
+    right_h:"Qué debe contener cada PC",
+    right_type:"checks",
+    right:[
+      {t:"Proveedor correcto", ok:true},
+      {t:"Artículo con referencia exacta del proveedor", ok:true},
+      {t:"Cantidad a pedir", ok:true},
+      {t:"Precio de compra acordado o de la última cotización", ok:true},
+      {t:"Fecha de entrega requerida (coherente con lo prometido al cliente en el PV)", ok:true},
+      {t:"Nº de expediente vinculado", ok:true},
+      {t:"Dimensiones: Departamento, Zona", ok:true}
+    ],
+    bcCaption:"El PC debe registrarse en BC antes de confirmar nada al proveedor. Es el documento que vincula el coste de compra al expediente y que Adjust Cost usará para calcular el margen real.",
+    scenarios:[
+      {type:"info", label:"¿Y si el cliente acepta la OV parcialmente?", body:"Solo se lanzan PC para las líneas aceptadas. Las líneas rechazadas se desmarcan en la OV antes de generar el PV. No crear PC para artículos que el cliente no ha confirmado."},
+      {type:"warn", label:"Registrar el PC antes de que llegue la mercancía", body:"Si la mercancía llega al almacén antes de que el PC esté creado en BC, la recepción no se puede registrar correctamente. El PC tiene que existir en BC antes de la entrega del proveedor."}
+    ],
+    d:["Origen","OV aceptada por el cliente","PV + PC(s)","Lanzar simultáneamente","Stock existente","No genera PC"]
+  },
+  {
+    label:"Seguimiento y recepción",
+    title:"Seguimiento del pedido al proveedor y verificación de la mercancía",
+    left_h:"Desde que se lanza el PC hasta que llega la mercancía",
+    left:[
+      {t:"Confirmar el PC al proveedor y solicitar confirmación de fecha de entrega.", hi:false},
+      {t:"Si el proveedor da una fecha diferente a la prometida al cliente: comunicarlo al cliente inmediatamente.", hi:true},
+      {t:"Hacer seguimiento activo del envío — no esperar a que llegue sin más.", hi:false},
+      {t:"Cuando llega la mercancía al almacén: verificar antes de registrar nada en BC.", hi:true}
+    ],
+    right_h:"Qué verificar al recibir la mercancía",
+    right_type:"checks",
+    right:[
+      {t:"Artículos recibidos coinciden con el PC (referencia, descripción)", ok:true},
+      {t:"Cantidades recibidas coinciden con el PC", ok:true},
+      {t:"Estado visual del embalaje y del producto", ok:true},
+      {t:"Si la recepción es parcial: anotar exactamente qué ha llegado y qué queda pendiente", ok:true},
+      {t:"Certificado de calidad si el artículo lo requiere", ok:true}
+    ],
+    bcCaption:"La verificación antes de registrar en BC es crítica. Una vez registrado el albarán de compra, el inventario se actualiza y el coste queda imputado. Si se registra más de lo recibido, el stock no refleja la realidad.",
+    scenarios:[
+      {type:"warn", label:"Recepción parcial", body:"Si llega solo parte de los artículos, modificar las cantidades en el PC antes de registrar el albarán de compra. Indicar solo las unidades efectivamente recibidas. El resto queda pendiente en el PC para una recepción posterior."},
+      {type:"red", label:"Mercancía recibida con daños o incorrecta", body:"No registrar el albarán de compra hasta resolver la incidencia con el proveedor. Documentar el estado con fotografías. Contactar al proveedor para gestionar la devolución o reenvío antes de tocar nada en BC."}
+    ],
+    d:["Seguimiento","Activo hasta recepción","Recepción parcial","Ajustar unidades en PC","Verificación","Antes de registrar en BC"]
+  },
+  {
+    label:"Albarán de compra y venta",
+    title:"Registrar el albarán de compra — y lo que activa en la cadena",
+    left_h:"Qué hace el albarán de compra en BC",
+    left:[
+      {t:"El albarán de compra registra la entrada de la mercancía en el inventario de BC.", hi:true},
+      {t:"Genera el movimiento de stock: las unidades quedan disponibles en el almacén.", hi:false},
+      {t:"Crea la capa de coste FIFO (o actualiza el promedio para consumibles).", hi:false},
+      {t:"Con el stock disponible, ya se puede registrar el albarán de venta para despachar al cliente.", hi:true},
+      {t:"En muchas operaciones de Repuestos: albarán de compra y albarán de venta se registran el mismo día.", hi:false}
+    ],
+    right_h:"Secuencia correcta en BC",
+    right_type:"bc",
+    right:[
+      {l:"1º Registrar albarán de compra", v:"Mercancía entra en stock", t:"ok"},
+      {l:"2º Registrar albarán de venta", v:"Mercancía sale hacia el cliente", t:"ok"},
+      {l:"3º Factura de venta", v:"Cuando el envío está confirmado", t:"norm"},
+      {l:"4º Factura de compra", v:"Cuando llega la factura del proveedor", t:"norm"}
+    ],
+    bcCaption:"El orden importa. Si se intenta registrar el albarán de venta antes del de compra, BC puede dar error de stock insuficiente o registrar el coste de venta a cero. Albarán de compra siempre primero.",
+    scenarios:[
+      {type:"warn", label:"La factura del proveedor llega después — el desfase habitual de IP", body:"En el flujo habitual de Repuestos, la factura del proveedor llega días o semanas después del albarán de compra. El coste registrado en ese momento es el del PC (provisional). Adjust Cost lo corregirá cuando llegue la factura real. Ver materiales sobre FIFO y Promedio para entender el impacto en el margen."},
+      {type:"info", label:"Operaciones triangulares: sin albarán de compra en el almacén de IP", body:"Si la mercancía va directamente del proveedor al cliente sin pasar por el almacén de IP, no hay albarán de compra físico en la sede. El registro en BC se hace igualmente pero con el almacén configurado para operaciones triangulares. Ver pestaña de Operaciones triangulares en el checklist de facturación."}
+    ],
+    d:["Albarán compra","Entrada en inventario BC","Albarán venta","Salida hacia el cliente","Orden obligatorio","Compra → Venta"]
+  }
+],
 f4:[
   {
     label:"Crear el expediente",
@@ -717,6 +848,33 @@ f4:[
 ],
 
 f5:[
+  {
+    label:"Recepción de mercancía",
+    title:"Llega la mercancía del proveedor — verificar y registrar el albarán de compra",
+    left_h:"Qué hacer cuando llega el material",
+    left:[
+      {t:"Recibir la confirmación de envío del proveedor (tracking) o la llegada física al almacén.", hi:false},
+      {t:"Verificar que lo recibido coincide con el PC: artículos, referencias y cantidades.", hi:true},
+      {t:"Revisar el estado visual del material antes de firmarlo como conforme.", hi:true},
+      {t:"Si la recepción es parcial: registrar en BC solo las unidades realmente recibidas.", hi:true},
+      {t:"Una vez verificado, registrar el albarán de compra en BC desde el Pedido de Compra.", hi:true}
+    ],
+    right_h:"Cómo registrar el albarán de compra en BC",
+    right_type:"checks",
+    right:[
+      {t:"Abrir el PC correspondiente en BC", ok:true},
+      {t:"Verificar cantidades a recibir — ajustar si la entrega es parcial", ok:true},
+      {t:"Registrar: opción 'Registrar' → 'Recibir'", ok:true},
+      {t:"El albarán de compra actualiza el stock en BC y crea la capa de coste FIFO", ok:true},
+      {t:"El albarán de venta se puede generar a continuación desde el PV", ok:true}
+    ],
+    bcCaption:"El albarán de compra es el momento en que BC registra la entrada de mercancía y crea el coste de inventario. La factura del proveedor llegará después — puede ser días o semanas más tarde.",
+    scenarios:[
+      {type:"warn", label:"Recepción parcial", body:"Si el proveedor envía solo parte del pedido, registrar únicamente las unidades recibidas. No registrar más de lo que ha llegado físicamente. El PC queda abierto con las unidades pendientes hasta la siguiente entrega."},
+      {type:"info", label:"Albarán de compra y albarán de venta: ¿cuál va primero?", body:"En operaciones donde IP recibe en almacén y luego despacha: primero el albarán de compra (entrada de stock) y luego el albarán de venta (salida de stock). No se puede registrar la salida antes de que el material esté en el sistema."}
+    ],
+    d:["Documento","Albarán de compra desde PC","Efecto en BC","Entrada de stock + capa FIFO","Factura proveedor","Llega después — ver F6"]
+  },
   {
     label:"Empaque y embalaje",
     title:"Preparar el envío correctamente antes de que entre el transportista",
@@ -863,8 +1021,8 @@ f6:[
 };
 
 /* ─── RENDER ─────────────────────────────────────────────────────────── */
-const cur = {f1:0,f2:0,f3:0,f4:0,f5:0,f6:0};
-const phaseColor = {f1:'f1',f2:'f2',f3:'f3',f4:'f4',f5:'f5',f6:'f6'};
+const cur = {f1:0,f2:0,f3:0,fc:0,f4:0,f5:0,f6:0};
+const phaseColor = {f1:'f1',f2:'f2',f3:'f3',fc:'fc',f4:'f4',f5:'f5',f6:'f6'};
 
 function renderRight(s, phase){
   if(s.right_type==='checks'){
@@ -930,8 +1088,10 @@ function renderStep(phase, idx){
     scHtml = `<div class="scenarios">${sc}</div>`;
   }
 
-  document.getElementById('card-'+phase).innerHTML = `
-    <div class="step-meta">Fase ${phase.replace('f','')} · ${['','Recepción y análisis','Oferta de venta','Pedido de venta','Expediente','Preparación y despacho','Facturación y cierre'][parseInt(phase.replace('f',''))]}</div>
+    const phaseName = ['','Recepción y análisis','Oferta de venta','Pedido de venta','Gestión de compra','Expediente','Preparación y despacho','Facturación y cierre'];
+    const phaseNum  = {f1:1,f2:2,f3:3,fc:4,f4:5,f5:6,f6:7};
+    document.getElementById('card-'+phase).innerHTML = `
+    <div class="step-meta">Fase ${phaseNum[phase]} · ${phaseName[phaseNum[phase]]}</div>
     <div class="step-title">${s.title}</div>
     <div class="two">
       <div>
@@ -967,8 +1127,8 @@ function go(phase, idx){
 }
 
 /* ─── TAB SWITCHING ──────────────────────────────────────────────────── */
-const TAB_IDS = ['dgr','f1','f2','f3','f4','f5','f6'];
-const TAB_ON  = ['on-dgr','on-f1','on-f2','on-f3','on-f4','on-f5','on-f6'];
+const TAB_IDS = ['dgr','f1','f2','f3','fc','f4','f5','f6'];
+const TAB_ON  = ['on-dgr','on-f1','on-f2','on-f3','on-fc','on-f4','on-f5','on-f6'];
 
 function switchTab(id){
   TAB_IDS.forEach((t,i)=>{
@@ -989,7 +1149,7 @@ function toggleScen(hdr){
 }
 
 /* ─── INIT ───────────────────────────────────────────────────────────── */
-['f1','f2','f3','f4','f5','f6'].forEach(p => renderStep(p, 0));
+['f1','f2','f3','fc','f4','f5','f6'].forEach(p => renderStep(p, 0));
 </script>
 </body>
 </html>
